@@ -34,6 +34,7 @@ const Button = styled.button`
 const Toggle = ({theme, toggleTheme }) => {
     return (
         <Button onClick={toggleTheme} 
+        data-testid="toggleDarkMode"
         aria-pressed="false"
         >
           {theme === "light" ? (

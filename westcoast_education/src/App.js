@@ -22,10 +22,12 @@ function App() {
     <Theme>
     <ThemeProvider theme={themeMode}>
     <GlobalStyle/>  
-    <div className="App">
+    <div className="App" data-testid="wholeapp"
+    >
       <header className="App-header">
        <h1>Westcoast Education</h1>
-       <Toggle theme={theme} toggleTheme={themeToggler} />
+       <Toggle theme={theme} toggleTheme={themeToggler} 
+       style={{ backgroundColor: theme.buttonBackground}}/>
       </header>
       <main className="App-main">
 
