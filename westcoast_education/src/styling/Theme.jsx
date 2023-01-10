@@ -6,7 +6,7 @@ const overallTheme = {
     small: "1em",
     medium: "2em",
     large: "3em"
-  }
+  },
 }
 
 export const lightTheme = {
@@ -15,7 +15,9 @@ export const lightTheme = {
   buttonText: "#FFF",
   toggleBorder: '#FFF',
   background: '#363537',
-  buttonBackground: "#363537"
+  buttonBackground: "#363537",
+  accent: "#1E90FF",
+
 }
 
 export const darkTheme = {
@@ -23,7 +25,8 @@ export const darkTheme = {
   text: '#FAFAFA',
   toggleBorder: '#6B8096',
   background: '#999',
-  buttonBackground: "lightgray"
+  buttonBackground: "lightgray",
+  accent: "#00BFFF",
 }
 
 export const Theme = ({ children }) => (

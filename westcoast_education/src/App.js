@@ -1,26 +1,27 @@
+import { Fragment } from "react";
+
+//*----styling and darkmode/lightmode:
 import Theme from "./styling/Theme";
-import styled from "styled-components";
 import GlobalStyle from './styling/globalStyles';
 import { useDarkMode } from "./Components/ThemeModes/useDarkMode";
-import { Fragment } from "react";
 import { lightTheme, darkTheme } from "./styling/Theme";
-import { useState, useEffect } from "react";
 import { ThemeProvider } from "styled-components";
 import Toggle from "./Components/ThemeModes/Toggler";
 
+//*---routing
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+
 function App() {
-  const [theme, themeToggler] = useDarkMode();
+  const [theme, themeToggler, mountedComponent] = useDarkMode();
 
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
+  if(!mountedComponent) return <div/>
 
   return (
     <Fragment>
     <Theme>
-     <ThemeProvider theme={themeMode}>
-    <GlobalStyle/>
-    
-   
-      
+    <ThemeProvider theme={themeMode}>
+    <GlobalStyle/>  
     <div className="App">
       <header className="App-header">
        <h1>Westcoast Education</h1>
