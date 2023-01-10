@@ -2,11 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
-import MockTheme from './styling/MockTheme';
-import { ThemeProvider } from 'styled-components';
-import { lightTheme, darkTheme } from "./styling/Theme";
-import { useDarkMode } from "./Components/ThemeModes/useDarkMode";
-import GlobalStyle from './styling/globalStyles';
+
 
 describe("Homepage component", () => {
   it("should have a header", () => {
@@ -19,6 +15,11 @@ describe("Homepage component", () => {
       render(<App/>);
       expect(screen.getByRole("button", {name: "Mörkt tema"})).toBeInTheDocument();
     })
+    it("should have navigation bar", () => {
+      render(<App/>)
+      expect(screen.getByRole("button", {name:"Meny"})).toBeInTheDocument();
+    })
+ 
     describe("Darkmode button", () => {
       it("should change text when clicked",  () => {
         render(<App/>);
@@ -33,8 +34,15 @@ describe("Homepage component", () => {
         userEvent.click(themeTogglerButton);
         expect(themeTogglerButton).toHaveStyle("background-color: lightgray")
       })
+      it ("should change background on every button when clicked", () => {
+        render(<App/>)
+        const allButtons = screen.getAllByRole("button");
+        const themeTogglerButton = screen.getByTestId("toggleDarkMode");
+        userEvent.click(themeTogglerButton);
+        expect(allButtons).toHaveStyle("background-color: lightgray")
+      })
 
-      //?skipped because changed to themeprovider, unsure on how to test themeprovider correctly
+      //?skipped because changed to themeprovider, unsure on how to test themeprovider correctly. Not necessary for the assignment so skipping this for the time being:
 
       xit("should change website background color when clicked", async () => {
 
