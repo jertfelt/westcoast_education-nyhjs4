@@ -1,0 +1,39 @@
+{"teachers": [
+  {"firstName": "Arnold",
+  "lastName": "Schwarzenegger", 
+  "personalID": 7608190034,
+  "email": "arnold@westcoast.se",
+  "mobileNo": 736843434,
+  "competences": ["English", "Swedish"]
+  },
+  {"firstName": "Oskar",
+  "lastName": "Johansson Jertfelt", 
+  "personalID": 8603250094,
+  "email": "ojj@westcoast.se",
+  "mobileNo": 70998876,
+  "competences": ["Mathematics", "Natural Science", "French"]
+  }
+],
+"courses": [
+  {"courseID": 1,
+  "courseName": "English A",
+  "lengthWeeks": 3,
+  "courseDescription": "English for beginners",
+  "startDate": "2023-04-23"},
+  {"courseID": 12,
+  "courseName": "English B",
+  "lengthWeeks": 6,
+  "courseDescription": "English for intermediate",
+  "startDate": "2023-04-24"},
+  {"courseID": 5,
+  "courseName": "Mathematics A",
+  "lengthWeeks": 6,
+  "courseDescription": "Mathematics for beginners",
+  "startDate": "2023-01-20"},
+  {"courseID": 51,
+  "courseName": "Mathematics B",
+  "lengthWeeks": 6,
+  "courseDescription": "Mathematics for intermediate",
+  "startDate": "2023-01-20"}
+]
+}
