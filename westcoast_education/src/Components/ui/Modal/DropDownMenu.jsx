@@ -18,11 +18,17 @@ box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     left: calc(50% - 20rem);
     width: 50rem;
 }
-.close{
 
-}
 button{
-
+  background: transparent;
+  color: ${({ theme }) => theme.body};
+  border:none;
+  padding:8px;
+  position:relative;
+  left:80%;
+  &:hover{
+    color: ${({ theme }) => theme.accent};
+  }
 }
 ul{
   list-style:none;
@@ -64,18 +70,18 @@ const Overlay = () => {
   return <OverlayDiv/>
 }
 
-const DropDownOverlay = (theme, props) => {
+const DropDownOverlay = (props) => {
+ 
   return(
-    <DropDMenu>
+    <DropDMenu data-testid="dropdown">
     <ul>
         <li>Start</li>
         <li>Alla kurser</li>
         <li>Våra lärare</li>
         <li>Logga in</li>
     </ul>
-    <footer className="close">
       <button onClick={props.onClick}>Stäng</button>
-    </footer>
+   
   </DropDMenu>
   )
 }

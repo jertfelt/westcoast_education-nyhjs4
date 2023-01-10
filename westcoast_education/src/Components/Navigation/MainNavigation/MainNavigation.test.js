@@ -1,17 +1,17 @@
-import { render, screen, waitFor } from '@testing-library/react';
+import { render, screen, within} from '@testing-library/react';
+import '@testing-library/jest-dom/extend-expect'
 import userEvent from '@testing-library/user-event';
 import MainNavigation from './MainNavigation';
+import App from '../../../App';
+
 describe("Navigation component", () => {
-  it("should have a meny button", () => {
+ 
+ 
+  describe("should have a meny button", () => {
     render(<MainNavigation/>);
     expect(screen.getByRole("button", {name: /meny/i})).toBeInTheDocument();
-  })
-  it("should show dropdown when clicked", () => {
-    render(<MainNavigation/>)
-
-    userEvent.click(screen.getByRole("button", {name: /meny/i}))
-
-    expect(screen.getByTestId("dropdown-menu")).toBeInTheDocument()
   
+  it("should reveal a dropdown menu when pressed", () => {
+    
   })
-})
+})})

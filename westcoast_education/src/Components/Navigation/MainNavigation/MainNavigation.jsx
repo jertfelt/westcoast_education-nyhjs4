@@ -22,25 +22,27 @@ border-radius: 30px;
 const MainNavigation = ({theme}) => {
   const [dropdownShown, setDropdown] = useState(false)
 
-  async function showMenu(e) {
+  const showMenu = (e) => {
     e.preventDefault();
     if(dropdownShown !== true){setDropdown(true)}
     else{
       setDropdown(false)
     }
   }
+
   return ( 
   <nav>
     <MenuButton
     onClick={showMenu}
     >Meny</MenuButton>
 
-    {dropdownShown && <DropDownMenu
+    {dropdownShown && (<DropDownMenu
     theme={theme} 
+    onClick={() => setDropdown(false)}
     data-testid="dropdown-menu"
-    />
-      
+    />)
       }
+   
   </nav> );}
 
   
