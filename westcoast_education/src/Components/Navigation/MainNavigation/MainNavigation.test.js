@@ -1,9 +1,17 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import MainNavigation from './MainNavigation';
 describe("Navigation component", () => {
-  it("should exist", () => {
+  it("should have a meny button", () => {
     render(<MainNavigation/>);
-    expect(screen.getByRole("nav", {name:"meny/i"})).toBeInTheDocument();
+    expect(screen.getByRole("button", {name: /meny/i})).toBeInTheDocument();
+  })
+  it("should show dropdown when clicked", () => {
+    render(<MainNavigation/>)
+
+    userEvent.click(screen.getByRole("button", {name: /meny/i}))
+
+    expect(screen.getByTestId("dropdown-menu")).toBeInTheDocument()
+  
   })
 })

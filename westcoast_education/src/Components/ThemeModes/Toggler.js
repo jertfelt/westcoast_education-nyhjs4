@@ -1,10 +1,9 @@
 import styled from "styled-components"
 
 const Button = styled.button`
-  background: ${({ theme }) => theme.buttonBackground};
-  border: 2px solid ${({ theme }) => theme.toggleBorder};
-  color: ${({ theme }) => theme.buttonText};
-  font-family: Sofia Sans;
+  background:transparent;
+  border:none;
+  color: ${({ theme }) => theme.text};
   border-radius: 30px;
   min-width:40px;
   cursor: pointer;
@@ -25,13 +24,17 @@ const Button = styled.button`
   }
   &:hover,focus{
     background: ${({ theme }) => theme.accent};
-  
+    
 }
 `;
 
+
+
 const Toggle = ({theme, toggleTheme }) => {
+
     return (
-        <Button onClick={toggleTheme} 
+        <Button 
+        onClick={toggleTheme} 
         data-testid="toggleDarkMode"
         aria-pressed="false"
         >
@@ -39,7 +42,8 @@ const Toggle = ({theme, toggleTheme }) => {
             <>
           <span 
           className="button-icon" aria-hidden="true" 
-          data-icon="&#9788;"></span>
+          data-icon="&#9788;">
+          </span>
           <span 
           className="button-text">Mörkt tema</span>
           </>

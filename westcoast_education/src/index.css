@@ -3,6 +3,18 @@
 body{
   font-family: "Sofia Sans"
 }
-body h1{
+h1,h2{
+  font-family: "Arya"
+}
+h3, h4{
+  font-family: "Sofia Sans"
+}
+p{
+  font-family: "Sofia Sans"
+}
+button{
+  font-family: "Sofia Sans"
+}
+a{
   font-family: "Arya"
 }

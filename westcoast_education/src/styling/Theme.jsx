@@ -16,8 +16,7 @@ export const lightTheme = {
   toggleBorder: '#FFF',
   background: '#363537',
   buttonBackground: "#363537",
-  accent: "#1E90FF",
-
+  accent: "#00BFFF",
 }
 
 export const darkTheme = {
@@ -26,7 +25,7 @@ export const darkTheme = {
   toggleBorder: '#6B8096',
   background: '#999',
   buttonBackground: "lightgray",
-  accent: "#00BFFF",
+  accent:  "#1E90FF",
 }
 
 export const Theme = ({ children }) => (

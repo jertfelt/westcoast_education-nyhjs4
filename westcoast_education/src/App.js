@@ -37,14 +37,13 @@ function App() {
     >
       <Header>
         <h1>Westcoast Education</h1>
-        <MainNavigation></MainNavigation>
-
-      <Toggle theme={theme} 
-      toggleTheme={themeToggler} 
-      style={{ backgroundColor: theme.buttonBackground}}/>
+        <MainNavigation theme={theme}/>
+        <Toggle theme={theme} 
+        toggleTheme={themeToggler} 
+        />
       </Header>
       
-      <main className="App-main">
+      <main className="app-main">
 
       </main>
     </div>
