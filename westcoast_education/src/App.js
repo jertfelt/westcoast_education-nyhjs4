@@ -11,11 +11,12 @@ import styled from "styled-components"
 import { Line } from "./Components/styling/Line";
 
 //*---routing
-import {  Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
+import {  Routes, Route, BrowserRouter} from "react-router-dom";
 import { lazy } from "react";
 import HomePage from "./Pages/Startsida/Homepage";
 import Login from "./Pages/Login/Login"
 import AdminSite from "./Pages/AdminSite/AdminSite"
+import Student from "./Pages/StudentSite/Student";
 
 //components
 import Header from "./Components/Header/Header";
@@ -26,13 +27,10 @@ align-items:center;
 justify-content: space-around;
 `
 
-
-
 function App() {
   const [theme, themeToggler, mountedComponent] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   if(!mountedComponent) return <div/>
-
   return (
     <Fragment>
     <Theme>
@@ -41,7 +39,7 @@ function App() {
     <div className="App" data-testid="wholeapp"
     >
       <BrowserRouter>
-      <Header/>
+      <Header theme={themeMode}/>
       <Line/>
       <main>
       <Routes>
@@ -50,6 +48,7 @@ function App() {
         <Route path="/login"
         element={<Login/>}/>
         <Route path="/admin" element={<AdminSite/>}/>
+        <Route path="/student" element={<Student/>}/>
         <Route path="*" element={<NoMatch/>}/>
       </Routes>
       

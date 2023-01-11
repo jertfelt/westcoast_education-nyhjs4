@@ -6,7 +6,6 @@ import { BrowserRouter } from 'react-router-dom';
 import App from '../../../App';
 
 describe("Menu button", () => {
-
   it("should reveal a dropdown menu when pressed", () => {
     render(<MainNavigation/>, {wrapper: BrowserRouter});
     userEvent.click(screen.getByRole("button", {name: /meny/i}));

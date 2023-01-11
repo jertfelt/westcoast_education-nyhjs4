@@ -15,15 +15,13 @@ describe("Routing on website", () => {
     ${'/'}        | ${'homepage'}
     ${'/login'}   | ${'Login'}
     ${'/admin'} | ${'Admin'}
+    ${'/student'} | ${'student'}
   `(
-    'display $componentTestId when path is $path',
+    'display $componentTestId when path = $path',
     ({ path, componentTestId }) => {
-      // Arrange
       window.history.pushState({}, '', path);
       setup();
       const elem = screen.queryByTestId(componentTestId);
-
-      // Assert
       expect(elem).toBeInTheDocument();
     },
   );
@@ -31,10 +29,16 @@ describe("Routing on website", () => {
   path          | componentTestId
   ${'/'}        | ${'Login'}
   ${'/'}        | ${'Admin'}
+  ${'/'}        | ${'student'}
   ${'/login'}   | ${'homepage'}
   ${'/login'}   | ${'Admin'}
+  ${'/login'}   | ${'student'}
   ${'/admin'} | ${'homepage'}
   ${'/admin'} | ${'Login'}
+  ${'/admin'} | ${'student'}
+  ${'/student'} | ${'homepage'}
+  ${'/student'} | ${'Admin'}
+  ${'/student'} | ${'Login'}
 `(
   'does not display $componentTestId when path is $path',
   ({ path, componentTestId }) => {
