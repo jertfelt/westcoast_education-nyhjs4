@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import ReactDOM  from "react-dom";
+import { Link } from "react-router-dom";
+
 
 const DropDMenu = styled.div`
 background: ${({ theme }) => theme.buttonBackground};
@@ -70,15 +72,13 @@ const Overlay = () => {
   return <OverlayDiv/>
 }
 
-const DropDownOverlay = (props) => {
- 
+const DropDownOverlay = (props) => {  
   return(
     <DropDMenu data-testid="dropdown">
     <ul>
-        <li>Start</li>
-        <li>Alla kurser</li>
-        <li>Våra lärare</li>
-        <li>Logga in</li>
+        <li><Link to="/">Start</Link></li>
+        <li><Link to="/kurser">Våra kurser</Link></li>
+        <li><Link to="/kurser">Logga in</Link></li>
     </ul>
       <button onClick={props.onClick}>Stäng</button>
    
@@ -87,6 +87,8 @@ const DropDownOverlay = (props) => {
 }
 
 const DropDownMenu = (props) => {
+
+
   return (
     <div>
     {ReactDOM.createPortal(

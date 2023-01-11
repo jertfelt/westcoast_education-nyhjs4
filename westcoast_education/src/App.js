@@ -9,12 +9,17 @@ import { ThemeProvider } from "styled-components";
 import Toggle from "./Components/ThemeModes/Toggler";
 import styled from "styled-components"
 
-
-
-
 //*---routing
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {  Routes, Route, BrowserRouter } from "react-router-dom";
 import MainNavigation from "./Components/Navigation/MainNavigation/MainNavigation";
+import { lazy } from "react";
+import HomePage from "./Pages/Startsida/Homepage";
+import Login from "./Pages/Login/Login"
+import AllaKurser from "./Pages/AllaKurser/AllaKurser"
+import AdminSite from "./Pages/AdminSite/AdminSite"
+
+const NoMatch = lazy(() => import('./Pages/NoMatch'));
+
 
 //*--header
 const Header = styled.header`
@@ -35,6 +40,7 @@ function App() {
     <GlobalStyle/>  
     <div className="App" data-testid="wholeapp"
     >
+      <BrowserRouter>
       <Header>
         <h1>Westcoast Education</h1>
         <MainNavigation theme={theme}/>
@@ -44,8 +50,17 @@ function App() {
       </Header>
       
       <main className="app-main">
-
+      <Routes>
+        <Route path="/" 
+        element={<HomePage/>}/>
+        <Route path="/login"
+        element={<Login/>}/>
+        <Route path="/admin" element={<AdminSite/>}/>
+        <Route path="/kurser" element={<AllaKurser/>}/>
+        <Route path="*" element={<NoMatch/>}/>
+      </Routes>
       </main>
+      </BrowserRouter>
     </div>
     </ThemeProvider>
     </Theme>

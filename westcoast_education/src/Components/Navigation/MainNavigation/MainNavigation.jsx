@@ -24,7 +24,8 @@ const MainNavigation = ({theme}) => {
 
   const showMenu = (e) => {
     e.preventDefault();
-    if(dropdownShown !== true){setDropdown(true)}
+    if(dropdownShown !== true){setDropdown(true)
+    }
     else{
       setDropdown(false)
     }

@@ -42,7 +42,7 @@ const Toggle = ({theme, toggleTheme }) => {
             <>
           <span 
           className="button-icon" aria-hidden="true" 
-          data-icon="&#9788;">
+          data-icon="&#x263E;">
           </span>
           <span 
           className="button-text">Mörkt tema</span>
@@ -51,7 +51,7 @@ const Toggle = ({theme, toggleTheme }) => {
             <>
             <span 
             className="button-icon" aria-hidden="true" 
-            data-icon="&#x263E;"></span>
+            data-icon=" &#9788;"></span>
             <span 
             className="button-text">Ljust tema</span>
             </>
