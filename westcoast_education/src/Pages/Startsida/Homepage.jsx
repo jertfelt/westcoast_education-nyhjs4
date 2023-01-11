@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import { Line } from "../../Components/styling/Line";
+import AllaKurser from "../../Components/AllaKurser/AllaKurser";
 
 const Intro = styled.div`
 min-height:50vh;
@@ -82,6 +83,7 @@ const HomePage = () => {
   <About 
   id="kurser" data-testid="kurserSection">
   <h2>Våra kurser:</h2>
+  <AllaKurser/>
   </About>
   
   </section> );

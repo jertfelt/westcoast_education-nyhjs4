@@ -19,21 +19,21 @@
   "courseName": "English A",
   "lengthWeeks": 3,
   "courseDescription": "English for beginners",
-  "startDate": "2023-04-23"},
+  "startDate": "2023-23-4"},
   {"courseID": 12,
   "courseName": "English B",
   "lengthWeeks": 6,
-  "courseDescription": "English for intermediate",
-  "startDate": "2023-04-24"},
+  "courseDescription": "English for intermediate. English A is required for this course.",
+  "startDate": "2023-4-4"},
   {"courseID": 5,
   "courseName": "Mathematics A",
   "lengthWeeks": 6,
   "courseDescription": "Mathematics for beginners",
-  "startDate": "2023-01-20"},
+  "startDate": "2023-20-1"},
   {"courseID": 51,
   "courseName": "Mathematics B",
   "lengthWeeks": 6,
-  "courseDescription": "Mathematics for intermediate",
-  "startDate": "2023-01-20"}
+  "courseDescription": "Mathematics for intermediate. Mathematics A is required for this course.",
+  "startDate": "2023-20-3"}
 ]
 }

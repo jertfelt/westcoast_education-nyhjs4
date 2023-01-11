@@ -25,6 +25,7 @@ export const darkTheme = {
   text: '#FAFAFA',
   toggleBorder: '#6B8096',
   background: 'midnightblue',
+  buttonText: "black",
   buttonBackground: "lightgray",
   accent:  "#1E90FF",
   highlight: "lightblue",
