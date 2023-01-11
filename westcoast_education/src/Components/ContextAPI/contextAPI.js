@@ -35,18 +35,18 @@ export const APITeachersContextProvider = ({children}) => {
   )
 }
 
-export const useTeacher = () => {
-  const context = useContext(TeachersContext)
-  if(context === undefined){
-    throw new Error("Context must be used within a Provider");
-  }
-  return context;
-}
+// export const useTeacher = () => {
+//   const context = useContext(TeachersContext)
+//   if(context === undefined){
+//     throw new Error("Context must be used within a Provider");
+//   }
+//   return context;
+// }
 
-export const useCourses = () => {
-  const context = useContext(CoursesContext)
-  if(context === undefined){
-    throw new Error("Context must be used within a Provider");
-  }
-  return context;
-}
+// export const useCourses = () => {
+//   const context = useContext(CoursesContext)
+//   if(context === undefined){
+//     throw new Error("Context must be used within a Provider");
+//   }
+//   return context;
+// }

@@ -1,6 +1,6 @@
 
 import styled from "styled-components";
-import { useCourses } from "../ContextAPI/contextAPI";
+
 
 const ListWithCourses = styled.div`
 display:grid;
@@ -36,22 +36,21 @@ p:last-of-type{
 
 const AllaKurser = () => {
  
-const {courses} = useCourses()
-console.log(courses)
+
   return ( 
   <Info data-testid="allCourses">
     <h2>2023</h2>
     <p>Här följer kurser vi erbjuder under 2023. Denna lista kan komma att uppdateras under början på året.</p>
     
       <ListWithCourses>
-        {courses.map(c => (
+        {/* {courses.map(c => (
           <li key={c.courseID}>
             <h3>{c.courseName}</h3>
             <p>{c.courseDescription}</p>
             <Date>Startdatum: {c.startDate.substring(5).replace("-", "/")} </Date>
           <p>Anmäl dig till kursen</p>
           </li>
-        ))}
+        ))} */}
       </ListWithCourses>
       <p>När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med
       betalningsuppgifter och ett välkomstmeddelande. 

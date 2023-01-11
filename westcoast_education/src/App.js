@@ -1,4 +1,4 @@
-import { Fragment } from "react";
+import { Fragment, useState } from "react";
 
 //*----styling & darkmode/lightmode:
 import Theme from "./styling/Theme";
@@ -13,8 +13,7 @@ import styled from "styled-components"
 import {BrowserRouter} from "react-router-dom";
 import Routing from "./Routes";
 
-//*---context
-
+import AppContext from "./Components/context/AppContext";
 
 //---other components
 import Header from "./Components/Header/Header";
@@ -26,16 +25,21 @@ justify-content: space-around;
 `
 
 function App() {
+  const [authenticated, setAuthenticated] = useState(false)
+
   const [theme, themeToggler, mountedComponent] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   if(!mountedComponent) return <div/>
+  
   return (
     <Fragment>
     <Theme>
     <ThemeProvider theme={themeMode}>
     <GlobalStyle/>
     <div className="App">
+      
       <BrowserRouter>
+      <AppContext.Provider value={{authenticated, setAuthenticated}}>
       <Header/>
       <Line/>
       <main>
@@ -48,6 +52,7 @@ function App() {
         />  
         <p>En hemsida programmerad av Tova Jertfelt</p>
       </Footer>
+      </AppContext.Provider>
       </BrowserRouter>
     </div>
     </ThemeProvider>
