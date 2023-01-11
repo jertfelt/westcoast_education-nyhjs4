@@ -16,11 +16,13 @@ import { lazy } from "react";
 import HomePage from "./Pages/Startsida/Homepage";
 import Login from "./Pages/Login/Login"
 import AdminSite from "./Pages/AdminSite/AdminSite"
-import Student from "./Pages/StudentSite/Student";
+import Registrering from "./Pages/RegisterStudent/Registrering";
 
 //components
 import Header from "./Components/Header/Header";
-const NoMatch = lazy(() => import('./Pages/NoMatch'));
+import Routing from "./Routes";
+const NoMatch = lazy(() => import('./Pages/NoMatch/NoMatch'));
+
 const Footer = styled.footer`
 display:flex;
 align-items:center;
@@ -42,16 +44,7 @@ function App() {
       <Header theme={themeMode}/>
       <Line/>
       <main>
-      <Routes>
-        <Route path="/" 
-        element={<HomePage/>}/>
-        <Route path="/login"
-        element={<Login/>}/>
-        <Route path="/admin" element={<AdminSite/>}/>
-        <Route path="/student" element={<Student/>}/>
-        <Route path="*" element={<NoMatch/>}/>
-      </Routes>
-      
+        <Routing/>
       </main>
       <Line/>
       <Footer data-testid="footer">

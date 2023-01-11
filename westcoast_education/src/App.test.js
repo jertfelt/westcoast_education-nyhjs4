@@ -2,6 +2,7 @@ import { render, screen, fireEvent} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
+
 describe("Routing on website", () => {
   const setup = () => render(<App />);
 
@@ -10,12 +11,20 @@ describe("Routing on website", () => {
     expect(screen.getByText(/Välkommen till ditt studieliv!/i)).toBeInTheDocument()
   })
 
+  
+  it("landing on a bad page", () => {
+    const badRoute = '/some/bad/route'
+    window.history.pushState({}, '', badRoute);
+    setup();
+    expect(screen.getByText(/oops!/i)).toBeInTheDocument()
+  })
+
   test.each`
     path          | componentTestId
     ${'/'}        | ${'homepage'}
     ${'/login'}   | ${'Login'}
     ${'/admin'} | ${'Admin'}
-    ${'/student'} | ${'student'}
+    ${'/register'} | ${'Registrering'}
   `(
     'display $componentTestId when path = $path',
     ({ path, componentTestId }) => {
@@ -25,29 +34,27 @@ describe("Routing on website", () => {
       expect(elem).toBeInTheDocument();
     },
   );
+  
   test.each`
   path          | componentTestId
   ${'/'}        | ${'Login'}
   ${'/'}        | ${'Admin'}
-  ${'/'}        | ${'student'}
+  ${'/'}        | ${'Registrering'}
   ${'/login'}   | ${'homepage'}
   ${'/login'}   | ${'Admin'}
-  ${'/login'}   | ${'student'}
+  ${'/login'}   | ${'Registrering'}
   ${'/admin'} | ${'homepage'}
   ${'/admin'} | ${'Login'}
-  ${'/admin'} | ${'student'}
-  ${'/student'} | ${'homepage'}
-  ${'/student'} | ${'Admin'}
-  ${'/student'} | ${'Login'}
+  ${'/admin'} | ${'Registrering'}
+  ${'/register'} | ${'homepage'}
+  ${'/register'} | ${'Admin'}
+  ${'/register'} | ${'Login'}
 `(
   'does not display $componentTestId when path is $path',
   ({ path, componentTestId }) => {
-    // Arrange
     window.history.pushState({}, '', path);
     setup();
     const elem = screen.queryByTestId(componentTestId);
-
-    // Assert
     expect(elem).not.toBeInTheDocument();
   },
 );

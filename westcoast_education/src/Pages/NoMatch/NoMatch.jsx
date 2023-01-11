@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 const ErrorPage = styled.section`
+padding:4rem;
 h1{
    color: ${({ theme }) => theme.accent};
    font-size:3rem;
@@ -27,8 +28,7 @@ button{
 const NoMatch = () => {
   const navigate = useNavigate();
   return (    
-  <ErrorPage>
-
+  <ErrorPage data-testid="NoMatch">
      <h1>Oops!</h1>
      <p>Något blev fel. Kontakta webb-administratören om problemet kvarstår, eller prova att gå tillbaka till föregående sida.</p>
 

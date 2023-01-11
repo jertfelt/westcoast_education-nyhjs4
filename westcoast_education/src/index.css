@@ -10,7 +10,9 @@ h3, h4{
   font-family: "Sofia Sans"
 }
 p{
-  font-family: "Sofia Sans"
+  font-family: "Sofia Sans";
+  font-size:1.2rem;
+  
 }
 button{
   font-family: "Sofia Sans"

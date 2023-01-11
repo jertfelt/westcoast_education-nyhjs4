@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { useState } from "react";
+import { useEffect, useState, useRef, } from "react";
 import { Link } from "react-router-dom";
 
 const MenuButton = styled.button`
@@ -17,25 +17,23 @@ font-size:1rem;
 cursor: pointer;
 border-radius: 30px;
 `
-
-
 const DropDMenu = styled.nav`
-background: ${({ theme }) => theme.buttonBackground};
-color: ${({ theme }) => theme.body};
-font-size:1rem;
-position: absolute;
-top: 10vh;
-left:30%;
-min-width:200px;
-max-width:400px;
-z-index: 100;
-overflow: hidden;
-padding: 12px 16px;
-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-@media (min-width: 768px) {
-    left: calc(50% - 20rem);
-    width: 50rem;
-}
+  background: ${({ theme }) => theme.buttonBackground};
+  color: ${({ theme }) => theme.body};
+  font-size:1rem;
+  position: absolute;
+  top: 10vh;
+  left:30%;
+  min-width:200px;
+  max-width:400px;
+  z-index: 100;
+  overflow: hidden;
+  padding: 12px 16px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  @media (min-width: 768px) {
+      left: calc(50% - 20rem);
+      width: 50rem;
+  }
 
 button{
   background: transparent;
@@ -73,28 +71,46 @@ a{
     color: ${({ theme }) => theme.accent};
   }
 }
-
 `
 
-const MainNavigation = ({theme}) => {
+const MainNavigation = () => {
+  const ref = useRef()
   const [dropdownShown, setDropdown] = useState(false)
-
-  const showMenu = (e) => {
-    e.preventDefault();
-    if(dropdownShown !== true){setDropdown(true)
+  
+  useEffect(() => {
+    const checkIfClickedOutside = e => {
+      if (dropdownShown && ref.current && !ref.current.contains(e.target)) {
+        setDropdown(false)
+      }
     }
-    else{
-      setDropdown(false)
-    }
-  }
 
+    const handleEsc = (event) => {
+      if (event.keyCode === 27) {
+        if (dropdownShown && ref.current){
+          setDropdown(false)
+        }
+     }
+   };
+
+    document.addEventListener("mousedown", checkIfClickedOutside)
+    document.addEventListener("keydown", handleEsc)
+
+    return() => {
+      document.removeEventListener("mousedown", checkIfClickedOutside)
+      document.removeEventListener("keydown", handleEsc)
+    }
+
+    
+    
+  },[dropdownShown])
 
   return ( 
-  <div>
+  <div ref={ref}>
     <MenuButton
-    onClick={showMenu}
-    >Meny</MenuButton>
-    {dropdownShown && (<DropDMenu data-testid="dropdown">
+    onClick={() => setDropdown(prev => !prev)}>
+      Meny</MenuButton>
+    {dropdownShown && (
+    <DropDMenu data-testid="dropdown">
       <ul>
       <li><Link to="/">Start</Link></li>
       <li><Link to="/login">Logga in</Link></li>

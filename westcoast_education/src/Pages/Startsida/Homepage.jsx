@@ -36,9 +36,7 @@ gap:0.3rem;}
 
 const Column = styled.div`
 max-width:50%;
-p{
-  line-height:1.3rem;
-}
+
 @media screen and (max-width: 700px) {
   max-width:80%;}
 `

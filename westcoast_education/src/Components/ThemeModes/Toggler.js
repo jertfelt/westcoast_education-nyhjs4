@@ -28,10 +28,7 @@ const Button = styled.button`
 }
 `;
 
-
-
 const Toggle = ({theme, toggleTheme }) => {
-
     return (
         <Button 
         onClick={toggleTheme} 
