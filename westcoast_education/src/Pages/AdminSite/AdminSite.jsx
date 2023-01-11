@@ -1,5 +1,5 @@
 const AdminSite = () => {
-  return (<section>
+  return (<section data-testid="Admin">
     
   </section>  );
 }

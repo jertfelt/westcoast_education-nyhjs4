@@ -8,25 +8,25 @@ import { lightTheme, darkTheme } from "./styling/Theme";
 import { ThemeProvider } from "styled-components";
 import Toggle from "./Components/ThemeModes/Toggler";
 import styled from "styled-components"
+import { Line } from "./Components/styling/Line";
 
 //*---routing
-import {  Routes, Route, BrowserRouter } from "react-router-dom";
-import MainNavigation from "./Components/Navigation/MainNavigation/MainNavigation";
+import {  Routes, Route, BrowserRouter, useLocation } from "react-router-dom";
 import { lazy } from "react";
 import HomePage from "./Pages/Startsida/Homepage";
 import Login from "./Pages/Login/Login"
-import AllaKurser from "./Pages/AllaKurser/AllaKurser"
 import AdminSite from "./Pages/AdminSite/AdminSite"
 
+//components
+import Header from "./Components/Header/Header";
 const NoMatch = lazy(() => import('./Pages/NoMatch'));
-
-
-//*--header
-const Header = styled.header`
+const Footer = styled.footer`
 display:flex;
 align-items:center;
 justify-content: space-around;
 `
+
+
 
 function App() {
   const [theme, themeToggler, mountedComponent] = useDarkMode();
@@ -41,25 +41,26 @@ function App() {
     <div className="App" data-testid="wholeapp"
     >
       <BrowserRouter>
-      <Header>
-        <h1>Westcoast Education</h1>
-        <MainNavigation theme={theme}/>
-        <Toggle theme={theme} 
-        toggleTheme={themeToggler} 
-        />
-      </Header>
-      
-      <main className="app-main">
+      <Header/>
+      <Line/>
+      <main>
       <Routes>
         <Route path="/" 
         element={<HomePage/>}/>
         <Route path="/login"
         element={<Login/>}/>
         <Route path="/admin" element={<AdminSite/>}/>
-        <Route path="/kurser" element={<AllaKurser/>}/>
         <Route path="*" element={<NoMatch/>}/>
       </Routes>
+      
       </main>
+      <Line/>
+      <Footer data-testid="footer">
+        <Toggle theme={theme} 
+        toggleTheme={themeToggler} 
+        />  
+        <p>En hemsida programmerad av Tova Jertfelt</p>
+      </Footer>
       </BrowserRouter>
     </div>
     </ThemeProvider>

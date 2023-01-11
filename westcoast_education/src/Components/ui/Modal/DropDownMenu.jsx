@@ -3,7 +3,7 @@ import ReactDOM  from "react-dom";
 import { Link } from "react-router-dom";
 
 
-const DropDMenu = styled.div`
+const DropDMenu = styled.nav`
 background: ${({ theme }) => theme.buttonBackground};
 color: ${({ theme }) => theme.body};
 font-size:1rem;
@@ -36,24 +36,28 @@ ul{
   list-style:none;
   display:flex; 
   flex-direction:column;
-  gap:6px;
+  gap:8px;
   align-items:flex-start;
 }
 li{
-  a{
-    font-family: Sofia Sans;
+  &:hover{
+    font-weight:bolder;
   }
-  &:active{
-    color: pink;
-  }
+}
+a{
+  color:${({ theme }) => theme.buttonText};
+  font-family: Sofia Sans;
   &:hover{
     color: ${({ theme }) => theme.accent};
-    font-weight:bolder;
   }
   &:focus{
     color: ${({ theme }) => theme.accent};
   }
+  &:active{
+    color: ${({ theme }) => theme.accent};
+  }
 }
+
 `
 
 const OverlayDiv = styled.div`
@@ -66,8 +70,6 @@ z-index: 10;
 background: rgba(0, 0, 0, 0.4);
 `
 
-
-
 const Overlay = () => {
   return <OverlayDiv/>
 }
@@ -77,18 +79,15 @@ const DropDownOverlay = (props) => {
     <DropDMenu data-testid="dropdown">
     <ul>
         <li><Link to="/">Start</Link></li>
-        <li><Link to="/kurser">Våra kurser</Link></li>
-        <li><Link to="/kurser">Logga in</Link></li>
+        <li><a href="#kurser">Våra kurser</a></li>
+        <li><Link to="/login">Logga in</Link></li>
     </ul>
       <button onClick={props.onClick}>Stäng</button>
-   
   </DropDMenu>
   )
 }
 
 const DropDownMenu = (props) => {
-
-
   return (
     <div>
     {ReactDOM.createPortal(
@@ -105,5 +104,5 @@ const DropDownMenu = (props) => {
     </div>
    );
 }
- 
+
 export default DropDownMenu;

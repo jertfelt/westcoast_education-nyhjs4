@@ -1,20 +1,73 @@
-import { render, screen, fireEvent, } from '@testing-library/react';
+import { render, screen, fireEvent} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
+describe("Routing on website", () => {
+  const setup = () => render(<App />);
+
+  it("navigates and renders correctly", async () => {
+    setup()
+    expect(screen.getByText(/Välkommen till ditt studieliv!/i)).toBeInTheDocument()
+  })
+
+  test.each`
+    path          | componentTestId
+    ${'/'}        | ${'homepage'}
+    ${'/login'}   | ${'Login'}
+    ${'/admin'} | ${'Admin'}
+  `(
+    'display $componentTestId when path is $path',
+    ({ path, componentTestId }) => {
+      // Arrange
+      window.history.pushState({}, '', path);
+      setup();
+      const elem = screen.queryByTestId(componentTestId);
+
+      // Assert
+      expect(elem).toBeInTheDocument();
+    },
+  );
+  test.each`
+  path          | componentTestId
+  ${'/'}        | ${'Login'}
+  ${'/'}        | ${'Admin'}
+  ${'/login'}   | ${'homepage'}
+  ${'/login'}   | ${'Admin'}
+  ${'/admin'} | ${'homepage'}
+  ${'/admin'} | ${'Login'}
+`(
+  'does not display $componentTestId when path is $path',
+  ({ path, componentTestId }) => {
+    // Arrange
+    window.history.pushState({}, '', path);
+    setup();
+    const elem = screen.queryByTestId(componentTestId);
+
+    // Assert
+    expect(elem).not.toBeInTheDocument();
+  },
+);
+
+})
 
 
-describe("Homepage component", () => {
+
+describe("The website", () => {
   it("should have a header", () => {
     render(<App/>);
-    expect(screen.getByText(/Westcoast Education/i)).toBeInTheDocument();
+    expect(screen.getByRole("heading", {name:/Westcoast Education/i})).toBeInTheDocument();
   })
-  
-  describe("Header component", () => {
-    it("should have a darkmode button", () => {
-      render(<App/>);
-      expect(screen.getByRole("button", {name: "Mörkt tema"})).toBeInTheDocument();
-    })
+
+  it("should have a footer", () => {
+    render(<App/>)
+    expect(screen.getByTestId("footer")).toBeInTheDocument()
+  })
+    
+    describe("Footer component", () => {
+      it("should have a darkmode button", () => {
+        render(<App/>);
+        expect(screen.getByRole("button", {name: "Mörkt tema"})).toBeInTheDocument();
+      })
     
     describe("Darkmode button", () => {
       it("should change text when clicked", () =>{
@@ -23,7 +76,8 @@ describe("Homepage component", () => {
         userEvent.click(buttonToggle);
         expect(buttonToggle).toHaveTextContent(/ljust/i)
       })
-      it("should change back to mörkt when doubleclicked", () => {
+
+      it("should change back to initial text when doubleclicked", () => {
         render(<App/>)
         const buttonToggle = screen.getByText(/mörkt/i); 
         userEvent.dblClick(buttonToggle);

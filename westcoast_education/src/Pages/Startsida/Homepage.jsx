@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import { Line } from "../../Components/styling/Line";
 
 const Intro = styled.div`
 min-height:50vh;
@@ -42,8 +42,6 @@ p{
   max-width:80%;}
 `
 
-const Line = styled.hr`
-color: ${({ theme }) => theme.accent};`
 
 const About = styled.div`
 padding:2rem;
@@ -53,27 +51,9 @@ padding:2rem;
 
 const HomePage = () => {
 
-  const words = [
-    {text: "svenska",
-    value: 64,}
-    ,
-    {text: "mattematik",
-    value: 54,},
-    {text: "engelska",
-    value: 84,},
-    {text: "teknik",
-    value: 24,},
-    {text: "musik",
-    value: 34,},
-    {text: "naturvetenskap",
-    value: 54,},
-    {text: "franska",
-    value: 74,}
-    ]
-
   return ( 
   <section data-testid="homepage">
-   <Intro>
+  <Intro>
     <h1>Välkommen till ditt studieliv!</h1>
     <img src="https://habitatbroward.org/wp-content/uploads/2020/01/10-Benefits-Showing-Why-Education-Is-Important-to-Our-Society.jpg"
     alt="Education @ Westcoast"
@@ -82,27 +62,25 @@ const HomePage = () => {
       <Column>
       <h3>Vi har varit i utbildningsbranschen i snart 40 år.</h3>
       <p>
-      <strong>WestCoast Education </strong> är ett utbildningsföretag som har sin placering på västkusten strax norr
-om Göteborg. 
- Vårt affärsmål är och har varit
-att tillhandahålla tekniska utbildningar inom IT-området.
-Vi har varit väldigt framgångsrika i alla år. 
+      <strong>WestCoast Education </strong> är ett utbildningsföretag som har sin placering på västkusten strax norr om Göteborg. 
+      Vårt affärsmål är och har varit att tillhandahålla tekniska utbildningar inom IT-området.
+      Vi har varit väldigt framgångsrika i alla år. 
         </p>
       </Column>
       <Column>
       <p>
-      
       Vi har specialiserat oss på framförallt
-systemutvecklingsutbildningar inom webb och mobila lösningar.
-Vårt koncept har och är fortfarande att tillhandahålla klassrums utbildningar där elever och
-lärare möts. Vi erbjuder även distansutbildning där elever kan närvara via länk till klassrum
-där en lärare genomför lektionen.
+      systemutvecklingsutbildningar inom webb och mobila lösningar.
+      Vårt koncept har och är fortfarande att tillhandahålla klassrums utbildningar där elever och
+      lärare möts. Vi erbjuder även distansutbildning där elever kan närvara via länk till klassrum
+      där en lärare genomför lektionen.
         </p>
       </Column>
     </TwoColumns>
    </Intro>
   <Line/>
-  <About>
+  <About 
+  id="kurser" data-testid="kurserSection">
   <h2>Våra kurser:</h2>
   </About>
   
