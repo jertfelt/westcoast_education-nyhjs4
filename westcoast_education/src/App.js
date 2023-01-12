@@ -1,4 +1,4 @@
-import { Fragment, useState } from "react";
+import {useContext, Fragment, useState } from "react";
 
 //*----styling & darkmode/lightmode:
 import Theme from "./styling/Theme";
@@ -10,10 +10,11 @@ import Toggle from "./Components/ThemeModes/Toggler";
 import styled from "styled-components"
 
 //*---routing
-import {BrowserRouter} from "react-router-dom";
+import {BrowserRouter, Link} from "react-router-dom";
 import Routing from "./Routes";
 
-import AppContext from "./Components/context/AppContext";
+//*context
+import AuthContext from "./Components/store/auth-context";
 
 //---other components
 import Header from "./Components/Header/Header";
@@ -22,11 +23,31 @@ const Footer = styled.footer`
 display:flex;
 align-items:center;
 justify-content: space-around;
+li{
+  list-style:none;
+  cursor:pointer;
+}
+font-family: Sofia Sans;
+font-size:1rem;
+`
+const Button = styled.button`
+padding:8px;
+border-radius: 30px;
+border:none;
+background: transparent;
+color:${({ theme }) => theme.text};
+font-size:1rem;
+&:hover,&:focus{
+  color: ${({ theme }) => theme.buttonText};
+  background: ${({ theme }) => theme.accent};
+}
 `
 
 function App() {
-  const [authenticated, setAuthenticated] = useState(false)
+  const context = useContext(AuthContext)
+  const [authenticated, setAuthenticated] = useState(context.isLoggedIn)
 
+  //*theme:
   const [theme, themeToggler, mountedComponent] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   if(!mountedComponent) return <div/>
@@ -37,9 +58,8 @@ function App() {
     <ThemeProvider theme={themeMode}>
     <GlobalStyle/>
     <div className="App">
-      
       <BrowserRouter>
-      <AppContext.Provider value={{authenticated, setAuthenticated}}>
+      <AuthContext.Provider value={{authenticated, setAuthenticated}}>
       <Header/>
       <Line/>
       <main>
@@ -50,9 +70,13 @@ function App() {
         <Toggle theme={theme} 
         toggleTheme={themeToggler} 
         />  
-        <p>En hemsida programmerad av Tova Jertfelt</p>
+        {authenticated && <>
+      <li><Link to="/admin">Admin</Link></li>
+      <li><Button onClick={context.onLogout}>Logga ut</Button></li>
+      </>
+      }
       </Footer>
-      </AppContext.Provider>
+      </AuthContext.Provider>
       </BrowserRouter>
     </div>
     </ThemeProvider>

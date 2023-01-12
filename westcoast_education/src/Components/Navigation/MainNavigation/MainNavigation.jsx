@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState, useRef, useContext, } from "react";
 import { Link } from "react-router-dom";
-import AppContext from "../../context/AppContext";
+
 import AuthContext from "../../store/auth-context";
 
 const MenuButton = styled.button`
@@ -77,6 +77,7 @@ a{
 
 const MainNavigation = () => {
   const ref = useRef()
+  const context = useContext(AuthContext)
   const [dropdownShown, setDropdown] = useState(false)
   
   useEffect(() => {
@@ -103,9 +104,7 @@ const MainNavigation = () => {
     }
   },[dropdownShown])
 
-  const context = useContext(AuthContext)
-  const {authenticated, setAuthenticated} = context
-
+  
 
   return ( 
   <div ref={ref}>
@@ -116,8 +115,12 @@ const MainNavigation = () => {
     <DropDMenu data-testid="dropdown">
       <ul>
       <li><Link to="/">Start</Link></li>
-      {!authenticated && <li><Link to="/login">Logga in</Link></li>}
-      {authenticated && <li><Link to="/admin">Logga in</Link></li> }
+      {!context.isLoggedIn && <li><Link to="/login">Logga in</Link></li>}
+      {context.isLoggedIn && <>
+      <li><Link to="/admin">Admin</Link></li>
+      <li><button onClick={context.onLogout}>Logga ut</button></li>
+      </>
+      }
       </ul>
       <button onClick={() => setDropdown(false)}>Stäng</button>
     </DropDMenu>)}

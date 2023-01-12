@@ -1,5 +1,8 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import styled from "styled-components";
+import AuthContext from "../../Components/store/auth-context";
+import { useNavigate } from "react-router-dom";
+
 
 const Section = styled.section`
 min-height:90vh;
@@ -15,7 +18,6 @@ p{ max-width:60%;
   }
 }
 `
-
 const Form = styled.form`
 padding:2rem;
 margin-top:-2rem;
@@ -24,7 +26,6 @@ flex-direction: column;
 gap:20px;
 font-size:1.4rem;
 `
-
 const LabelInput = styled.div`
 display:flex;
 align-items:center;
@@ -62,13 +63,29 @@ font-size:1.4rem;
 `
 
 const Login = () => {
+  const navigate = useNavigate();
+  const context = useContext(AuthContext)
+  
   const [buttDisabled, setButtDisabled] = useState(true);
-  const [username, setUsername] = useState('');
+  const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const user = [{userName: "Admin", password:"pass123"}]
+  
+  const LoginFunction = (e) => {
+    e.preventDefault()
+    const account = user.find(user => user.userName === userName)
+    if(account && account.password === password){
+      context.onLogin({
+        userName,
+        password
+      })
+      navigate("/admin")
+    }
+  }
 
   const passwordHandler = (e) => {
     setPassword(e.target.value)
-    if(username.length >0 && e.target.value.length > 0 ){
+    if(userName.length >0 && e.target.value.length > 0 ){
       setButtDisabled(false)
     }else{
       setButtDisabled(true)
@@ -83,22 +100,19 @@ const Login = () => {
       setButtDisabled(true);
     }
   }
-
- 
-
   return ( 
   <Section data-testid="Login">
     <Intro>
     <h1>Välkommen</h1>
     <p>Här krävs det inloggning! För att få ett konto, kontakta din lärare eller administratören på westcoast-admin@email.com</p>
     </Intro>
-    <Form> 
+    <Form onSubmit={LoginFunction}> 
       <LabelInput>
       <label htmlFor="username">Användarnamn:</label>
       <input 
       id="username"
       placeholder="Användarnamn"
-      value={username}
+      value={userName}
       onChange={userNameHandler}/>
       </LabelInput>
       <LabelInput>
@@ -110,12 +124,12 @@ const Login = () => {
       </LabelInput>
       <Button
       value="Logga In"
-      type="button"
+      type="submit"
       disabled={buttDisabled}
       >
       </Button>
     </Form>
   </Section> );
 }
- 
+
 export default Login;

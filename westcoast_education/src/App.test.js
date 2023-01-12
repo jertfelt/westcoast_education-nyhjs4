@@ -44,7 +44,6 @@ describe("Routing on website", () => {
   ${'/login'}   | ${'Admin'}
   ${'/login'}   | ${'Registrering'}
   ${'/admin'} | ${'homepage'}
-  ${'/admin'} | ${'Login'}
   ${'/admin'} | ${'Registrering'}
   ${'/register'} | ${'homepage'}
   ${'/register'} | ${'Admin'}

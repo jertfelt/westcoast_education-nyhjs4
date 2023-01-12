@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Login from './Login';
+import { BrowserRouter } from 'react-router-dom';
 
 describe("Login page", () => {
-  const setup = () => render(<Login/>)
+  const setup = () => render(<Login/>, {wrapper: BrowserRouter})
 
   it("should have an username input", () => {
     setup()
@@ -21,7 +22,7 @@ describe("Login page", () => {
 })
 
 describe("Interactions", () => {
-  const setup = () => render(<Login/>)
+  const setup = () => render(<Login/>, {wrapper: BrowserRouter})
  
   describe("login btn", () => {
     it("should be disabled initially", () => {
@@ -37,8 +38,8 @@ describe("Interactions", () => {
       expect(screen.getByRole('button', {name: "Logga In"})).toBeEnabled()
     })
   })
+
   describe("Modal", () => {
-   
     xit("should show a message if there is something faulty with the username/password",() => {
       setup()
       const username = screen.getByPlaceholderText("Användarnamn");

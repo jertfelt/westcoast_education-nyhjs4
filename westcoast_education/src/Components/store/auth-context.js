@@ -12,27 +12,26 @@ export const AuthContextProvider = (props) => {
   const [loggedIn, setLoggedIn] = useState(false);
   
   useEffect(() => {
-    const userloggedIn = localStorage.getItem('loggedIn');
-
-    if (userloggedIn === '1') {
+    const userloggedIn = localStorage.getItem("loggedIn");
+    if (userloggedIn === 10) {
       setLoggedIn(true);
-      setUserName(localStorage.getItem('userName'));
+      setUserName(localStorage.getItem("userName"));
     }
   }, []);
 
-  
+  const onLogout = () => {
+    setLoggedIn(false);
+    localStorage.removeItem("loggedIn");
+    localStorage.removeItem("userName");
+  };
   const onLogin = (user) => {
     setLoggedIn(true);
     setUserName(user.userName);
-    localStorage.setItem('loggedIn', 1);
-    localStorage.setItem('userName', user.userName);
+    localStorage.setItem("loggedIn", 10);
+    localStorage.setItem("userName", user.userName);
   };
 
-  const onLogout = () => {
-    setLoggedIn(false);
-    localStorage.removeItem('loggedIn');
-    localStorage.removeItem('userName');
-  };
+  
 
   return (
     <AuthContext.Provider
