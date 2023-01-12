@@ -1,5 +1,6 @@
 import styled from "styled-components";
-import MainNavigation from "../Navigation/MainNavigation/MainNavigation";
+
+import  Navbar  from "../Navigation/Navbar";
 
 
 const Headerdiv = styled.header`
@@ -23,18 +24,10 @@ nav{
 
 
 const Header = ({theme}) => {
-
-  
-  
-
   return (
   <Headerdiv>
-  
-    
     <h1>Westcoast Education</h1>
-    
-  
-    <MainNavigation/>
+    <Navbar/>
   </Headerdiv>  );
 }
  

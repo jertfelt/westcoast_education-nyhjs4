@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Login from './Login';
-import { BrowserRouter } from 'react-router-dom';
+import { MemoryRouter } from 'react-router-dom';
 
 describe("Login page", () => {
-  const setup = () => render(<Login/>, {wrapper: BrowserRouter})
+  const setup = () => render(<Login/>, {wrapper: MemoryRouter})
 
   it("should have an username input", () => {
     setup()
@@ -22,7 +22,7 @@ describe("Login page", () => {
 })
 
 describe("Interactions", () => {
-  const setup = () => render(<Login/>, {wrapper: BrowserRouter})
+  const setup = () => render(<Login/>, {wrapper: MemoryRouter})
  
   describe("login btn", () => {
     it("should be disabled initially", () => {

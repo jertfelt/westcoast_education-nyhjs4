@@ -1,8 +1,7 @@
 import styled from "styled-components";
 import { useEffect, useState, useRef, useContext, } from "react";
 import { Link } from "react-router-dom";
-
-import AuthContext from "../../store/auth-context";
+import AuthContext from "../../Context/Auth.Context";
 
 const MenuButton = styled.button`
 background: transparent;
@@ -75,7 +74,7 @@ a{
 }
 `
 
-const MainNavigation = () => {
+ const Navbar = () => {
   const ref = useRef()
   const context = useContext(AuthContext)
   const [dropdownShown, setDropdown] = useState(false)
@@ -120,12 +119,11 @@ const MainNavigation = () => {
       <li><Link to="/admin">Admin</Link></li>
       <li><button onClick={context.onLogout}>Logga ut</button></li>
       </>
-      }
+      } 
       </ul>
       <button onClick={() => setDropdown(false)}>Stäng</button>
     </DropDMenu>)}
   </div> );}
 
   
- 
-export default MainNavigation;
+export default Navbar

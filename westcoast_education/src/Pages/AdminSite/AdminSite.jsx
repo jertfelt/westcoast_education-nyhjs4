@@ -1,15 +1,15 @@
 import { useContext, useState } from "react";
-import AuthContext from "../../Components/store/auth-context";
+import AuthContext from "../../Context/Auth.Context";
 import Admin from "./Admin";
-import Login from "../Login/Login";
+import Login from "../../Components/LoginLogOut/Login";
 
 const AdminSite = () => {
    const context = useContext(AuthContext)
-   const [authenticated, setAuthenticated] = useState(context.isLoggedIn)
+   const [authenticated, setAuthenticated] = useState(context.loggedIn)
   return (
       <section data-testid="Admin">
       {authenticated && <Admin/>}
-      {!authenticated && <Login/>}
+      {!authenticated && <Login/>} 
       </section>
    );
 }

@@ -1,15 +1,14 @@
-import { useState, useContext } from "react";
-import styled from "styled-components";
-import AuthContext from "../../Components/store/auth-context";
+import { useState, useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import AuthContext from "../../Context/Auth.Context";
 
-
+//styling
+import styled from "styled-components";
 const Section = styled.section`
 min-height:90vh;
 @media (min-width: 900px){
   padding-left:4rem;
 }`
-
 const Intro = styled.div`
 padding:2rem;
 p{ max-width:60%;
@@ -41,7 +40,6 @@ input{
   font-family: Sofia Sans;
   width:100%;
 }`
-
 const Button = styled.input`
 padding:4px;
 color: ${({ theme }) => theme.buttonText};background: ${({ theme }) => theme.buttonBackground};
@@ -64,22 +62,27 @@ font-size:1.4rem;
 
 const Login = () => {
   const navigate = useNavigate();
-  const context = useContext(AuthContext)
+  const context = useContext(AuthContext);
   
   const [buttDisabled, setButtDisabled] = useState(true);
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const user = [{userName: "Admin", password:"pass123"}]
+  const adminName = "Admin"
+  const adminPassword = "word123"
   
   const LoginFunction = (e) => {
     e.preventDefault()
-    const account = user.find(user => user.userName === userName)
-    if(account && account.password === password){
+    if(userName === adminName && password === adminPassword){
       context.onLogin({
         userName,
-        password
+        password,
       })
+      
       navigate("/admin")
+    }
+    else{
+      //*lägg in modal här
+      alert("error")
     }
   }
 
@@ -110,6 +113,7 @@ const Login = () => {
       <LabelInput>
       <label htmlFor="username">Användarnamn:</label>
       <input 
+      type="text"
       id="username"
       placeholder="Användarnamn"
       value={userName}
@@ -120,6 +124,7 @@ const Login = () => {
         <input id="password"
         placeholder="Lösenord"
         value={password}
+        type="password"
         onChange={passwordHandler}/>
       </LabelInput>
       <Button

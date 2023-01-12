@@ -1,22 +1,24 @@
 import {useContext, Fragment, useState } from "react";
 
 //*----styling & darkmode/lightmode:
-import Theme from "./styling/Theme";
-import GlobalStyle from './styling/globalStyles';
+import Theme, { lightTheme, darkTheme }  from "./Context/styling/Theme";
+import GlobalStyle from "./Context/styling/globalStyles";
 import { useDarkMode } from "./Components/ThemeModes/useDarkMode";
-import { lightTheme, darkTheme } from "./styling/Theme";
 import { ThemeProvider } from "styled-components";
-import Toggle from "./Components/ThemeModes/Toggler";
 import styled from "styled-components"
+
+//*toggler darkmode/lightmode
+import Toggle from "./Components/ThemeModes/Toggler";
 
 //*---routing
 import {BrowserRouter, Link} from "react-router-dom";
-import Routing from "./Routes";
+import Routing from "./Config/Routes"
 
-//*context
-import AuthContext from "./Components/store/auth-context";
+// //*context
+import AuthContext from "./Context/Auth.Context";
 
-//---other components
+
+//*---other components
 import Header from "./Components/Header/Header";
 import { Line } from "./Components/styling/Line";
 const Footer = styled.footer`
@@ -44,8 +46,9 @@ font-size:1rem;
 `
 
 function App() {
-  const context = useContext(AuthContext)
-  const [authenticated, setAuthenticated] = useState(context.isLoggedIn)
+   const context = useContext(AuthContext)
+   console.log(context, "test")
+
 
   //*theme:
   const [theme, themeToggler, mountedComponent] = useDarkMode();
@@ -59,7 +62,6 @@ function App() {
     <GlobalStyle/>
     <div className="App">
       <BrowserRouter>
-      <AuthContext.Provider value={{authenticated, setAuthenticated}}>
       <Header/>
       <Line/>
       <main>
@@ -70,14 +72,15 @@ function App() {
         <Toggle theme={theme} 
         toggleTheme={themeToggler} 
         />  
-        {authenticated && <>
+      {context.loggedIn  && <>
       <li><Link to="/admin">Admin</Link></li>
       <li><Button onClick={context.onLogout}>Logga ut</Button></li>
       </>
       }
       </Footer>
-      </AuthContext.Provider>
+     
       </BrowserRouter>
+   
     </div>
     </ThemeProvider>
     </Theme>

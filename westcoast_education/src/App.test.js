@@ -2,7 +2,6 @@ import { render, screen, fireEvent} from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import App from './App';
 
-
 describe("Routing on website", () => {
   const setup = () => render(<App />);
 
