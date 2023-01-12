@@ -2,14 +2,23 @@ import { useState } from "react";
 import styled from "styled-components";
 
 const Section = styled.section`
-min-height:90vh;`
+min-height:90vh;
+@media (min-width: 900px){
+  padding-left:4rem;
+}`
 
 const Intro = styled.div`
 padding:2rem;
-p{ max-width:60%;}`
+p{ max-width:60%;
+  @media (min-width: 900px){
+    max-width:500px;
+  }
+}
+`
 
 const Form = styled.form`
 padding:2rem;
+margin-top:-2rem;
 display: flex;
 flex-direction: column;
 gap:20px;
@@ -20,8 +29,13 @@ const LabelInput = styled.div`
 display:flex;
 align-items:center;
 gap:10px;
-max-width:330px;
+max-width:60%;
+@media (min-width: 900px){
+  max-width:500px;
+}
 input{
+  border-color:black;
+  border-radius:9px;
   padding:4px;
   font-family: Sofia Sans;
   width:100%;
@@ -101,8 +115,6 @@ const Login = () => {
       >
       </Button>
     </Form>
-    
-    
   </Section> );
 }
  
