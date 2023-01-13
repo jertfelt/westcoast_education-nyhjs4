@@ -114,10 +114,10 @@ a{
     <DropDMenu data-testid="dropdown">
       <ul>
       <li><Link to="/">Start</Link></li>
-      {!context.isLoggedIn && <li><Link to="/login">Logga in</Link></li>}
-      {context.isLoggedIn && <>
+      {!context.loggedIn && <li><Link to="/login">Logga in</Link></li>}
+      {context.loggedIn && <>
       <li><Link to="/admin">Admin</Link></li>
-      <li><button onClick={context.onLogout}>Logga ut</button></li>
+      <li><Link onClick={context.onLogout}>Logga ut</Link></li>
       </>
       } 
       </ul>

@@ -47,8 +47,6 @@ font-size:1rem;
 
 function App() {
    const context = useContext(AuthContext)
-   console.log(context, "test")
-
 
   //*theme:
   const [theme, themeToggler, mountedComponent] = useDarkMode();

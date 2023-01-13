@@ -14,8 +14,7 @@ export const AuthContextProvider = (props) => {
   const [userName, setUserName] = useState("")
   const [loggedIn, setLoggedIn] = useState(false)
   const [userPassword, setUserPassword] = useState("")
-  const adminName = "Admin"
-  const adminPassword = "word123"
+
 
   useEffect(() => {
     const userIsLoggedIn = localStorage.getItem("loggedIn");
@@ -26,14 +25,12 @@ export const AuthContextProvider = (props) => {
   }, [])
 
   const onLogin = (user) => {
-    if(user.userName === adminName && user.userPassword === adminPassword){
       setUserName(user.userName)
       setUserPassword(user.userPassword)
       localStorage.setItem("loggedIn", 1)
       setLoggedIn(true)
       localStorage.setItem("userName", user.userName)
       setUserName(localStorage.getItem("userName"))
-    }
   }
 
   const onLogout = () => {

@@ -1,6 +1,9 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../Context/Auth.Context";
+
+//Modal
+import Modal from "../ui/Modal/Modal";
 
 //styling
 import styled from "styled-components";
@@ -10,6 +13,9 @@ min-height:90vh;
   padding-left:4rem;
 }`
 const Intro = styled.div`
+h1{
+  font-size:42px;
+}
 padding:2rem;
 p{ max-width:60%;
   @media (min-width: 900px){
@@ -63,26 +69,27 @@ font-size:1.4rem;
 const Login = () => {
   const navigate = useNavigate();
   const context = useContext(AuthContext);
-  
   const [buttDisabled, setButtDisabled] = useState(true);
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const adminName = "Admin"
   const adminPassword = "word123"
+  //if logged in, hide login page
+  const [authenticated, setAuthenticated] = useState(context.loggedIn)
+  //if wrong pass/username show modal
+  const [showModal, setShowModal] = useState(false)
   
   const LoginFunction = (e) => {
     e.preventDefault()
     if(userName === adminName && password === adminPassword){
+      navigate("/admin")
       context.onLogin({
         userName,
         password,
       })
-      
-      navigate("/admin")
     }
     else{
-      //*lägg in modal här
-      alert("error")
+    setShowModal(true)
     }
   }
 
@@ -105,10 +112,17 @@ const Login = () => {
   }
   return ( 
   <Section data-testid="Login">
+    {!authenticated ? <>
     <Intro>
     <h1>Välkommen</h1>
     <p>Här krävs det inloggning! För att få ett konto, kontakta din lärare eller administratören på westcoast-admin@email.com</p>
     </Intro>
+    {showModal && (
+      <Modal 
+      title="Något gick fel!"
+      message="Du kan ha skrivit in fel användarnamn eller lösenord."
+      onClick={() => setShowModal(false)} />
+    )}
     <Form onSubmit={LoginFunction}> 
       <LabelInput>
       <label htmlFor="username">Användarnamn:</label>
@@ -133,7 +147,12 @@ const Login = () => {
       disabled={buttDisabled}
       >
       </Button>
-    </Form>
+    </Form></>: <Intro> <h1>Välkommen</h1>
+    <p>Du är redan inloggad!</p>
+    <button className="btn" onClick={() => navigate(-1)}>
+     Gå  tillbaka
+  </button>
+    </Intro>}
   </Section> );
 }
 

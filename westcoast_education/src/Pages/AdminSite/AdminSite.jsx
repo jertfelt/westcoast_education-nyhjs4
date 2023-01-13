@@ -5,6 +5,7 @@ import Login from "../../Components/LoginLogOut/Login";
 
 const AdminSite = () => {
    const context = useContext(AuthContext)
+
    const [authenticated, setAuthenticated] = useState(context.loggedIn)
   return (
       <section data-testid="Admin">
