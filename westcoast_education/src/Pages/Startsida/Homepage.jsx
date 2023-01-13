@@ -1,6 +1,8 @@
 import styled from "styled-components";
 import { Line } from "../../Components/styling/Line";
+import { Link } from "react-router-dom";
 import AllaKurser from "../../Components/AllaKurser/AllaKurser";
+import { useState, useEffect, useMemo } from "react";
 
 const Intro = styled.div`
 min-height:50vh;
@@ -48,7 +50,21 @@ padding:2rem;
   padding:1rem;}
 `
 
+const Grid = styled.div`
+display:grid;`
+
 const HomePage = () => {
+  const coursesURL = "http://localhost:8000/courses"
+  const [courses, setCourses] = useState([])
+
+
+  useEffect(() => {
+    fetch(coursesURL)
+    .then(res => res.json())
+    .then(data => setCourses(data))
+   }, [])
+
+
 
   return ( 
   <section data-testid="homepage">
@@ -81,7 +97,19 @@ const HomePage = () => {
   <About 
   id="kurser" data-testid="kurserSection">
   <h2>Våra kurser:</h2>
-  <AllaKurser/>
+    {   courses.filter(function (course){ return course.published === true}).map(function (course){
+    return (
+      <Grid key={course.courseID}>
+        <h3>{course.courseName}</h3>
+        <p>{course.courseDescription}</p>
+        <p>Startdatum: {course.startDate}</p>
+        <Link to="/register">Anmäl dig till kursen här</Link>
+      </Grid>
+    )
+   
+   })}
+ 
+    
   </About>
   
   </section> );
