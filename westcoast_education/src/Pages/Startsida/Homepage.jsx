@@ -137,7 +137,6 @@ const HomePage = () => {
   </Grid>
 }
   
-
   <h3>Bra att veta:</h3>
   <p>När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med
       betalningsuppgifter och ett välkomstmeddelande. 

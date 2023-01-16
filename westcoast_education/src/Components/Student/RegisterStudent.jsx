@@ -62,15 +62,14 @@ const RegisterStudent = () => {
 
 
 
-  const id = Math.floor(Math.random()*900)
 
   const studentUser = {
-       id, studentName, studentEmail,studentPassword
+       studentName, studentEmail,studentPassword
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log(studentUser)
+    
       fetch("http://localhost:8000/students", {
         method:"POST",
         headers:{

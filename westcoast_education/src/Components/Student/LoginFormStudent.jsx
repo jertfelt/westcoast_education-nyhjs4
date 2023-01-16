@@ -1,5 +1,5 @@
 import styled from "styled-components";
-
+import axios from "axios";
 import { useContext, useState,  useRef, useEffect } from "react";
 import StudentContext from "../../Context/StudentContext";
 import { useNavigate } from "react-router-dom";
@@ -34,21 +34,25 @@ const LoginFormStudent = () => {
   const navigate = useNavigate();
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
-  const [user, setUser] = useState("")
-  const [password, setPassword] = useState("")
+  const [studentEmail, setUser] = useState("")
+  const [studentPassword, setPassword] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [errMsg, setErrMsg] = useState("")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     try{
-      // const res = await axios.post(
-      //   "http://localhost:8000/students",
-      //   JSON.stringify({user, password}),{
-      //     headers: { "Content-Type": "application/json" },
-      //     withCredentials: true,
-      //   }
-      // );
+      const res = await axios.post(
+        "http://localhost:8000/students",
+        JSON.stringify({studentEmail, studentPassword}),{
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      context.onLogin({
+        studentEmail,
+        studentPassword,
+      })
       navigate("/register")
     }catch(err){
       if (!err?.response) {
@@ -77,7 +81,7 @@ const LoginFormStudent = () => {
               id="username"
               ref={emailInputRef}
               onChange={(e) => setUser(e.target.value)}
-              value={user}
+              value={studentEmail}
               required
             />
       <label htmlFor="password">
@@ -86,7 +90,7 @@ const LoginFormStudent = () => {
               type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
-              value={password}
+              value={studentPassword}
               required
             />
             <input type="submit"

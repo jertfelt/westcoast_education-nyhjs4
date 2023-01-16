@@ -32,32 +32,32 @@
         "firstChoice": "Engelska A",
         "secondChoice": "Matematik A"
       },
-      "studentID": 901100,
+      "studentID": 901,
       "password": "123Pass"
-    },
-    {
-      "id": 242,
-      "studentName": "Tova",
-      "studentEmail": "eee@gmail.com",
-      "studentPassword": "ABC123!!1a"
-    },
-    {
-      "id": 351,
-      "studentName": "Tova",
-      "studentEmail": "eee@gmail.com",
-      "studentPassword": "ABC123!!1a"
-    },
-    {
-      "id": 212,
-      "studentName": "Tova",
-      "studentEmail": "eee@gmail.com",
-      "studentPassword": "ABC123!!1a"
     },
     {
       "id": 810,
       "studentName": "Tova",
-      "studentEmail": "eee@gmail.com",
-      "studentPassword": "ABC123!!1a"
+      "studentEmail": "test@gmail.com",
+      "studentPassword": "12345678TESTer!"
+    },
+    {
+      "studentName": "Tova33",
+      "studentEmail": "test@gmail.com",
+      "studentPassword": "12345678TESTer!",
+      "id": 811
+    },
+    {
+      "studentName": "Tova333",
+      "studentEmail": "test@gmail.com",
+      "studentPassword": "12345678TESTer!",
+      "id": 812
+    },
+    {
+      "studentName": "test",
+      "studentEmail": "test@gmail.com",
+      "studentPassword": "12345678TESTer!",
+      "id": 813
     }
   ],
   "courses": [
