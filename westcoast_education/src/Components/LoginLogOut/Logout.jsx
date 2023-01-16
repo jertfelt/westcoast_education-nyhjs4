@@ -5,6 +5,7 @@ const LogOut = () => {
   const navigate = useNavigate()
   const logOut = () => {
     navigate("/")
+    window.location.reload()
   }
   
   return (

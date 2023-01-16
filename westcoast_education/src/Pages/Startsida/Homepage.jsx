@@ -1,8 +1,8 @@
 import styled from "styled-components";
 import { Line } from "../../Components/styling/Line";
 import { Link } from "react-router-dom";
-import AllaKurser from "../../Components/AllaKurser/AllaKurser";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect} from "react";
+import { useFetch } from "../../Components/utils/useFetch";
 
 const Intro = styled.div`
 min-height:50vh;
@@ -51,21 +51,40 @@ padding:2rem;
 `
 
 const Grid = styled.div`
-display:grid;`
+display:grid;
+max-width: 1200px;
+margin: 0 auto;
+gap: 1rem;
+div{
+  background: ${({ theme }) => theme.highlight};
+  padding:2rem;
+  
+  color: ${({ theme }) => theme.body};
+  h3{
+    font-size:30px;
+    margin-top:1rem;
+  }
+  p{
+    max-width:80%;
+  }
+}
+@media (min-width:800px){
+  grid-template-columns: repeat(2, 1fr);
+}
+button{
+  padding:8px;
+  border:none;
+}
+`
 
 const HomePage = () => {
   const coursesURL = "http://localhost:8000/courses"
-  const [courses, setCourses] = useState([])
 
-
-  useEffect(() => {
-    fetch(coursesURL)
-    .then(res => res.json())
-    .then(data => setCourses(data))
-   }, [])
-
-
-
+  const [year, setYear] = useState(new Date().getFullYear())
+  const {data,loading,error} = useFetch(coursesURL)
+  if(error){
+    console.log(error)
+  }
   return ( 
   <section data-testid="homepage">
   <Intro>
@@ -73,7 +92,7 @@ const HomePage = () => {
     <img src="https://habitatbroward.org/wp-content/uploads/2020/01/10-Benefits-Showing-Why-Education-Is-Important-to-Our-Society.jpg"
     alt="Education @ Westcoast"
     ></img>
-    <TwoColumns>
+    <TwoColumns data-testid="responsive">
       <Column>
       <h3>Vi har varit i utbildningsbranschen i snart 40 år.</h3>
       <p>
@@ -94,25 +113,37 @@ const HomePage = () => {
     </TwoColumns>
    </Intro>
   <Line/>
-  <About 
-  id="kurser" data-testid="kurserSection">
-  <h2>Våra kurser:</h2>
-    {   courses.filter(function (course){ return course.published === true}).map(function (course){
+  <About>
+  <h2>Våra kurser {year}</h2>
+  {loading && <div>Laddar..</div>}
+    {data && 
+  <Grid>
+    {data.filter(function (course){ return course.published === true}).map(function (course){
     return (
-      <Grid key={course.courseID}>
+      <div
+      key={course.courseID}>
         <h3>{course.courseName}</h3>
         <p>{course.courseDescription}</p>
         <p>Startdatum: {course.startDate}</p>
-        <Link to="/register">Anmäl dig till kursen här</Link>
-      </Grid>
+        <Link 
+        to={`/kurser/${course.courseName}`}>
+          Läs mer här </Link>
+        <Link
+        to={`/register/${course.courseName}`}><button >Anmäl dig till kursen här</button></Link>
+      </div>
     )
-   
-   })}
- 
-    
-  </About>
+  })}
+
+  </Grid>
+}
   
+
+  <h3>Bra att veta:</h3>
+  <p>När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med
+      betalningsuppgifter och ett välkomstmeddelande. 
+      Skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste
+      vi tyvärr av ekonomiska skäl boka av kursen. </p>
+  </About>
   </section> );
 }
- 
 export default HomePage;

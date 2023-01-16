@@ -4,7 +4,6 @@ import App from './App';
 
 describe("Routing on website", () => {
   const setup = () => render(<App />);
-
   it("navigates and renders correctly", async () => {
     setup()
     expect(screen.getByText(/Välkommen till ditt studieliv!/i)).toBeInTheDocument()

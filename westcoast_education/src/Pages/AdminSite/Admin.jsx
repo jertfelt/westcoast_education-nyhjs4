@@ -54,7 +54,8 @@ const Admin = () => {
     .then(data => setCourses(data))
    }, [])
 
-  return (<section 
+  return (
+  <section 
   data-testid="Admin">
     <h1>Välkommen, {context.userName}</h1>
     <TwoColumns>

@@ -1,6 +1,7 @@
 import styled from "styled-components";
 
 import  Navbar  from "../Navigation/Navbar";
+import { Link } from "react-router-dom";
 
 
 const Headerdiv = styled.header`
@@ -20,13 +21,16 @@ nav{
     font-size:30px;
   }
 }
+h1 a{
+  color:${({ theme }) => theme.text};
+}
 `
 
 
 const Header = ({theme}) => {
   return (
   <Headerdiv>
-    <h1>Westcoast Education</h1>
+    <h1><Link to="/">Westcoast Education</Link></h1>
     <Navbar/>
   </Headerdiv>  );
 }

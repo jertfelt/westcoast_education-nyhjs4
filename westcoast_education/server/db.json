@@ -1,71 +1,155 @@
-{"teachers": [
-  {"firstName": "Arnold",
-  "lastName": "Schwarzenegger", 
-  "personalID": 7608190034,
-  "email": "arnold@westcoast.se",
-  "mobileNo": 736843434,
-  "competences": ["Engelska", "Svenska"]
-  },
-  {"firstName": "Oskar",
-  "lastName": "Johansson Jertfelt", 
-  "personalID": 8603250094,
-  "email": "ojj@westcoast.se",
-  "mobileNo": 70998876,
-  "competences": ["Mattematik", "Naturvetenskap", "Franska"]
-  }
-],
-"courses": [
-  {"courseID": 1,
-  "courseName": "Engelska A",
-  "lengthWeeks": 3,
-  "courseDescription": "English for beginners",
-  "startDate": "2023-23-4",
-  "published": true},
-  {"courseID": 12,
-  "courseName": "Engelska B",
-  "lengthWeeks": 6,
-  "courseDescription": "English for intermediate. English A is required for this course.",
-  "startDate": "2023-4-4",
-  "published": true},
-  {"courseID": 5,
-  "courseName": "Matematik",
-  "lengthWeeks": 6,
-  "courseDescription": "Matematik för nybörjare",
-  "startDate": "2023-20-1",
-  "published": true},
-  {"courseID": 51,
-  "courseName": "Matematik B",
-  "lengthWeeks": 6,
-  "courseDescription": "Matematik för avancerade. Du behöver ha läst Matte A för att ha behörighet till den här kursen.",
-  "startDate": "2023-20-3",
-  "published": false}
-],
-"competences": [
-  {"competence": "Matematik",
-  "competenceID": 1},
-  {"competence": "Franska",
-  "competenceID": 12},
-  {"competence": "Engelska",
-  "competenceID": 13},
-  {"competence": "Filosofi",
-  "competenceID": 14},
-  {"competence": "Svenska",
-  "competenceID": 15},
-  {"competence": "Spanska",
-  "competenceID": 19},
-  {"competence": "Samhällskunskap",
-  "competenceID": 16},
-  {"competence": "Naturvetenskap",
-  "competenceID": 17},
-  {"competence": "Hemkunskap",
-  "competenceID": 18},
-  {"competence": "Teknik",
-  "competenceID": 11},
-  {"competence": "Idrott och hälsa",
-  "competenceID": 112},
-  {"competence": "Historia",
-  "competenceID": 10},
-  {"competence": "Religionskunskap",
-  "competenceID": 113}
-] 
+{
+  "teachers": [
+    {
+      "firstName": "Arnold",
+      "lastName": "Schwarzenegger",
+      "personalID": 7608190034,
+      "email": "arnold@westcoast.se",
+      "mobileNo": 736843434,
+      "competences": [
+        "Engelska",
+        "Svenska"
+      ]
+    },
+    {
+      "firstName": "Oskar",
+      "lastName": "Johansson Jertfelt",
+      "personalID": 8603250094,
+      "email": "ojj@westcoast.se",
+      "mobileNo": 70998876,
+      "competences": [
+        "Matematik",
+        "Naturvetenskap",
+        "Franska"
+      ]
+    }
+  ],
+  "students": [
+    {
+      "studentName": "Eva",
+      "studentEmail": "eva@gmail.com",
+      "courses": {
+        "firstChoice": "Engelska A",
+        "secondChoice": "Matematik A"
+      },
+      "studentID": 901100,
+      "password": "123Pass"
+    },
+    {
+      "id": 242,
+      "studentName": "Tova",
+      "studentEmail": "eee@gmail.com",
+      "studentPassword": "ABC123!!1a"
+    },
+    {
+      "id": 351,
+      "studentName": "Tova",
+      "studentEmail": "eee@gmail.com",
+      "studentPassword": "ABC123!!1a"
+    },
+    {
+      "id": 212,
+      "studentName": "Tova",
+      "studentEmail": "eee@gmail.com",
+      "studentPassword": "ABC123!!1a"
+    },
+    {
+      "id": 810,
+      "studentName": "Tova",
+      "studentEmail": "eee@gmail.com",
+      "studentPassword": "ABC123!!1a"
+    }
+  ],
+  "courses": [
+    {
+      "courseID": 1,
+      "studentsAssigned": 2,
+      "courseName": "Engelska A",
+      "lengthWeeks": 3,
+      "courseDescription": "English for beginners",
+      "startDate": "2023-23-4",
+      "published": true
+    },
+    {
+      "courseID": 12,
+      "studentsAssigned": 5,
+      "courseName": "Engelska B",
+      "lengthWeeks": 6,
+      "courseDescription": "English for intermediate. English A is required for this course.",
+      "startDate": "2023-4-4",
+      "published": true
+    },
+    {
+      "courseID": 5,
+      "studentsAssigned": 10,
+      "courseName": "Matematik",
+      "lengthWeeks": 6,
+      "courseDescription": "Matematik för nybörjare",
+      "startDate": "2023-20-1",
+      "published": true
+    },
+    {
+      "courseID": 51,
+      "courseName": "Matematik B",
+      "lengthWeeks": 6,
+      "studentsAssigned": 0,
+      "courseDescription": "Matematik för avancerade. Du behöver ha läst Matte A för att ha behörighet till den här kursen.",
+      "startDate": "2023-20-3",
+      "published": false
+    }
+  ],
+  "competences": [
+    {
+      "competence": "Matematik",
+      "competenceID": 1
+    },
+    {
+      "competence": "Franska",
+      "competenceID": 12
+    },
+    {
+      "competence": "Engelska",
+      "competenceID": 13
+    },
+    {
+      "competence": "Filosofi",
+      "competenceID": 14
+    },
+    {
+      "competence": "Svenska",
+      "competenceID": 15
+    },
+    {
+      "competence": "Spanska",
+      "competenceID": 19
+    },
+    {
+      "competence": "Samhällskunskap",
+      "competenceID": 16
+    },
+    {
+      "competence": "Naturvetenskap",
+      "competenceID": 17
+    },
+    {
+      "competence": "Hemkunskap",
+      "competenceID": 18
+    },
+    {
+      "competence": "Teknik",
+      "competenceID": 11
+    },
+    {
+      "competence": "Idrott och hälsa",
+      "competenceID": 112
+    },
+    {
+      "competence": "Historia",
+      "competenceID": 10
+    },
+    {
+      "competence": "Religionskunskap",
+      "competenceID": 113
+    }
+  ]
 }

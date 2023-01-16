@@ -7,15 +7,25 @@
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "axios": "^1.2.2",
+    "ecma": "^1.0.2",
     "enzyme": "^3.11.0",
+    "firebase": "^9.15.0",
+    "firebase-admin": "^11.4.1",
+    "firebase-functions": "^4.1.1",
     "jest-styled-components": "^7.1.1",
     "json-server": "^0.17.1",
+    "node": "^19.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.6.2",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "axios": "axios/dist/node/axios.cjs"
+    }
   },
   "scripts": {
     "start": "react-scripts start",

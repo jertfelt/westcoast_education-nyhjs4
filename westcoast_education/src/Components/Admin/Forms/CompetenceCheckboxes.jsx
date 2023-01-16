@@ -1,4 +1,4 @@
-import axios from "axios";
+
 import { useEffect, useState, useCallback} from "react";
 import styled from "styled-components";
 import Modal from "../../ui/Modal/Modal";
@@ -46,12 +46,12 @@ const CompetenceList = (ref) => {
   })  
  }
 
- useEffect(() => {
-  axios
-  .get(teacherURL)
-  .then(({data}) => setAllTeachers(data))
-  .catch(error => setError(error))
- })
+//  useEffect(() => {
+//   axios
+//   .get(teacherURL)
+//   .then(({data}) => setAllTeachers(data))
+//   .catch(error => setError(error))
+//  })
 
  if(error){
   setShowModal(true)

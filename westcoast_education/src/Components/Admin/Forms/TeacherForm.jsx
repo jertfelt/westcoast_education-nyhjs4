@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import CompetenceList from "./CompetenceCheckboxes";
 import { useRef, useEffect, useCallback, useState } from "react";
-import axios from "axios";
+import { useFetch } from "../../utils/useFetch";
 import Modal from "../../ui/Modal/Modal";
 
 const Form = styled.form``
@@ -25,7 +25,7 @@ const CheckBox = ({competence, isChecked, onAddCompetence, onRemoveCompetence}) 
 
 const TeacherForm = () => {
   const [competences, setCompetences] = useState([])
-  const [error, setError] = useState(null)
+  const [error2, setError] = useState(null)
   const [showModal, setShowModal] = useState(false)
   const [modifiedData, setModifiedData] = useState({competences: [], description: '', name: ''})
   const firstNameInputRef = useRef()
@@ -46,7 +46,18 @@ const TeacherForm = () => {
     personalIDInputRef.current.value = ""
     emailInputRef.current.value =""
     mobileNoInputRef.current.value =""
-   
+  }
+
+  async function postData(url ="", data = {}){
+    const res = await fetch(url, {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        'Content-Type': "application/json"
+      },
+      body: JSON.stringify(data)
+    })
+    return res.json()
   }
 
   const onSubmit = async (e) => {
@@ -68,27 +79,22 @@ const TeacherForm = () => {
       modifiedData
     }
     
-    await axios 
-    .post(teacherURL, teacher)
-    .then(res => {
-      console.log(res, "response from axios post")
+    postData(teacherURL, {teacher}).then(data => {
+      console.log(data)
     })
     .catch(error => {
       setError(error)
     })
     clearForm()
+    if(error2){
+      setShowModal(true)
+     }
   }
 
  
-   if(error){
-    setShowModal(true)
-   }
 
-   useEffect(() => {
-    fetch(competenceURL)
-    .then(res => res.json())
-    .then(data => setCompetences(data))
-   }, [])
+  
+   const {data,loading,error} = useFetch(competenceURL)
 
   return ( 
     <Form onSubmit={onSubmit}>
