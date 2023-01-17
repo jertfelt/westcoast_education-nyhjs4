@@ -73,13 +73,43 @@ setYear(today)
 setNextYear(nextyearToday)
   }, [])
 
+  const clearForm = () =>{
+   courseNameRef.current.value = ""
+   courseDescriptionRef.current.value = ""
+  startDateref.current.value = ""
+  lengthWeeksRef.current.value = ""
+  studentsAssignedRef.current.value = ""
+  }
+
+
 
   const setToPublished = (e) => {
     e.preventDefault()
   }
   const changeCourse = (e) => {
   e.preventDefault()
-  
+  const courseName = courseNameRef.current.value;
+  const courseDescription = courseDescriptionRef.current.value
+  const startDate = startDateref.current.value
+  const lengthWeeks = lengthWeeksRef.current.value
+  const studentsAssigned = studentsAssignedRef.current.value
+
+  const courseItem = {
+    courseName,
+    courseDescription,
+    startDate,
+    lengthWeeks,
+    studentsAssigned
+     ,
+  }
+    fetch(COURSES_URL, {
+      method:"POST", headers:{
+        "Content-Type": "application/json"
+      },
+      body:JSON.stringify(courseItem)
+    }
+      )
+      
   }
 
   return ( 
@@ -125,7 +155,7 @@ setNextYear(nextyearToday)
         key={item.courseID}
         id="studentsAssignedChangeInput"
         type="number"
-        value={item.studentsAssigned}
+        placeholder={item.studentsAssigned}
         ref={studentsAssignedRef}
         />
       )}}))}
