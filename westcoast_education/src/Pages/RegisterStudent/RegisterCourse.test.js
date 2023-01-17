@@ -1,4 +1,4 @@
-import { getByTestId, render, screen } from '@testing-library/react';
+import {  render, screen } from '@testing-library/react';
 import Registrering from "./Registrering"
 import userEvent from '@testing-library/user-event';
 
@@ -9,6 +9,10 @@ describe("Register page", () => {
       setup();
       expect(screen.getByRole("heading",{name:/Registrera dig på en kurs/i})).toBeInTheDocument()
     })
+    xit("should have the logged in students name in the name input as a default", () => {
+      setup()
+      
+    } )
   })
   describe("should have a form element", () => {
     it("should have two select components", () => {

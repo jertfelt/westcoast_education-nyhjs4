@@ -3,37 +3,9 @@ import styled from "styled-components";
 import { useContext, useState, useRef, useEffect } from "react";
 import StudentContext from "../../Context/StudentContext";
 import { useNavigate } from "react-router-dom";
+import { FormInstructions as Form } from "../StylingElements/Form/Form";
+import Button from "../StylingElements/Buttons/FormButton";
 
-const Form = styled.form`
-background: ${({ theme }) => theme.toggleBorder};
-padding:2rem;
-color: ${({ theme }) => theme.text};
-h1{
-  
-  align-self:center;
-  font-size:32px;
-  line-height:1rem;
-}
-display:flex;
-flex-direction:column;
-max-width:300px;
-gap:10px;
-font-family: Sofia Sans;
-.instructions{
-  
-  font-size:12px;
-}
-.offscreen{
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-`
 const Container = styled.div`
 display:flex;
 gap:6px;
@@ -52,22 +24,7 @@ input[type=password]{
 min-width:200px;
 width:100%;
 `
-const Button = styled.input`
-border-radius: 30px;
-width:100px;
-margin-top:1rem;
-padding:1rem;
-border:none;
-font-family: Sofia Sans;
-align-self:center;
-font-weight:bold;
-font-size:14px;
-opacity: 0.8;
-.enabled{
-  opacity: 1;
-  cursor:pointer;
-}
-`
+
 
 const RegisterStudent = () => {
   const context = useContext(StudentContext);
@@ -96,12 +53,12 @@ const RegisterStudent = () => {
 
   useEffect(() => {
     setValidName(USER_REGEX.test(studentName));
-  }, [studentName]);
+  }, [studentName, USER_REGEX]);
 
   useEffect(() => {
     setValidPassword(PWD_REGEX.test(studentPassword));
     setValidMatch(studentPassword === matchPassword);
-  }, [studentPassword, matchPassword]);
+  }, [studentPassword, matchPassword, PWD_REGEX]);
 
   useEffect(() => {
     setMatchFocus(true)
@@ -122,13 +79,15 @@ const RegisterStudent = () => {
         },
         body: JSON.stringify(studentUser)
       })
+      let studentLoggedIn = true
       context.onLogin({
         studentEmail,
+        studentLoggedIn,
         studentName,
         studentPassword
       })
      
-      navigate("/register")
+      navigate("/student")
   }
   
   

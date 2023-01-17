@@ -8,11 +8,11 @@ const StudentPortal = () => {
   <section data-testid="studentportal">
     <h1>Välkommen, {context.studentName}</h1>
     <h2>Dina kurser:</h2>
-    <div>
+    {/* <div>
       {context.studentCourses.map(item => ( 
         <p>{item.courses.firstChoice.subject}</p>
       ))}
-    </div>
+    </div> */}
     <Link to="/register">Registrera kurs</Link>
     <button onClick={context.onLogout}>Logga ut</button>
   </section> );

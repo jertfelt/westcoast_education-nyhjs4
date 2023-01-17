@@ -20,7 +20,8 @@ import StudentContext from "./Context/StudentContext";
 
 //*---other components
 import Header from "./Components/Header/Header";
-import { Line } from "./Components/styling/Line";
+import { Line } from "./Components/StylingElements/Line/Line";
+
 const Footer = styled.footer`
 display:flex;
 align-items:center;

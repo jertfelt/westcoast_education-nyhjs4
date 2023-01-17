@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import { useEffect, useState, useRef, useContext, } from "react";
 import { Link } from "react-router-dom";
-import AuthContext from "../../Context/Auth.Context";
-import StudentContext from "../../Context/StudentContext"
+import AuthContext from "../../../Context/Auth.Context";
+import StudentContext from "../../../Context/StudentContext";
+
 
 const MenuButton = styled.button`
 background: transparent;

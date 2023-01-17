@@ -8,11 +8,11 @@ import HomePage from "../Pages/Startsida/Homepage";
 import NoMatch from "../Pages/NoMatch/NoMatch";
 
 //? ADMIN ROUTES 
-import Login from "../Components/LoginLogOut/Login";
+import Login from "../Components/Admin/LoginLogOut/Login";
 import Admin from "../Pages/AdminSite/Admin";
-import AllaKurser from "../Components/Admin/Kurs/AllaKurser"
-import Kurs from "../Components/Admin/Kurs/Kurs"
-import AllTeachers from "../Components/Admin/AllTeachers/AllTeachers"
+import AllaKurser from "../Components/Admin/Kurs/AllaKurser";
+import Kurs from "../Components/Admin/Kurs/Kurs";
+import AllTeachers from "../Components/Admin/AllTeachers/AllTeachers";
 import Teacher from "../Components/Admin/AllTeachers/Teacher"
 
 //? STUDENT ROUTES
@@ -28,6 +28,7 @@ const Routing = () => {
   const contextStudent = useContext(StudentContext)
   const isAdminLoggedIn = contextAdmin.loggedIn
   const isStudentLoggedIn = contextStudent.studentLoggedIn
+  console.log(contextStudent)
 
   return (   
   <Routes>

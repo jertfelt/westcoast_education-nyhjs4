@@ -22,10 +22,12 @@ export const StudentContextProvider = (props) => {
   const [studentCourses, setStudentCourses] = useState([])
 
   useEffect(() => {
-    const studentIsLoggedIn = localStorage.getItem("loggedIn");
+    const studentIsLoggedIn = localStorage.getItem("studentLoggedIn");
     if(studentIsLoggedIn){
       setLoggedIn(true)
       setStudentName(localStorage.getItem("studentName"))
+      setStudentEmail(localStorage.getItem("studentEmail"))
+      setStudentCourses(localStorage.getItem("studentCourses"))
     } 
   }, [])
 
@@ -35,13 +37,14 @@ export const StudentContextProvider = (props) => {
     setStudentID(user.studentID)
     setStudentCourses(user.studentCourses)
     setStudentEmail(user.studentEmail)
-    localStorage.setItem("studentLoggedIn", true)
     setLoggedIn(true)
+    localStorage.setItem("studentLoggedIn", true)
     localStorage.setItem("studentID", user.studentID)
     localStorage.setItem("studentName", user.studentName)
     localStorage.setItem("studentEmail", user.studentEmail)
     setStudentName(localStorage.getItem("studentName"))
 }
+
 const onLogout = () => {
   setLoggedIn(false)
   localStorage.removeItem("studentLoggedIn")

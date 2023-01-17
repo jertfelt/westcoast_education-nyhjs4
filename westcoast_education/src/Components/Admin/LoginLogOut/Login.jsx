@@ -1,9 +1,9 @@
 import { useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
-import AuthContext from "../../Context/Auth.Context";
+import AuthContext from "../../../Context/Auth.Context";
 
 //Modal
-import Modal from "../ui/Modal/Modal";
+import Modal from "../../ui/Modal/Modal";
 
 //styling
 import styled from "styled-components";

@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Line } from "../../Components/styling/Line";
+import {Line} from "../../Components/StylingElements/Line/Line"
 import { Link } from "react-router-dom";
 import { useState, useEffect} from "react";
 import { useFetch } from "../../Components/utils/useFetch";
