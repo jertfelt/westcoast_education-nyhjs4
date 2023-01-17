@@ -64,32 +64,15 @@ const determineMember = () => {
 
   return (
   <section>
-   <Content>
-    {!notMemberYet && <>
-      <RegisterStudent/>
-    {revealQuestion2 && <QuestionDiv>
-    <p>Är du redan registrerad?</p>
-    <button 
-    onClick={determineMember}>Klicka här</button>
-    </QuestionDiv>}
-    </>}
-
-    {notMemberYet && <><LoginFormStudent/>
+  <Content>
+    {!notMemberYet && <RegisterStudent/>}
+    {notMemberYet && <LoginFormStudent/>}
     <QuestionDiv>
-    <p>Behöver du registrera dig?</p>
-    <button 
+      {!notMemberYet && <p>Är du redan registrerad?</p>}
+      {notMemberYet && <p>Behöver du registrera dig?</p>}
+      <button 
     onClick={determineMember}>Klicka här</button>
     </QuestionDiv>
-    </>
-    }
-    {revealQuestion1 && 
-    <QuestionDiv>
-    <p>Är du redan registrerad?</p>
-    <button 
-    onClick={determineMember}>
-      Klicka här</button>
-    </QuestionDiv>
-    }
     </Content>
   </section>  );
 }
