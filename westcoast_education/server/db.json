@@ -32,38 +32,23 @@
         "firstChoice": {
           "subject": "Engelska A",
           "points": 50,
-          "courseID": 1},
+          "courseID": 1
+        },
         "secondChoice": {
           "subject": "Matematik A",
           "points": 50,
-          "courseID": 10}
+          "courseID": 10
+        }
       },
       "studentID": 901,
       "password": "123Pass"
     },
+    
     {
-      "id": 810,
-      "studentName": "Tova",
-      "studentEmail": "test@gmail.com",
-      "studentPassword": "12345678TESTer!"
-    },
-    {
-      "studentName": "Tova33",
-      "studentEmail": "test@gmail.com",
-      "studentPassword": "12345678TESTer!",
-      "id": 811
-    },
-    {
-      "studentName": "Tova333",
-      "studentEmail": "test@gmail.com",
-      "studentPassword": "12345678TESTer!",
-      "id": 812
-    },
-    {
-      "studentName": "test",
-      "studentEmail": "test@gmail.com",
-      "studentPassword": "12345678TESTer!",
-      "id": 813
+      "studentName": "toje2101",
+      "studentEmail": "toje2101@gmail.com",
+      "studentPassword": "Toje2101!",
+      "id": 815
     }
   ],
   "courses": [

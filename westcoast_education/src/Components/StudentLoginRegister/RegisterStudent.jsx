@@ -60,9 +60,13 @@ padding:1rem;
 border:none;
 font-family: Sofia Sans;
 align-self:center;
-background-color: ${({ theme }) => theme.accent};
 font-weight:bold;
 font-size:14px;
+opacity: 0.8;
+.enabled{
+  opacity: 1;
+  cursor:pointer;
+}
 `
 
 const RegisterStudent = () => {
@@ -72,6 +76,7 @@ const RegisterStudent = () => {
   const nameInputRef = useRef()
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
+  const matchPasswordInputRef = useRef()
 
   const [studentName, setUsername] = useState('');
   const [studentEmail, setEmail] = useState('')
@@ -98,11 +103,15 @@ const RegisterStudent = () => {
     setValidMatch(studentPassword === matchPassword);
   }, [studentPassword, matchPassword]);
 
+  useEffect(() => {
+    setMatchFocus(true)
+  }, [setMatch])
 
   const studentUser = {
-       studentName, studentEmail,studentPassword
+    studentName, studentEmail,studentPassword
   }
 
+  //*lägg in en if student redan finns så poppar en modal upp med det felmeddelandet:
   const handleSubmit = (e) => {
     e.preventDefault()
     
@@ -179,7 +188,8 @@ const RegisterStudent = () => {
       />
      
       </Container>
-      <p className={pwdFocus && !validPassword ? "instructions" : "offscreen"} >
+      <p className={pwdFocus && !validPassword ? "instructions" : "offscreen"} 
+      data-testid="testingParagraph">
       Minst 8 karaktärer. Måste innehålla både stora och små bokstäver, minst ett nummer och minst ett specialtecken. Tillåtna tecken är:{""}
       <span aria-label="exclamation mark">
             !
@@ -202,9 +212,8 @@ const RegisterStudent = () => {
       onChange={(e) => setMatch(e.target.value)}
       aria-invalid={validMatch? "false": "true"}
       placeholder="Bekräfta lösenord"
-      ref={passwordInputRef}
+      ref={matchPasswordInputRef}
       />
-    
       </Container>
       <p className={
               matchFocus && !validMatch
@@ -216,6 +225,7 @@ const RegisterStudent = () => {
       </p>
       <Button
       type="submit"
+      className={!validMatch ? "disabled" : "enabled"}
       disabled={!validMatch ? true :false}
       value="Registrera"/>
   </Form>
