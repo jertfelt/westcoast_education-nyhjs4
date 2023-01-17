@@ -9,7 +9,8 @@
       "competences": [
         "Engelska",
         "Svenska"
-      ]
+      ],
+      "id": 300
     },
     {
       "firstName": "Oskar",
@@ -21,7 +22,8 @@
         "Matematik",
         "Naturvetenskap",
         "Franska"
-      ]
+      ],
+      "id": 301
     }
   ],
   "students": [
@@ -55,7 +57,7 @@
       "lengthWeeks": 3,
       "courseDescription": "English for beginners",
       "startDate": "2023-23-4",
-      "published": true
+      "published": false
     },
     {
       "courseID": 12,
@@ -81,6 +83,15 @@
       "lengthWeeks": 6,
       "studentsAssigned": 0,
       "courseDescription": "Matematik för avancerade. Du behöver ha läst Matte A för att ha behörighet till den här kursen.",
+      "startDate": "2023-20-3",
+      "published": false
+    },
+    {
+      "courseID": 91,
+      "courseName": "Matematik C",
+      "lengthWeeks": 10,
+      "studentsAssigned": 5,
+      "courseDescription": "Matematik för avancerade. Du behöver ha läst Matte B och A för att ha behörighet till den här kursen.",
       "startDate": "2023-20-3",
       "published": false
     }

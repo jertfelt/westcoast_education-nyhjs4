@@ -32,8 +32,8 @@ const NoMatch = () => {
      <h1>Oops!</h1>
      <p>Något blev fel. Kontakta webb-administratören om problemet kvarstår, eller prova att gå tillbaka till föregående sida.</p>
 
-  <button className="btn" onClick={() => navigate(-1)}>
-     Gå  tillbaka
+  <button onClick={() => navigate(-1)}>
+     Gå tillbaka
   </button>
 </ErrorPage>  );
 }

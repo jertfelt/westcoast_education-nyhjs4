@@ -38,7 +38,6 @@ const LoginFormStudent = () => {
       setStudentsEmail(data2)
     }
     dataFetch()
-   
   }, [])
 
 

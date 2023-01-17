@@ -85,9 +85,11 @@ function App() {
       <li><Button onClick={context.onLogout}>Logga ut</Button></li>
       </>
       }
+      {!context.loggedIn && <>
       {contextStudent.studentLoggedIn && <>
       <li><Link to="/student">Studentportal</Link></li>
       <li><Button onClick={contextStudent.onLogout}>Logga ut</Button></li> </>}
+      </>}
       </Footer>
      
       </BrowserRouter>

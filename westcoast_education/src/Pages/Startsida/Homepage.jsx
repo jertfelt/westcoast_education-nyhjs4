@@ -79,7 +79,6 @@ button{
 
 const HomePage = () => {
   const coursesURL = "http://localhost:8000/courses"
-
   const [year, setYear] = useState(new Date().getFullYear())
   const {data,loading,error} = useFetch(coursesURL)
   if(error){

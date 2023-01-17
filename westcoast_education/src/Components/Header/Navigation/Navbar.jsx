@@ -110,7 +110,9 @@ a{
       <li><Link onClick={context.onLogout}>Logga ut</Link></li>
       </>
       } 
+      {!context.loggedIn && <> 
       {contextStudent.studentLoggedIn && <li><Link onClick={contextStudent.onLogout}>Logga ut</Link></li> }
+      </>}
       </ul>
       <button onClick={() => setDropdown(false)}>Stäng</button>
     </DropDMenu>)}
