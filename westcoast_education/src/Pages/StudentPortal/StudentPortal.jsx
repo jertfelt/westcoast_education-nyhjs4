@@ -100,6 +100,8 @@ margin-top:-2rem;
 }
 `
 
+//!ej testat om den här komponenten funkat ännu (alltså att uppdatera databas) pga denna ingår inte i skoluppgiften
+
 const StudentPortal = () => {
   const STUDENTS_URL = "http://localhost:8000/students"
   const studentEmailInput = useRef()
@@ -207,18 +209,23 @@ const StudentPortal = () => {
   <Section data-testid="studentportal">
     <div>
     <h1>Välkommen, {context.studentName}</h1>
-    {showModal && <Modal title="Viktigt!" 
-    message= {msg} onClick={() => setShowModal(false)}/>}
+    {showModal && <Modal 
+    title="Viktigt!" 
+    message= {msg} 
+    onClick={() => setShowModal(false)}/>}
     <div>
         <h2>Dina uppgifter:</h2>
         <div>
-          <ParagraphWithButton className={changeNameForm ? "offscreen" : "normal"}>
+          <ParagraphWithButton 
+          data-testid="paragraph"
+          className={changeNameForm ? "offscreen" : "normal"}>
         <p>
           Namn: {studentName}
           </p>
-          <button onClick={changeName}>Ändra</button>
+          <button onClick={changeName} data-testid="changeParagraph">Ändra</button>
           </ParagraphWithButton>
-          {changeNameForm && <form onSubmit={handleSubmit}>
+          {changeNameForm && <form data-testid="formTest"
+          onSubmit={handleSubmit}>
             <label htmlFor="student">Namn:</label>
             <input id="student"
             ref={studentNameInput}
