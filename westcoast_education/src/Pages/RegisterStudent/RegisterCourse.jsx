@@ -59,13 +59,7 @@ fetch(STUDENTS_URL, {
     }
   }
   )})
-
-
-
   clearForm()
-
-
-
 }
 
   return ( 

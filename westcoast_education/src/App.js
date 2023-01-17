@@ -32,6 +32,15 @@ li{
 }
 font-family: Sofia Sans;
 font-size:1rem;
+a{
+  border-radius: 30px;
+border:none;
+padding:8px;
+  color: ${({ theme }) => theme.text};
+  &:hover,&:focus{
+    color: ${({ theme }) => theme.buttonText};
+    background: ${({ theme }) => theme.accent};}
+}
 `
 const Button = styled.button`
 padding:8px;

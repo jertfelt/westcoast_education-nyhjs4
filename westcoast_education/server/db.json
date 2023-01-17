@@ -30,12 +30,10 @@
       "studentEmail": "eva@gmail.com",
       "courses": {
         "firstChoice": {
-          "subject": "Engelska A",
-       
+          "subject": "Engelska A"
         },
         "secondChoice": {
-          "subject": "Matematik A",
-        
+          "subject": "Matematik A"
         }
       },
       "studentID": 901,
