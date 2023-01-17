@@ -19,16 +19,16 @@ const Registrering = (props) => {
   const context = useContext(StudentContext);
   const [showModal, setShowModal] = useState(false)
   const [validInputs, setValidInputs] = useState(false)
-  const nameInputRef = useRef()
   const emailInputRef = useRef()
   const courseInputRef = useRef()
   const courseInputRef2 = useRef()
   const coursesURL = "http://localhost:8000/courses"
   const {data,loading,error} = useFetch(coursesURL)
-
+  const [course2, setCourse2] = useState("")
+  const [errorMsg, setErrMsg] = useState("")
+  const STUDENTS_URL = "http://localhost:8000/students"
 
 const clearForm = () => {
-  nameInputRef.current.value =""
   emailInputRef.current.value=""
   courseInputRef.current.value=""
   courseInputRef2.current.value=""
@@ -36,28 +36,44 @@ const clearForm = () => {
 
 const onSubmit = async(e) => {
   e.preventDefault()
+  if(courseInputRef2.current.value === "Välj"){
+    setCourse2("")
+  }
+  else{
+    setCourse2(courseInputRef2.current.value)
+  }
+
+fetch(STUDENTS_URL, {
+  method:"PATCH",  
+  headers:{
+    "Content-Type": "application/json"
+  },
+  body: JSON.stringify({
+    "studentEmail": emailInputRef.current.value,
+    "courses": {"firstChoice": {
+      "subject" : courseInputRef.current.value
+    },
+    "secondChoice":{
+      "subject" : course2
+    }
+    }
+  }
+  )})
+
+
+
   clearForm()
+
+
+
 }
-
-
 
   return ( 
   <Section data-testid="Registrering">
 
     <Form onSubmit={onSubmit}>
     <h1>Registrera dig på en kurs</h1>
-      <label htmlFor="studentName">
-        Ditt namn:
-      </label>
-      <input id="studentName"
-      ref={nameInputRef}
-      name="studentName"
-      placeholder={context.studentName || "Namn"} 
-      type="text"
-      required/>
-      <label htmlFor="studentEmail">
-        Email:
-      </label>
+      
       <input id="studentEmail"
       data-testid="studentEmail"
       ref={emailInputRef}
@@ -73,10 +89,14 @@ const onSubmit = async(e) => {
       required
       onChange={() => setValidInputs(true)}
       >
-        <option value={props.name ||"Välj:"} 
+        <option 
+        value={props.name ||"Välj:"} 
         data-testid="optionDefault"
         label={props.name ||"Välj:"}/>
-        {data && data.filter(function (course){return course.courseName !== props.name}).map(item => ( <option key={item.courseID}>{item.courseName}</option>)
+
+        {data && data.filter(function (course){return course.courseName !== props.name}).map(item => ( <option value={item.courseName}
+        key={item.courseID}>
+          {item.courseName}</option>)
         )}
       </select>
       
@@ -86,10 +106,11 @@ const onSubmit = async(e) => {
       ref={courseInputRef2}
       data-testid="studentcourse2"
       >
-      <option value="Välj:" 
-        name="Välj:"
-        label="Välj:"/>
-        {data && data.filter(function (course){return course.courseName !== props.name}).map(item => ( <option key={item.courseID}>{item.courseName}</option>)
+      <option 
+      value="Välj:" 
+      name="Välj:"
+      label="Välj:"/>
+        {data && data.filter(function (course){return course.courseName !== props.name}).map(item => ( <option key={item.courseID} value={item.courseName}>{item.courseName}</option>)
         )}
         <option 
         value="Ingen"
@@ -99,6 +120,7 @@ const onSubmit = async(e) => {
       </select>
       <Button 
       className={validInputs ? "enabled" :""}
+      disabled={validInputs ? true : false}
       type="submit"
       value="Skicka"
       />
