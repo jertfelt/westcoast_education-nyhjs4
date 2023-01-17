@@ -7,7 +7,7 @@ const StudentContext = createContext({
       studentPassword: "",
       studentName: "",
       studentEmail: "",
-      studentCourses: "",
+      studentCourses: [],
       studentID: "",
       onLogin: () => {},
       onLogout: () => {}

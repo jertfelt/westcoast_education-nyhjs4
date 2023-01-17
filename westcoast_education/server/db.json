@@ -29,8 +29,14 @@
       "studentName": "Eva",
       "studentEmail": "eva@gmail.com",
       "courses": {
-        "firstChoice": "Engelska A",
-        "secondChoice": "Matematik A"
+        "firstChoice": {
+          "subject": "Engelska A",
+          "points": 50,
+          "courseID": 1},
+        "secondChoice": {
+          "subject": "Matematik A",
+          "points": 50,
+          "courseID": 10}
       },
       "studentID": 901,
       "password": "123Pass"

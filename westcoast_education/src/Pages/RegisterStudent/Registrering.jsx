@@ -1,22 +1,16 @@
-
 import { useState, useRef, useContext } from "react";
 import { useFetch } from "../../Components/utils/useFetch";
 import StudentContext from "../../Context/StudentContext";
-import LoginStudent from "../../Components/Student/LoginStudent";
-
-
-
 
 const Registrering = (props) => {
   const context = useContext(StudentContext);
-
   const [showModal, setShowModal] = useState(false)
 
   const nameInputRef = useRef()
   const emailInputRef = useRef()
   const courseInputRef = useRef()
   const courseInputRef2 = useRef()
-  const [student, setStudent] = useState(context.studentLoggedIn)
+ 
 
   const coursesURL = "http://localhost:8000/courses"
   const {data,loading,error} = useFetch(coursesURL)
@@ -38,9 +32,7 @@ const onSubmit = async(e) => {
   return ( 
   <section data-testid="Registrering">
     <h2>Registrera dig på en kurs</h2>
-    {!student && <div><h2>För att registrera dig behöver du vara inloggad hos oss.</h2> <LoginStudent/></div>
-    }
-    {student && <>
+
     <form onSubmit={onSubmit}>
       <label htmlFor="studentName">
         Ditt namn:
@@ -103,7 +95,7 @@ const onSubmit = async(e) => {
       betalningsuppgifter och ett välkomstmeddelande. 
       Skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste
       vi tyvärr av ekonomiska skäl boka av kursen. </p>
-      </>}
+      
   </section> );
 }
  

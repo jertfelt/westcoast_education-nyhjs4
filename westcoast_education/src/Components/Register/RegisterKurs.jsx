@@ -8,5 +8,4 @@ const RegisterKurs = () => {
   name={id}
   />  );
 }
- 
 export default RegisterKurs;
