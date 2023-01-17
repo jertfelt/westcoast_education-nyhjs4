@@ -22,11 +22,8 @@ display:flex;
 flex-direction:column;
 gap:2rem;
 div{
-
-
 }
-a{
-}
+
 `
 const Courses = styled.div`
 background:none;

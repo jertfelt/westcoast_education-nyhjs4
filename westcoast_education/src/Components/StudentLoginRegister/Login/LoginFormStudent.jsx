@@ -1,9 +1,9 @@
 import styled from "styled-components";
 import axios from "axios";
 import { useContext, useState,  useRef, useEffect } from "react";
-import StudentContext from "../../Context/StudentContext";
+import StudentContext from "../../../Context/StudentContext";
 import { useNavigate } from "react-router-dom";
-import Modal from "../ui/Modal/Modal";
+import Modal from "../../ui/Modal/Modal";
 
 
 const Form = styled.form`

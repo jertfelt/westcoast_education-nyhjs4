@@ -1,4 +1,4 @@
-import Registrering from "../../Pages/RegisterStudent/Registrering";
+import Registrering from "../../Pages/RegisterStudent/RegisterCourse";
 import { useParams } from "react-router-dom";
 
 const RegisterKurs = () => {
