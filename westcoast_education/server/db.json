@@ -58,36 +58,6 @@
       "studentEmail": "test@gmail.com",
       "studentPassword": "12345678TESTer!",
       "id": 813
-    },
-    {
-      "studentName": "test",
-      "studentEmail": "test@gmail.com",
-      "studentPassword": "12345678TESTer!",
-      "id": 814
-    },
-    {
-      "studentName": "test",
-      "studentEmail": "test@gmail.com",
-      "studentPassword": "12345678TESTer!",
-      "id": 815
-    },
-    {
-      "studentName": "Tova",
-      "studentEmail": "eee@gmail.com",
-      "studentPassword": "123P@ssword",
-      "id": 816
-    },
-    {
-      "studentName": "Tova",
-      "studentEmail": "eee@gmail.com",
-      "studentPassword": "123P@ssword",
-      "id": 817
-    },
-    {
-      "studentName": "Tova",
-      "studentEmail": "eee@gmail.com",
-      "studentPassword": "123P@ssword",
-      "id": 818
     }
   ],
   "courses": [

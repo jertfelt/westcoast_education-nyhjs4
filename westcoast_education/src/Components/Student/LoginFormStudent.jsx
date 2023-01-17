@@ -1,10 +1,9 @@
 import styled from "styled-components";
-import { useFetch } from "../utils/useFetch";
+import axios from "axios";
 import { useContext, useState,  useRef, useEffect } from "react";
 import StudentContext from "../../Context/StudentContext";
 import { useNavigate } from "react-router-dom";
 import Modal from "../ui/Modal/Modal";
-import { M } from "msw/lib/SetupApi-b2f0e5ac";
 
 
 const Form = styled.form`
@@ -32,63 +31,48 @@ input{
 
 const LoginFormStudent = () => {
   const context = useContext(StudentContext);
-  
+  const navigate = useNavigate();
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
   const [studentEmail, setUser] = useState("")
   const [studentPassword, setPassword] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [errMsg, setErrMsg] = useState("")
-  const navigate = useNavigate()
-
-  // const {data,loading,error} = useFetch("http://localhost:8000/students")
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    await fetch("http://localhost:8000/students", {
-    method: "POST",
-    headers:{
-      "Content-Type": "application/json"
-    },
-    body: JSON.stringify({
-      studentPassword: passwordInputRef.current.value,
-      studentEmail: emailInputRef.current.value,
-    }),
-    }).then(res => res.json())
-    .then(data => {
-      console.log(data)
-      if(data.error){
-        setErrMsg("Fel lösenord eller användarnamn")
-        setShowModal(true)
+    try{
+      const res = await axios.post(
+        "http://localhost:8000/students",
+        JSON.stringify({studentEmail, studentPassword}),{
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      context.onLogin({
+        studentEmail,
+        studentPassword,
+      })
+      navigate("/register")
+    }catch(err){
+      if (!err?.response) {
+        setErrMsg("No Server Response");
+      } else if (err.response?.status === 400) {
+        setErrMsg("Missing Username or Password");
+      } else if (err.response?.status === 401) {
+        setErrMsg("Unauthorized");
+      } else {
+        setErrMsg("Login Failed");
       }
-      else{
-        navigate("/student")
-      }
-    })
-  
- 
-      // if(data.filter(function (item){return item.studentEmail === studentEmail})){
-      //   console.log(data.filter(function (item){return item.studentEmail === studentEmail}))
-      //   // context.onLogin({
-      //   //   studentEmail,
-      //   //   studentPassword,
-      //   // })
-      //   // navigate("/student")
-      // }
-      // else{
-      //   console.log("fel")
-      //     setErrMsg("Något har gått fel, försök igen")
-      //     setShowModal(true)
-      // }  
+    }
   }
+
+
+
 
   return (
     <>
-    {showModal && <Modal 
-    title="Något gick fel!"
-      message={errMsg}
-      onClick={() => setShowModal(false)}/> }
-
+    {showModal && <Modal/> }
     <Form onSubmit={handleSubmit}>
        <label htmlFor="username">
         Email:</label>
@@ -105,7 +89,6 @@ const LoginFormStudent = () => {
             <input
               type="password"
               id="password"
-              ref={passwordInputRef}
               onChange={(e) => setPassword(e.target.value)}
               value={studentPassword}
               required

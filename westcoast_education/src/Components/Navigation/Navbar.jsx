@@ -2,7 +2,6 @@ import styled from "styled-components";
 import { useEffect, useState, useRef, useContext, } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../Context/Auth.Context";
-import StudentContext from "../../Context/StudentContext";
 
 const MenuButton = styled.button`
 background: transparent;
@@ -78,7 +77,6 @@ a{
  const Navbar = () => {
   const ref = useRef()
   const context = useContext(AuthContext)
-  const contextStudent = useContext(StudentContext)
   const [dropdownShown, setDropdown] = useState(false)
   
   useEffect(() => {
@@ -116,14 +114,12 @@ a{
     <DropDMenu data-testid="dropdown">
       <ul>
       <li><Link to="/">Start</Link></li>
-      {!context.loggedIn  && <li><Link to="/login">Admin</Link></li>}
+      {!context.loggedIn && <li><Link to="/login">Logga in</Link></li>}
       {context.loggedIn && <>
       <li><Link to="/admin">Admin</Link></li>
-      <li><Link onClick={context.onLogout}>Logga ut</Link></li></>
-      }
-      {!contextStudent.studentloggedIn  && <li><Link to="/register">Registrera kurs</Link></li>}
-      {contextStudent.studentLoggedIn && <li><Link onClick={contextStudent.onLogout}>Logga ut</Link></li>}
-    
+      <li><Link onClick={context.onLogout}>Logga ut</Link></li>
+      </>
+      } 
       </ul>
       <button onClick={() => setDropdown(false)}>Stäng</button>
     </DropDMenu>)}

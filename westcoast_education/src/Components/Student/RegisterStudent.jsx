@@ -3,7 +3,6 @@ import styled from "styled-components";
 import { useContext, useState, useRef, useEffect } from "react";
 import StudentContext from "../../Context/StudentContext";
 import { useNavigate } from "react-router-dom";
-import { useFetch } from "../utils/useFetch";
 
 
 const Form = styled.form`
@@ -67,17 +66,10 @@ const RegisterStudent = () => {
   const studentUser = {
        studentName, studentEmail,studentPassword
   }
-  const {data,loading,error} = useFetch("http://localhost:8000/students")
 
-  async function handleSubmit (e) {
+  const handleSubmit = (e) => {
     e.preventDefault()
-      
-      if(data.filter(function (item){return item.studentEmail === studentEmail})){
-        setShowModal(true)
-        setErrMsg("Emailadressen finns redan")
-      }
-      else{
-        
+    
       fetch("http://localhost:8000/students", {
         method:"POST",
         headers:{
@@ -90,8 +82,8 @@ const RegisterStudent = () => {
         studentName,
         studentPassword
       })
-    }
-      navigate("/student")
+     
+      navigate("/register")
   }
   
   
