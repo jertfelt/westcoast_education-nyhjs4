@@ -16,7 +16,7 @@ import Routing from "./Config/Routes"
 
 // //*context
 import AuthContext from "./Context/Auth.Context";
-
+import StudentContext from "./Context/StudentContext";
 
 //*---other components
 import Header from "./Components/Header/Header";
@@ -47,7 +47,7 @@ font-size:1rem;
 
 function App() {
    const context = useContext(AuthContext)
-
+  const contextStudent = useContext(StudentContext)
   //*theme:
   const [theme, themeToggler, mountedComponent] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
@@ -75,6 +75,9 @@ function App() {
       <li><Button onClick={context.onLogout}>Logga ut</Button></li>
       </>
       }
+      {contextStudent.studentLoggedIn && <>
+      <li><Link to="/student">Studentportal</Link></li>
+      <li><Button onClick={contextStudent.onLogout}>Logga ut</Button></li> </>}
       </Footer>
      
       </BrowserRouter>
