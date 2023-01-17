@@ -28,7 +28,7 @@ const Routing = () => {
   const contextStudent = useContext(StudentContext)
   const isAdminLoggedIn = contextAdmin.loggedIn
   const isStudentLoggedIn = contextStudent.studentLoggedIn
-  console.log(contextStudent)
+  
 
   return (   
   <Routes>

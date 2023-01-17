@@ -3,23 +3,9 @@ import { useEffect, useState, useRef, useContext, } from "react";
 import { Link } from "react-router-dom";
 import AuthContext from "../../../Context/Auth.Context";
 import StudentContext from "../../../Context/StudentContext";
+import MenuButton from "../../StylingElements/Buttons/MenuButton";
 
 
-const MenuButton = styled.button`
-background: transparent;
-border:none;
-padding:8px;
-color: ${({ theme }) => theme.text};
-border-radius: 9px;
-&:hover{
-  background: ${({ theme }) => theme.buttonBackground};
-  color: ${({ theme }) => theme.body};
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-}
-font-size:1rem;
-cursor: pointer;
-border-radius: 30px;
-`
 const DropDMenu = styled.nav`
   background: ${({ theme }) => theme.buttonBackground};
   color: ${({ theme }) => theme.body};

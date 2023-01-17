@@ -63,7 +63,6 @@ const LoginFormStudent = () => {
           setStudent("")
           setPassword("")
           navigate("/student")
-          
    }
    else{
     setShowModal(true)
