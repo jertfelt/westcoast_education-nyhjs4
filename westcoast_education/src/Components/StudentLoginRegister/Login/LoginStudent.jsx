@@ -39,26 +39,14 @@ align-items:center;
 width:100%;` 
 
 const LoginStudent = () => {
-  const context = useContext(StudentContext);
- 
-  const [showModal, setShowModal] = useState(false)
-  const [errMsg, setErrMsg] = useState("")
-
   const [notMemberYet, setMember] = useState(false)
-  const [revealQuestion1, setReveal1] = useState(true)
-  const [revealQuestion2, setReveal2] = useState(false)
-
-
+ 
 const determineMember = () => {
   if(!notMemberYet){
-    setMember(true)
-    setReveal1(false)
-    setReveal2(true)
+    setMember(true) 
   }
   else{
     setMember(false)
-    setReveal1(true)
-    setReveal2(false)
   }
 }
 
@@ -68,8 +56,8 @@ const determineMember = () => {
     {!notMemberYet && <RegisterStudent/>}
     {notMemberYet && <LoginFormStudent/>}
     <QuestionDiv>
-      {!notMemberYet && <p>Är du redan registrerad?</p>}
-      {notMemberYet && <p>Behöver du registrera dig?</p>}
+      {!notMemberYet && <p data-testid="initialQuestion">Är du redan registrerad?</p>}
+      {notMemberYet && <p data-testid="ifNotMember">Behöver du registrera dig?</p>}
       <button 
     onClick={determineMember}>Klicka här</button>
     </QuestionDiv>

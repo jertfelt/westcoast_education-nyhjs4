@@ -7,7 +7,7 @@ describe("Login section", () => {
 
   it("should have a button", () => {  
     setup()
-    expect(screen.getAllByRole("button", {name:/Klicka här/i})).toHaveLength(3)
+    expect(screen.getByRole("button", {name:/Klicka här/i})).toBeInTheDocument()
   })
   describe("button toggles the view depending on if you want to login or register", () => {
     it("should initially ask if you are already a member", () => {
@@ -16,11 +16,11 @@ describe("Login section", () => {
     })
     it("should change when pressed", () => {
       setup()
-      const firstButton = screen.getAllByRole("button", {name:/Klicka här/i}[2])
       expect(screen.getByTestId("initialQuestion")).toBeInTheDocument()
-      userEvent.click(firstButton)
-      expect(screen.getByTestId("notMemberYet")).toBeInTheDocument()
-      userEvent.click()
+      userEvent.click(screen.getByRole("button", {name:/Klicka här/i}))
+      expect(screen.getByTestId("ifNotMember")).toBeInTheDocument()
+      userEvent.click(screen.getByRole("button", {name:/Klicka här/i}))
+      expect(screen.getByTestId("initialQuestion")).toBeInTheDocument()
     })
 
   })
