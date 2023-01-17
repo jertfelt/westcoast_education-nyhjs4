@@ -4,16 +4,23 @@ import { useContext, useState, useRef, useEffect } from "react";
 import StudentContext from "../../Context/StudentContext";
 import { useNavigate } from "react-router-dom";
 
-
 const Form = styled.form`
+background: ${({ theme }) => theme.toggleBorder};
+padding:2rem;
+color: ${({ theme }) => theme.text};
+h1{
+  
+  align-self:center;
+  font-size:32px;
+  line-height:1rem;
+}
 display:flex;
 flex-direction:column;
-max-width:600px;
-gap:4px;
-input{
-  padding:4px;
-}
+max-width:300px;
+gap:10px;
+font-family: Sofia Sans;
 .instructions{
+  
   font-size:12px;
 }
 .offscreen{
@@ -27,6 +34,37 @@ input{
   width: 1px;
 }
 `
+const Container = styled.div`
+display:flex;
+gap:6px;
+align-items:center;
+justify-content:flex-end;
+input{
+  font-family: Sofia Sans;
+  padding:4px;
+  width:60%;
+  border-color:${({ theme }) => theme.text};
+  font-color: ${({ theme }) => theme.text};
+}
+input[type=password]{
+  width:50%;
+}
+min-width:200px;
+width:100%;
+`
+const Button = styled.input`
+border-radius: 30px;
+width:100px;
+margin-top:1rem;
+padding:1rem;
+border:none;
+font-family: Sofia Sans;
+align-self:center;
+background-color: ${({ theme }) => theme.accent};
+font-weight:bold;
+font-size:14px;
+`
+
 const RegisterStudent = () => {
   const context = useContext(StudentContext);
   const navigate = useNavigate()
@@ -61,8 +99,6 @@ const RegisterStudent = () => {
   }, [studentPassword, matchPassword]);
 
 
-
-
   const studentUser = {
        studentName, studentEmail,studentPassword
   }
@@ -92,6 +128,8 @@ const RegisterStudent = () => {
   return (
     <Form 
       onSubmit={handleSubmit}>
+        <h1>Registrera dig:</h1>
+        <Container>
       <label htmlFor="username">
         Användarnamn:</label>
       <input 
@@ -105,8 +143,10 @@ const RegisterStudent = () => {
       onFocus={() => setUserFocus(true)}
       onBlur={() => setUserFocus(false)}
       />
+     
+      </Container>
       <p className={userFocus && studentName && !validName ? "instructions" : "offscreen"} >Måste börja med en bokstav. 4 - 24 karaktärer behövs.</p>
-      
+      <Container>
       <label 
       htmlFor="emailLogin">
       Email:</label>
@@ -118,10 +158,12 @@ const RegisterStudent = () => {
       ref={emailInputRef}
       onChange={(e) => setEmail(e.target.value)}
       />
-
+      </Container>
+      <Container>
       <label 
       htmlFor="passwordLogin">
         Lösenord:</label>
+
       <input 
       type="password"
       id="passwordLogin"
@@ -135,6 +177,8 @@ const RegisterStudent = () => {
       onFocus={() => setPwdFocus(true)}
       onBlur={() => setPwdFocus(false)}
       />
+     
+      </Container>
       <p className={pwdFocus && !validPassword ? "instructions" : "offscreen"} >
       Minst 8 karaktärer. Måste innehålla både stora och små bokstäver, minst ett nummer och minst ett specialtecken. Tillåtna tecken är:{""}
       <span aria-label="exclamation mark">
@@ -145,9 +189,10 @@ const RegisterStudent = () => {
           <span aria-label="dollar sign">$</span>{" "}
           <span aria-label="percent">%</span>
           </p>
+      <Container>
       <label 
       htmlFor="passwordLoginConfirm">
-      Bekräfta lösenord::</label>
+      Bekräfta lösenord:</label>
       <input 
       type="password"
       id="passwordLoginConfirm"
@@ -156,9 +201,11 @@ const RegisterStudent = () => {
       required
       onChange={(e) => setMatch(e.target.value)}
       aria-invalid={validMatch? "false": "true"}
-      placeholder="Email"
+      placeholder="Bekräfta lösenord"
       ref={passwordInputRef}
       />
+    
+      </Container>
       <p className={
               matchFocus && !validMatch
                 ? "instructions"
@@ -167,8 +214,7 @@ const RegisterStudent = () => {
       >
         Matchar inte första lösenordet!
       </p>
-      
-      <input 
+      <Button
       type="submit"
       disabled={!validMatch ? true :false}
       value="Registrera"/>
