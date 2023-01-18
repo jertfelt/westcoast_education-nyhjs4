@@ -17,44 +17,50 @@ import Teacher from "../Components/Admin/AllTeachers/Teacher"
 
 //? STUDENT ROUTES
 import RegisterKurs from "../Components/RegisterKursParam/RegisterKursParam";
-import Registrering from "../Pages/RegisterStudent/RegisterCourse";
+ import Registrering from "../Pages/RegisterStudent/RegisterCourse";
 import StudentPortal from "../Pages/StudentPortal/StudentPortal"
-import LoginStudent from "../Components/StudentLoginRegister/Login/LoginStudent"
-
-
+ import LoginStudent from "../Components/StudentLoginRegister/Login/LoginStudent"
 
 const Routing = () => {
   const contextAdmin = useContext(AuthContext)
   const contextStudent = useContext(StudentContext)
   const isAdminLoggedIn = contextAdmin.loggedIn
   const isStudentLoggedIn = contextStudent.studentLoggedIn
-  
+
+
   return (   
   <Routes>
     <Route path="/" 
     element={<HomePage/>}/>
-    <Route path="/login"
+
+    <Route path="admin/login"
     element={<Login/>}/>
+
     <Route path="/admin" 
-    element={isAdminLoggedIn ? <Admin />:<Navigate to="/login"/>}/>
-    <Route path="/studentlogin" 
-    element={<LoginStudent/>}/>
+    element={isAdminLoggedIn ? <Admin />:<Navigate to="admin/login"/>}/>
+
+    <Route path="/student/login" 
+    element={<LoginStudent/>}/> 
+
     <Route path="/student" 
-    element={isStudentLoggedIn ? <StudentPortal/>: <Navigate to="/studentlogin"/>}/>
+    element={isStudentLoggedIn ? <StudentPortal/>: <Navigate to="/student/login"/>}/>
+
+   {/* BYT NAMN PÅ NEDAN: */}
     <Route path="/register">
-      <Route index element={isStudentLoggedIn ? <Registrering/>: <Navigate to="/studentlogin"/>}/>
+      <Route index element={isStudentLoggedIn ? <Registrering/>: <Navigate to="/studentlogin"/>}/> 
       <Route path=":id" element={isStudentLoggedIn ? <RegisterKurs/>: <Navigate to="/studentlogin"/>}/>
-    </Route>
+    </Route> 
+
     <Route path="/kurser">
       <Route index element={isAdminLoggedIn ?<AllaKurser/>:<Navigate to="/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?<Kurs/>:<Navigate to="/login"/>}/>
-  
     </Route>
+
     <Route path="/larare">
       <Route index element={isAdminLoggedIn ?<AllTeachers/>:<Navigate to="/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?<Teacher/>:<Navigate to="/login"/>}/>
-    
     </Route>
+
     <Route path="*" element={<NoMatch/>}/>
   </Routes>
    );

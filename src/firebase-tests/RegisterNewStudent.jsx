@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link} from "react-router-dom";
-import { auth } from "../../../firebase/fireBase";
+import { auth } from "./fireBase";
 import { registerWithEmailAndPassword } from "../../../firebase/fireBase";
 
 
-function Register() {
+function RegisterNewStudent() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
@@ -50,10 +50,10 @@ function Register() {
         </button>
         
         <div>
-          Already have an account? <Link to="/studentlogin">Login</Link> now.
+          Already have an account? <Link to="/loginstudent">Login</Link> now.
         </div>
       </div>
     </div>
   );
 }
-export default Register;
+export default RegisterNewStudent;

@@ -1,23 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import initFirebase from "../../../firebase/initFirebase";
+
 import { signInWithEmailAndPassword} from "firebase/auth";
-import { auth } from "../../../firebase/fireBase";
+
 import { useAuthState } from "react-firebase-hooks/auth";
 
+import {auth} from "./fireBase"
 
 function LoginTest() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [user, loading, error] = useAuthState(auth);
   const navigate = useNavigate();
-  // useEffect(() => {
-  //   if (loading) {
-  //   <p>Laddar...</p>
-  //     return;
-  //   }
-  //   if (user) navigate("/");
-  // }, [user, loading]);
+  useEffect(() => {
+    if (loading) {
+    <p>Laddar...</p>
+      return;
+    }
+    if (user) navigate("/studentportal");
+  }, [user, loading]);
 
   return (
     <div className="login">
@@ -42,11 +43,11 @@ function LoginTest() {
         >
           Login
         </button>
-        <div>
+        {/* <div>
           <Link to="/reset">Forgot Password</Link>
-        </div>
+        </div> */}
         <div>
-          Don't have an account? <Link to="/register">Register</Link> now.
+          Don't have an account? <Link to="/registerstudent">Register</Link> now.
         </div>
       </div>
     </div>

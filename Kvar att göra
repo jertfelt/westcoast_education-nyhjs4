@@ -1,20 +1,39 @@
+
+
+PRIO 1: 
+-----------------ADMINPORTAL
+
+1A) ---------Lägg till lärare formulär
+              - Kompetenser checkboxes renderat
+              - Kurs i select option
+1B) ---------Lägg till kurs formulär
+               - Lärare i select option
+
+PRIO 2: 
 --------------- LÄRARE
               - I detaljvy: lägg till formulär för att ändra existerande lärare
 
------------------ADMINPORTAL
 
----------Lägg till lärare formulär
-              - Kompetenser checkboxes renderat
-              - Kurs i select option
----------Lägg till kurs formulär
-               - Lärare i select option
+PRIO 3: 
+---- Skriv klart tester
 
---------------STUDENT
-Byt till firebase? - låt bli så länge, låt det vara localhost pga ej obligatoriskt.
+
+PRIO 4:
+--------------STUDENTLOGIN/REGISTER:
+
+PRIO 3A: Routes - > registerStudent och login: städa upp och separera 
+se kommentar i routes.jsx
+
+PRIO 3B: 
+https://stackoverflow.com/questions/37910008/check-if-value-exists-in-firebase-db 
+
+
+Påbörjat processen här:
 
 https://blog.logrocket.com/user-authentication-firebase-react-apps/
 
-------------LOGIN
+att göra:
+1 - 
 
 
 ----------REGISTER KURS : 

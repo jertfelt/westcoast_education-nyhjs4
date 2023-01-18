@@ -2,8 +2,6 @@ import {useState} from "react";
 import RegisterStudent from "../RegisterStudent"
 import LoginFormStudent from "./LoginFormStudent"
 
-import LoginTest from "./LoginStudentTest";
-import Register from "./RegisterNewStudent";
 
 
 import styled from "styled-components";
@@ -58,9 +56,9 @@ const determineMember = () => {
   <Content>
   
   {/* {!notMemberYet && <Register/>}  */}
-     {notMemberYet && <LoginTest/>}
-    {/* {!notMemberYet && <RegisterStudent/>}
-    {notMemberYet && <LoginFormStudent/>} */}
+     {/* {notMemberYet && <LoginTest/>} */}
+    {!notMemberYet && <RegisterStudent/>}
+    {notMemberYet && <LoginFormStudent/>}
     <QuestionDiv>
       {!notMemberYet && <p data-testid="initialQuestion">Är du redan registrerad?</p>}
       {notMemberYet && <p data-testid="ifNotMember">Behöver du registrera dig?</p>}
