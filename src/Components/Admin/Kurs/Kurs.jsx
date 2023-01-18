@@ -1,10 +1,10 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useFirebase } from "../../utils/useFirebase";
 import styled from "styled-components";
 import { useEffect, useRef, useState } from "react";
 import { FormWOInstructions } from "../../StylingElements/Form/Form";
 import { useDates } from "../../utils/useDates";
-import {getDatabase, update, ref} from "firebase/database"
+import { getDatabase, ref, set} from "firebase/database"
 
 const Section = styled.section`
 display: flex;
@@ -50,11 +50,10 @@ color: ${({ theme }) => theme.accent};
 const Kurs = () => {
   const {id} = useParams()
   let noId = Number(id)
-  
+  const navigate = useNavigate()
  
   const {data} = useFirebase("/courses")
   const {year, nextYear} = useDates()
-
   const courseNameRef = useRef()
   const courseDescriptionRef = useRef()
   const startDateref = useRef()
@@ -63,7 +62,9 @@ const Kurs = () => {
   const [isLoading, setLoading] = useState(false)
   const [changeForm, setChangeForm] = useState(false);
   const [publishedStatus, setPublishedStatus] = useState(null)
+  const [instructions, setInstructions] = useState(false)
   const [courseID, setCourseID] = useState(null)
+
 
   useEffect(() => {
     if(data){
@@ -91,11 +92,15 @@ const Kurs = () => {
     e.preventDefault()
     if(data.filter(item => item.courseID === noId).map(item => item.published)[0] === true){
       setPublishedStatus(false)
+     
     }
     else{
       setPublishedStatus(true)
+      
     }
   }
+
+  
   
  
   const handleDiscard = (e) => {
@@ -104,30 +109,36 @@ const Kurs = () => {
   }
 
   const confirmSave = (e) => {
-  e.preventDefault()
-  setLoading(true)
-  const courseName = courseNameRef.current.value;
-  const courseDescription = courseDescriptionRef.current.value
-  const startDate = startDateref.current.value
-  const lengthWeeks = lengthWeeksRef.current.value
-  const studentsAssigned = studentsAssignedRef.current.value
-  const published = publishedStatus
-
-  const courseItem = {
-    courseName,
-    courseDescription,
-    startDate,
-    lengthWeeks,
-    studentsAssigned,
-    published
-  }
-  sendEditToFirebase(courseItem)
+    e.preventDefault()
+    setLoading(true)
+      const coursename = courseNameRef.current.value;
+      const description = courseDescriptionRef.current.value
+      const startdate = startDateref.current.value
+      const weeks = lengthWeeksRef.current.value
+      const students = studentsAssignedRef.current.value
+      const published = publishedStatus
+      const ID = courseID
+      sendEditToFirebase(coursename, description, startdate, weeks, students, published, ID )
+      navigate("/kurser")
+   
   }
 
-  const sendEditToFirebase = (courseItem) => {
+  const deleteCourse=(courseID) => {
+    ref.doc(courseID).delete()
+  }
+
+  const sendEditToFirebase = (coursename, description, startdate, weeks, students, published, ID) => {
     const db = getDatabase()
-    const dbRef = ref(db, `/kurser/${courseID}`)
-    update(dbRef, {text:courseItem})
+    set(ref(db, "courses/" + ID ),{
+      courseName: coursename,
+      courseDescription : description,
+      startDate : startdate,
+      lengthWeeks : weeks,
+      studentsAssigned: students,
+      courseID: ID,
+      published: published,
+    })
+    
   }
 
   useEffect(() => {
@@ -141,38 +152,50 @@ const Kurs = () => {
  
   return ( 
   <Section>
+
     <InfoRuta>
-      
-    {changeForm && 
-        <FormWOInstructions onSubmit={confirmSave}>
-          {isLoading ? <h2>Laddar..</h2>:<h2>Ändra:</h2>}
+    {data && data.filter(item => item.courseID === noId).map(item => (
+          <div key= {item.id}>
+            {changeForm ?  (<FormWOInstructions onSubmit={confirmSave}>
+          {isLoading ? 
+          <h2>Laddar..</h2>:<h2>Ändra:</h2>}
           <label htmlFor="courseNameChangeInput">Kursnamn:</label>
           <input id="courseNameChangeInput"
           type="text"
           ref={courseNameRef}
-          placeholder= "Kursnamn:"
+          defaultValue={item.courseName}
           />
           <label htmlFor="courseDescriptionChangeInput">Kursbeskrivning:</label>
           <textarea id="courseDescriptionChangeInput"
           type="text"
           maxLength="50"
           ref={courseDescriptionRef}
-          placeholder= "Kursbeskrivning, max 50 tecken."
+          defaultValue={item.courseDescription}
+          onFocus={() => setInstructions(true)}
           />
-          <label htmlFor="startDateChangeInput">Startdatum:</label>
+          {instructions && 
+          <p className="instructions">Max 50 tecken</p>
+          }
+          {item.startDate < year && <p>Startdatum har redan passerat!</p>}
+          {item.startDate > year && <>
+            <label htmlFor="startDateChangeInput">Startdatum:</label>
+            <p className="instructions">Tidigare startdatum:  {item.startDate}</p>
           <input 
           id="startDateChangeInput"
           type="date"
-          defaultValue={year}
           min={year}
           max={nextYear}
           ref={startDateref}
-          />
+          
+          /> 
+          </>}
+          
+         
           <label htmlFor="lengthWeeksChangeInput">Antal veckor:</label>
           <input 
           id="lengthWeeksChangeInput"
           type="number"
-          defaultValue={2}
+          defaultValue={item.lengthWeeks}
           min={2}
           max={15}
           ref={lengthWeeksRef}
@@ -194,14 +217,10 @@ const Kurs = () => {
         Stäng</button>
         </>
       }
-          </FormWOInstructions>}
-
-    {data && data.filter(item => item.courseID === noId).map(item => (
-          <div key= {item.id}>
+    </FormWOInstructions>): ( <div>
           <h1>{item.courseName}</h1>
           <p>Beskrivning: {item.courseDescription}</p>
           {item.published && <>
-          
           <p>Start:{item.startDate}</p>
           <p>Längd: {item.lengthWeeks} veckor</p>  
           <p>Publicerad kurs</p>
@@ -214,6 +233,7 @@ const Kurs = () => {
           onClick={() => setChangeForm(true)}>Redigera</button>
           </ButtonContainer>
           </>}
+
           {item.studentsAssigned < 5 && <>
             <p>Planerad start:{item.startDate}</p>
               <h3>Ej publicerad kurs</h3>
@@ -222,6 +242,7 @@ const Kurs = () => {
               <p>Antal deltagare kvar som behövs för att kunna ha kursen: {5-item.studentsAssigned} </p>
               <button 
               onClick={() => setChangeForm(true)}>Ändra</button>
+              <button onClick={() => deleteCourse(item.courseID)}>Radera</button>
           </>}
           {!item.published && item.studentsAssigned >= 5 ? <> <p>Start:{item.startDate}</p>
                   <h3>Ej publicerad kurs</h3>
@@ -230,16 +251,18 @@ const Kurs = () => {
                   <ButtonContainer>
                   <button  
                   onClick={setToPublished}>Publicera</button>
+                  <button onClick={() => deleteCourse(item.courseID)}>Radera</button>
                   <button 
                   onClick={() => setChangeForm(true)}>Ändra</button>
                   </ButtonContainer>
                   
           </>: null}
-         
+          </div>
+
+)}
           </div>
         ))
         }
-       
         </InfoRuta>
         
   </Section> );

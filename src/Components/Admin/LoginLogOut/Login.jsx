@@ -56,8 +56,7 @@ const Login = () => {
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null)
-  const adminName = "Admin"
-  const adminPassword = "word123"
+ 
   const [showModal, setShowModal] = useState(false)
   
   const login = (e) => {

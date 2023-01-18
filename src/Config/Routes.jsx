@@ -48,10 +48,12 @@ const Routing = () => {
     <Route path="/kurser">
       <Route index element={isAdminLoggedIn ?<AllaKurser/>:<Navigate to="/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?<Kurs/>:<Navigate to="/login"/>}/>
+  
     </Route>
     <Route path="/larare">
       <Route index element={isAdminLoggedIn ?<AllTeachers/>:<Navigate to="/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?<Teacher/>:<Navigate to="/login"/>}/>
+    
     </Route>
     <Route path="*" element={<NoMatch/>}/>
   </Routes>
