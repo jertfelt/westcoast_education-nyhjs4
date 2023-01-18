@@ -56,7 +56,6 @@ const ModalOverlay = (props) => {
 }
 
 const Modal = (props) => {
-  
   return (
     <>
      {ReactDOM.createPortal(

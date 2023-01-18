@@ -4,22 +4,23 @@ import { Link } from "react-router-dom";
 
 const GridKurser = styled.div`
 display:grid;
-gap:0.8rem;
+gap:2px;
 `
 
 const Courses = styled.div`
 background:none;
 display:flex; 
-align-items:center;
-gap: 6px;
-justify-content:space-around;
+align-items:flex-start;
+justify-content:flex-start;
+opacity:0.8;
 &:hover{
-  opacity:0.8;
+  opacity:1;
 }
+
 `
 const Content = styled.div`
 h2{
-text-align:center;
+text-align: flex-start;
 }`
 
 const AllaKurser = () => {
@@ -34,6 +35,7 @@ const AllaKurser = () => {
       <Courses key={courses.courseID}>
         <Link to={`/kurser/${courses.courseID}`}>
         <h3>{courses.courseName}</h3>
+        <p>Start: {courses.startDate}</p>
         </Link>
       </Courses>
     ))}
