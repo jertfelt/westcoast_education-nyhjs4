@@ -5,11 +5,14 @@ import App from './App';
 import { AuthContextProvider } from './Context/Auth.Context';
 import { StudentContextProvider } from './Context/StudentContext';
 
+
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
    <AuthContextProvider>
     <StudentContextProvider>
-    <App />
+    <App 
+    />
     </StudentContextProvider>
     </AuthContextProvider>
 );
