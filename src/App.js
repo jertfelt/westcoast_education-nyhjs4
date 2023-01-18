@@ -1,8 +1,6 @@
 import {useContext, Fragment} from "react";
 
-//*---firebase:
-import initFirebase from './firebase/initFirebase';
-import {getDatabase, ref, child, get} from "firebase/database"
+
 
 //*----styling & darkmode/lightmode:
 import Theme, { lightTheme, darkTheme }  from "./Context/styling/Theme";
@@ -60,32 +58,16 @@ font-size:1rem;
 `
 
 
-export async function getServerSideProps(){
-  initFirebase()
-  const db= getDatabase()
-  const dbRef = ref(db)
-  let teacherData = await get(child(dbRef, "/teachers"))
-  let courseData = await get(child(dbRef, "/courses"))
-  let competencesData = await get(child(dbRef, "/competences"))
-  let studentsData = await get(child(dbRef, "/students"))
-  return{
-      props: {
-          teachersdb : teacherData.val(),
-          coursesdb : courseData.val(),
-          competencesdb : competencesData.val(),
-          studentsdb : studentsData.val()
-      }
-  }
-}
 
-function App({teachersdb, coursesdb, competencesdb, studentsdb}) {
-   const context = useContext(AuthContext)
+function App() {
+  const context = useContext(AuthContext)
   const contextStudent = useContext(StudentContext)
   //*theme:
   const [theme, themeToggler, mountedComponent] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   if(!mountedComponent) return <div/>
-  
+ 
+
   return (
     <Fragment>
     <Theme>
@@ -96,11 +78,10 @@ function App({teachersdb, coursesdb, competencesdb, studentsdb}) {
       <Header/>
       <Line/>
       <main 
-      students = {studentsdb}
-      competences = {competencesdb}
-      teachers = {teachersdb}
-      courses = {coursesdb}>
-        <Routing/>
+      >
+      <Routing 
+      
+      />
       </main>
       <Line/>
       <Footer data-testid="footer">

@@ -29,7 +29,6 @@ const Routing = () => {
   const isAdminLoggedIn = contextAdmin.loggedIn
   const isStudentLoggedIn = contextStudent.studentLoggedIn
   
-
   return (   
   <Routes>
     <Route path="/" 
@@ -37,7 +36,7 @@ const Routing = () => {
     <Route path="/login"
     element={<Login/>}/>
     <Route path="/admin" 
-    element={isAdminLoggedIn ? <Admin/>:<Navigate to="/login"/>}/>
+    element={isAdminLoggedIn ? <Admin />:<Navigate to="/login"/>}/>
     <Route path="/studentlogin" 
     element={<LoginStudent/>}/>
     <Route path="/student" 

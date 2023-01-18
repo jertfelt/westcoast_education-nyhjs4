@@ -1,5 +1,5 @@
 import styled from "styled-components"
-import { useFetch } from "../../utils/useFetch"
+import { useFirebase } from "../../utils/useFirebase";
 import { Link } from "react-router-dom";
 
 const GridKurser = styled.div`
@@ -23,13 +23,12 @@ text-align:center;
 }`
 
 const AllaKurser = () => {
-  const COURSES_URL = "http://localhost:8000/courses"
-  const {data, error, loading} = useFetch(COURSES_URL)
-
+  const {data,error,loading} = useFirebase("/courses")
   return (
   <Content>
     <h2>Alla kurser</h2>
     {error && <p>Något har blivit fel med servern</p>}
+    {loading && <p>Laddar..</p>}
     <GridKurser>
     {data && data.map(courses => (
       <Courses key={courses.courseID}>

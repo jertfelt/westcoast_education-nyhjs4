@@ -2,7 +2,7 @@ import styled from "styled-components"
 import ReactDOM  from "react-dom"
 
 
-const ModalDiv = styled.div`
+export const ModalDiv = styled.div`
 @media (min-width: 800px){
   left: calc(50% - 20rem);
   width: 40rem;
@@ -30,7 +30,7 @@ button{
 }
 `
 
-const Overlay = styled.div`
+export const Overlay = styled.div`
 position: fixed;
 top: 0;
 left: 0;
@@ -39,7 +39,7 @@ height: 100vh;
 z-index: 10;
 background: rgba(0, 0, 0, 0.4);
 `
-const Content = styled.div`
+export const Content = styled.div`
 padding: 2rem;`
 
 const ModalOverlay = (props) => {

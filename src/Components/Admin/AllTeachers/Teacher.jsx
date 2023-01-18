@@ -1,6 +1,5 @@
 import { useNavigate, useParams, Link } from "react-router-dom";
-import { useFetch } from "../../utils/useFetch";
-import { useEffect, useState } from "react";
+import { useFirebase } from "../../utils/useFirebase";
 import styled from "styled-components";
 
 const Section = styled.section`
@@ -39,18 +38,14 @@ margin-bottom:-2rem;
 const Teacher = () => {
   const navigate = useNavigate()
   const {id} = useParams()
-  const TEACHER_URL = "http://localhost:8000/teachers"
-  const {data, error, loading} = useFetch(TEACHER_URL)
- 
+  const {data,error} = useFirebase("/teachers")
   let noId = Number(id)
 
   return ( 
   <Section>
     {error && <p>Något har blivit fel med servern</p>}
 
-     {data && data.map((item => {
-      if(item.id === noId){
-        return(
+     {data && data.filter(item => item.id === noId).map(item => (
       <InfoRuta key= {item.id}>
         <h1>{item.firstName} {item.lastName}</h1>
         <p>Personnummer: {item.personalID}</p>
@@ -67,17 +62,13 @@ const Teacher = () => {
         </ul>
         <button 
     onClick={() => navigate(-1)}>
-     Gå  tillbaka
+    Gå  tillbaka
   </button>
       </InfoRuta>
-        )
-      }
-     }
-     ))
-    }
-   
-  {loading && <p>Laddar...</p>}
-  </Section> );
+    ))}
+
+  </Section> 
+  );
 }
  
 export default Teacher;

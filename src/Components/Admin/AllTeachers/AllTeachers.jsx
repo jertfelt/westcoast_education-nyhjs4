@@ -1,7 +1,8 @@
-import { useFetch } from "../../utils/useFetch";
+
 import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
+import { useFirebase } from "../../utils/useFirebase";
 
 const Grid = styled.div`
 display:flex;
@@ -46,25 +47,20 @@ text-align:center;
 const CollapsedDiv=styled.div``
 
 const AllTeachers = () => {
-  const TEACHER_URL = "http://localhost:8000/teachers"
-  const {data, error, loading} = useFetch(TEACHER_URL)
   const [collapsed, setCollapsed] = useState(false)
-  
-  return ( 
+  const {data,error,loading} = useFirebase("/teachers")
+  return (
   <AllTeachersContent 
   data-testid="allTeachers">
     <h2>Alla lärare</h2>
       <Grid>
-        {error && <p>Något har blivit fel med servern</p>}
-        {loading && <p>Laddar...</p>}
-        {data && data.map((teacher => (
-          
+        {error && <p>Något är fel på servern.</p>}
+        {loading && <p>Laddar..</p>}
+         {data && data.map((teacher => (
           <GridTeacher 
           key={teacher.personalID}
           >
-         
           <div>
-          
           <h3 onClick={() => setCollapsed(prev => !prev)}
           className={collapsed ? "accent" : ""}>{teacher.firstName} {teacher.lastName}</h3>
           {collapsed && <CollapsedDiv>
@@ -81,11 +77,11 @@ const AllTeachers = () => {
           </Link>}
           </CollapsedDiv>}
           </div>
-           {!collapsed && <Link to={`/larare/${teacher.id}`}>
+          {!collapsed && <Link to={`/larare/${teacher.id}`}>
             Se mer 
           </Link>}
           </GridTeacher>
-        )))} 
+        )))}    
       </Grid>
 
   </AllTeachersContent> );

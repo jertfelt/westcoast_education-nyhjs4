@@ -1,10 +1,10 @@
-import { useContext, useState, useEffect } from "react";
+import { useContext} from "react";
 import AuthContext from "../../Context/Auth.Context";
 import styled from "styled-components";
 import AddTeacherOrCourseForm from "../../Components/Admin/Forms/AddTeachersOrCoursesForm";
-import { Link } from "react-router-dom";
 import AllTeachers from "../../Components/Admin/AllTeachers/AllTeachers";
 import AllaKurser from "../../Components/Admin/Kurs/AllaKurser";
+
 
 const AdminSite = styled.section`
 padding:2rem;
@@ -38,21 +38,20 @@ const FormContainer = styled.aside`
 `
 const Admin = () => {
   const context = useContext(AuthContext)
-
- 
   
-  const [courses, setCourses] = useState([])
- 
+  
 
   return (
   <AdminSite
   data-testid="Admin">
     <h1>Välkommen, {context.userName}</h1>
     <MainContent>
-    <TwoColumns>
-      <AllTeachers/>
-      <AllaKurser/>
-    </TwoColumns>
+     <TwoColumns>
+      <AllTeachers 
+      />
+      <AllaKurser 
+      />
+    </TwoColumns> 
     </MainContent>
     <FormContainer>
     <AddTeacherOrCourseForm/>

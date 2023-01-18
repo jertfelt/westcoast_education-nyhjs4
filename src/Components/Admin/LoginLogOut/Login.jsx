@@ -1,7 +1,7 @@
 import { useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../Context/Auth.Context";
-
+import { ButtonBlack } from "../../StylingElements/Buttons/FormButton";
 //Modal
 import Modal from "../../ui/Modal/Modal";
 
@@ -46,50 +46,45 @@ input{
   font-family: Sofia Sans;
   width:100%;
 }`
-const Button = styled.input`
-padding:4px;
-color: ${({ theme }) => theme.buttonText};background: ${({ theme }) => theme.buttonBackground};
-border:none;
-font-family: Sofia Sans;
-border-radius:29px;
-max-width:100px;
-&:hover, &:focus{
-  color: ${({ theme }) => theme.background};
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  background: ${({ theme }) => theme.accent};
-}
-&:active{
-  color: ${({ theme }) => theme.button};
-  background: ${({ theme }) => theme.accent};
-}
-cursor: pointer;
-font-size:1.4rem;
-`
+
+
 
 const Login = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const context = useContext(AuthContext);
   const [buttDisabled, setButtDisabled] = useState(true);
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState(null)
   const adminName = "Admin"
   const adminPassword = "word123"
-  //if logged in, hide login page
-  const [authenticated, setAuthenticated] = useState(context.loggedIn)
-  //if wrong pass/username show modal
   const [showModal, setShowModal] = useState(false)
   
-  const LoginFunction = (e) => {
+  const login = (e) => {
     e.preventDefault()
-    if(userName === adminName && password === adminPassword){
+    if(userName === process.env.REACT_APP_ADMIN_USERNAME && password === process.env.REACT_APP_ADMIN_PASSWORD){
       navigate("/admin")
       context.onLogin({
         userName,
         password,
       })
     }
+    else if (userName !== process.env.REACT_APP_ADMIN_USERNAME){
+      setShowModal(true)
+      setError("Du kan ha skrivit in fel användarnamn")
+    }
+    else if(password !== process.env.REACT_APP_ADMIN_PASSWORD){
+      setShowModal(true)
+      setError("Du kan ha skrivit in fel lösenord")
+    }
+    else if (password !== process.env.REACT_APP_ADMIN_PASSWORD && userName !== process.env.REACT_APP_ADMIN_USERNAME){
+      setShowModal(true)
+      setError("Både lösenord och användarnamn är fel!")
+    }
+    
     else{
-    setShowModal(true)
+      setShowModal(true)
+      setError("Något har gått fel. Försök igen, eller kontakta administratören.")
     }
   }
 
@@ -110,9 +105,9 @@ const Login = () => {
       setButtDisabled(true);
     }
   }
+
   return ( 
   <Section data-testid="Login">
-    {!authenticated ? <>
     <Intro>
     <h1>Välkommen</h1>
     <p>Här krävs det inloggning! För att få ett konto, kontakta din lärare eller administratören på westcoast-admin@email.com</p>
@@ -120,39 +115,39 @@ const Login = () => {
     {showModal && (
       <Modal 
       title="Något gick fel!"
-      message="Du kan ha skrivit in fel användarnamn eller lösenord."
+      message={error}
       onClick={() => setShowModal(false)} />
     )}
-    <Form onSubmit={LoginFunction}> 
+    <Form onSubmit={(e) =>login(e)} 
+    onFocus={() => setError(null)}> 
       <LabelInput>
-      <label htmlFor="username">Användarnamn:</label>
+      <label 
+      htmlFor="username">
+        Användarnamn:</label>
       <input 
       type="text"
+      autoComplete="off"
       id="username"
       placeholder="Användarnamn"
       value={userName}
       onChange={userNameHandler}/>
       </LabelInput>
       <LabelInput>
-        <label htmlFor="password">Lösenord:</label>
+        <label htmlFor="password">
+          Lösenord:</label>
         <input id="password"
-        placeholder="Lösenord"
+        placeholder="********"
         value={password}
         type="password"
         onChange={passwordHandler}/>
       </LabelInput>
-      <Button
+      <ButtonBlack
       value="Logga In"
       type="submit"
       disabled={buttDisabled}
       >
-      </Button>
-    </Form></>: <Intro> <h1>Välkommen</h1>
-    <p>Du är redan inloggad!</p>
-    <button className="btn" onClick={() => navigate(-1)}>
-     Gå  tillbaka
-  </button>
-    </Intro>}
+      </ButtonBlack>
+    </Form>
   </Section> );
 }
 
