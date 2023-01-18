@@ -1,0 +1,21 @@
+--------------- LÄRARE
+              - I detaljvy: lägg till formulär för att ändra existerande lärare
+
+-----------------ADMINPORTAL
+
+---------Lägg till lärare formulär
+              - Kompetenser checkboxes renderat
+              - Kurs i select option
+---------Lägg till kurs formulär
+               - Lärare i select option
+
+--------------STUDENT
+Byt till firebase? - låt bli så länge, låt det vara localhost pga ej obligatoriskt.
+
+https://blog.logrocket.com/user-authentication-firebase-react-apps/
+
+------------LOGIN
+
+
+----------REGISTER KURS : 
+om jag hinner lägg in så att det blir en count på kurs 

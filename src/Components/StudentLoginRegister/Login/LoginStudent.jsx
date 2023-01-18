@@ -1,7 +1,10 @@
-import { useContext, useState, useRef, useEffect } from "react";
+import {useState} from "react";
 import RegisterStudent from "../RegisterStudent"
 import LoginFormStudent from "./LoginFormStudent"
-import StudentContext from "../../../Context/StudentContext";
+
+import LoginTest from "./LoginStudentTest";
+import Register from "./RegisterNewStudent";
+
 
 import styled from "styled-components";
 const QuestionDiv = styled.div`
@@ -53,8 +56,11 @@ const determineMember = () => {
   return (
   <section>
   <Content>
-    {!notMemberYet && <RegisterStudent/>}
-    {notMemberYet && <LoginFormStudent/>}
+  
+  {/* {!notMemberYet && <Register/>}  */}
+     {notMemberYet && <LoginTest/>}
+    {/* {!notMemberYet && <RegisterStudent/>}
+    {notMemberYet && <LoginFormStudent/>} */}
     <QuestionDiv>
       {!notMemberYet && <p data-testid="initialQuestion">Är du redan registrerad?</p>}
       {notMemberYet && <p data-testid="ifNotMember">Behöver du registrera dig?</p>}

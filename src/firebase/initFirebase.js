@@ -1,6 +1,9 @@
 import { initializeApp } from 'firebase/app'
-import { getAuth } from 'firebase/auth'
+import {  getAuth} from 'firebase/auth';
+
 import { getDatabase } from 'firebase/database'
+
+
 
 const clientCredentials = {
   apiKey: "AIzaSyBj_ocbD0O1j13HCB3Bv2LnDzflVzhlrVs",
@@ -17,5 +20,6 @@ const initFirebase = () => {
   const auth = getAuth(app)
   const db = getDatabase(app)
 }
+
 
 export default initFirebase
