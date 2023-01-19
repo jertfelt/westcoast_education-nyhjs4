@@ -7,7 +7,7 @@ import { useRef, useEffect, useState,} from "react";
 import { getDatabase, ref, set, remove} from "firebase/database"
 import styled from "styled-components";
 
-const Competences = styled.div`
+export const Competences = styled.div`
 display:flex;
 
 li{

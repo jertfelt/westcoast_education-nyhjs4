@@ -10,7 +10,6 @@ PRIO 1:
                - Lärare i select option
 
 
-
 PRIO 3: 
 ---- Skriv klart tester
 
@@ -38,3 +37,4 @@ att göra:
 
 ----------REGISTER KURS : 
 om jag hinner lägg in så att det blir en count på kurs 
+(filter students och kör length på student.coursesnames --> )

@@ -10,17 +10,19 @@ import NoMatch from "../Pages/NoMatch/NoMatch";
 //? ADMIN ROUTES 
 import Login from "../Components/Admin/LoginLogOut/AdminLogin";
 import Admin from "../Pages/AdminSite/Admin";
-
-import AllaKurser from "../Components/Admin/Kurs/AllaKurser";
+//--Admin courses:
+import AddKurs from "../Components/Admin/Kurs/AddKurs";
 import Kurs from "../Components/Admin/Kurs/Kurs";
-import AllTeachers from "../Components/Admin/AllTeachers/AllTeachers";
+// --Admin teachers:
+import AddNewTeacher from "../Components/Admin/AllTeachers/AddNewTeacher";
 import Teacher from "../Components/Admin/AllTeachers/Teacher"
+
+
 
 //? STUDENT ROUTES
 import RegisterKurs from "../Components/RegisterKursParam/RegisterKursParam";
 import RegistreringKurs from "../Pages/RegisterStudent/RegisterCourse";
 import StudentPortal from "../Pages/StudentPortal/StudentPortal"
-
 import LoginStudent from "../Pages/LoginStudent/LoginStudent";
 
 const Routing = () => {
@@ -34,6 +36,7 @@ const Routing = () => {
   <Routes>
     <Route path="/" 
     element={<HomePage/>}/>
+   
 
     <Route path="/admin/login"
     element={<Login/>}/>
@@ -55,11 +58,13 @@ const Routing = () => {
     <Route path="/kurser">
       <Route index element={isAdminLoggedIn ?<Admin/>:<Navigate to="/admin/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?<Kurs/>:<Navigate to="/admin/login"/>}/>
+      <Route path="/kurser/new" element={isAdminLoggedIn ?<AddKurs/>:<Navigate to="/admin/login"/>}/>
     </Route>
 
     <Route path="/larare">
       <Route index element={isAdminLoggedIn ?<Admin/>:<Navigate to="/admin/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?<Teacher/>:<Navigate to="/admin/login"/>}/>
+      <Route path="/larare/new" element={isAdminLoggedIn ?<AddNewTeacher/>:<Navigate to="/admin/login"/>}  />
     </Route>
 
     <Route path="*" element={<NoMatch/>}/>

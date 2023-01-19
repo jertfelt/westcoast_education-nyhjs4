@@ -70,17 +70,20 @@ const Admin = () => {
   <AdminSite
   data-testid="Admin">
     <h1>Välkommen, {context.userName}</h1>
+ 
     <MainContent>
     <TwoColumns>
       <AllTeachers 
       />
       <AllaKurser 
       />
-    </TwoColumns> 
-    </MainContent>
-    <FormContainer>
+        <FormContainer>
     <AddTeacherOrCourseForm/>
     </FormContainer>
+    </TwoColumns> 
+  
+    </MainContent>
+    
     
   </AdminSite>  );
 }
