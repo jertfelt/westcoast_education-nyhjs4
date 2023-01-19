@@ -1,17 +1,18 @@
 import styled from "styled-components";
 
  const Form = styled.form`
-background: ${({ theme }) => theme.toggleBorder};
 padding:2rem;
-color: ${({ theme }) => theme.text};
 h1{
   align-self:center;
-  font-size:32px;
+  font-size:2rem;
   line-height:1rem;
+  @media (max-width: 600px){
+    line-height:1.8rem;
+    font-size:1.8rem;
+  }
 }
 display:flex;
 flex-direction:column;
-
 gap:10px;
 font-family: Sofia Sans;
 `
@@ -30,6 +31,29 @@ export const FormInstructions = styled(Form)`
   position: absolute;
   width: 1px;
 }
+
+  .Row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    line-height:1rem;
+    @media (max-width: 600px){
+      flex-direction:column;
+      align-items:flex-start;
+    }
+  }
+  input[type="submit"] {
+    padding: 4px 8px;
+    border:none;
+    font-size:14px;
+    border-radius:30px;
+    margin-top:1rem;
+    &:hover{
+      background: ${({ theme }) => theme.toggleBorder};
+    color: ${({ theme }) => theme.accent};
+    }
+  }
+
 `
 export const FormWOInstructions = styled(Form)`
 label{

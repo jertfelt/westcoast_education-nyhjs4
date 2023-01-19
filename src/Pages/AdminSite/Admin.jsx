@@ -14,11 +14,11 @@ h1{
   color: ${({ theme }) => theme.link};
 }
 h2{
-  font-size:30px;
+  font-size:2.2rem;
   color: ${({ theme }) => theme.buttonText};
 }
 a{
-  color: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.buttonText};
   &:hover{
     color: ${({ theme }) => theme.accent};
   }

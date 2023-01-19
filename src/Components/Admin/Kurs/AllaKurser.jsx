@@ -16,6 +16,14 @@ opacity:0.8;
 &:hover{
   opacity:1;
 }
+p{
+  font-size:1rem;
+  margin-top:-1rem;
+}
+h3{
+  font-size:2rem;
+  line-height:1rem;
+}
 
 `
 const Content = styled.div`

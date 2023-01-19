@@ -15,7 +15,7 @@ export const lightTheme = {
   buttonText: "#FFF",
   toggleBorder: '#FFF',
   background: '#363537',
-  buttonBackground: "#363537",
+  buttonBackground: "black",
   accent: "#1E90FF",
   highlight: "midnightblue",
   link :"salmon",

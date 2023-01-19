@@ -87,7 +87,13 @@ const KursChangeForm = ({course}) => {
       const students = studentsAssignedRef.current.value
       const published = publishedStatus
       const ID = courseID
-      sendEditToFirebase(coursename, description, startdate, weeks, students, published, ID )
+      sendEditToFirebase(coursename, 
+        description, 
+        startdate, 
+        weeks, 
+        students, 
+        published, 
+        ID )
       navigate("/kurser/" + ID)
    
   }
