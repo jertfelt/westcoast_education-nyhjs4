@@ -1,10 +1,9 @@
 import styled from "styled-components";
-
 import { useContext, useState, useRef, useEffect } from "react";
-import StudentContext from "../../Context/StudentContext";
+import StudentContext from "../../../Context/StudentContext";
 import { useNavigate } from "react-router-dom";
-import { FormInstructions as Form } from "../StylingElements/Form/Form";
-import Button from "../StylingElements/Buttons/FormButton";
+import { FormInstructions as Form } from "../../StylingElements/Form/Form";
+import Button from "../../StylingElements/Buttons/FormButton";
 
 const Container = styled.div`
 display:flex;
@@ -182,6 +181,7 @@ const RegisterStudent = () => {
       </p>
       <Button
       type="submit"
+      data-testid="Submitbtn"
       className={!validMatch ? "disabled" : "enabled"}
       disabled={!validMatch ? true :false}
       value="Registrera"/>

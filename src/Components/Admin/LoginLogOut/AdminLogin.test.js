@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Login from './Login';
+import Login from './AdminLogin';
 import { MemoryRouter } from 'react-router-dom';
 
 describe("Login page", () => {
@@ -12,7 +12,7 @@ describe("Login page", () => {
   })
   it("should have a password input", () => {
     setup()
-    expect(screen.getByPlaceholderText("Lösenord")).toBeInTheDocument()
+    expect(screen.getByPlaceholderText("********")).toBeInTheDocument()
   })
   it("should have a login button", () => {
     setup()
@@ -32,7 +32,7 @@ describe("Interactions", () => {
     it("should be enabled when username and password have values", () => {
       setup()
       const username = screen.getByPlaceholderText("Användarnamn");
-      const password = screen.getByPlaceholderText("Lösenord");
+      const password = screen.getByPlaceholderText("********");
       userEvent.type(username, "Admin");
       userEvent.type(password, "pass123");
       expect(screen.getByRole('button', {name: "Logga In"})).toBeEnabled()
@@ -43,9 +43,9 @@ describe("Interactions", () => {
     xit("should show a message if there is something faulty with the username/password",() => {
       setup()
       const username = screen.getByPlaceholderText("Användarnamn");
-      const password = screen.getByPlaceholderText("Lösenord");
+      const password = screen.getByPlaceholderText("********");
       userEvent.type(username, "Kaos")
-       userEvent.type(password, "dd")
+      userEvent.type(password, "dd")
       //*expect
       
     })

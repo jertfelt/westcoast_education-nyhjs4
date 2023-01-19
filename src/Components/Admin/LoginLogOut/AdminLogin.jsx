@@ -106,7 +106,7 @@ const Login = () => {
   }
 
   return ( 
-  <Section data-testid="Login">
+  <Section data-testid="AdminLogin">
     <Intro>
     <h1>Välkommen</h1>
     <p>Här krävs det inloggning! För att få ett konto, kontakta din lärare eller administratören på westcoast-admin@email.com</p>

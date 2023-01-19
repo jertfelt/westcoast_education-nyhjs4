@@ -99,12 +99,12 @@ a{
     <MenuButton
     onClick={() => setDropdown(prev => !prev)}>
       Meny</MenuButton>
-    {dropdownShown && (
-    <DropDMenu data-testid="dropdown">
+      {dropdownShown && (
+      <DropDMenu data-testid="dropdown">
       <ul>
       <li><Link to="/">Start</Link></li>
       <li><Link to="/student">Studentportal</Link></li>
-      {!context.loggedIn && <li><Link to="/login">Admin</Link></li>}
+      {!context.loggedIn && <li><Link to="/admin/login">Admin</Link></li>}
       {context.loggedIn && <>
       <li><Link to="/admin">Admin</Link></li>
       <li><Link onClick={context.onLogout}>Logga ut</Link></li>

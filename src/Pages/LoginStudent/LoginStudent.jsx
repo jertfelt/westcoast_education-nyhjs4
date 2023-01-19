@@ -1,8 +1,6 @@
 import {useState} from "react";
-import RegisterStudent from "../RegisterStudent"
-import LoginFormStudent from "./LoginFormStudent"
-
-
+import RegisterStudent from "../../Components/StudentLoginRegister/Register/RegisterNewStudent";
+import LoginFormStudent from "../../Components/StudentLoginRegister/Login/LoginFormStudent"
 
 import styled from "styled-components";
 const QuestionDiv = styled.div`

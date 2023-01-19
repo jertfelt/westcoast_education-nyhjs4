@@ -12,13 +12,13 @@ describe("Menu button", () => {
     userEvent.click(screen.getByRole("button", {name: /meny/i}));
     expect(screen.getByTestId("dropdown")).toBeInTheDocument()
   })
-  it("should route to login site when login button is pressed", async () => {
+  it("if not logged in, should route to login site when admin link is pressed", async () => {
     render(<Navbar/>, {wrapper: MemoryRouter}, );
     await userEvent.click(screen.getByRole("button", {name: /meny/i}));
     expect(screen.getByTestId("dropdown")).toBeInTheDocument()
-    await userEvent.click(screen.getByText("Logga in"))
-    const loginButt = screen.getByText("Logga in")
-    expect(loginButt).toHaveAttribute('href', '/login')
+    await userEvent.click(screen.getByText("Admin"))
+    
+    expect(screen.getByText("Admin")).toHaveAttribute('href', '/admin/login')
   })
   it("should route to homepage site when homepage button is pressed", async () => {
     render(<Navbar/>, {wrapper: MemoryRouter}, );

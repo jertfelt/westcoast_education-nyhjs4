@@ -15,7 +15,7 @@ width:100%;
 justify-content:center;`
 
 
-const Registrering = (props) => {
+const RegistreringKurs = (props) => {
   const context = useContext(StudentContext);
   const [showModal, setShowModal] = useState(false)
   const [validInputs, setValidInputs] = useState(false)
@@ -63,7 +63,7 @@ fetch(STUDENTS_URL, {
 }
 
   return ( 
-  <Section data-testid="Registrering">
+  <Section data-testid="RegisterStudentKurs">
 
     <Form onSubmit={onSubmit}>
     <h1>Registrera dig på en kurs</h1>
@@ -130,4 +130,4 @@ fetch(STUDENTS_URL, {
   </Section> );
 }
  
-export default Registrering ;
+export default RegistreringKurs ;

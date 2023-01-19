@@ -1,7 +1,5 @@
 import {useContext, Fragment} from "react";
 
-
-
 //*----styling & darkmode/lightmode:
 import Theme, { lightTheme, darkTheme }  from "./Context/styling/Theme";
 import GlobalStyle from "./Context/styling/globalStyles";

@@ -18,17 +18,19 @@ export const lightTheme = {
   buttonBackground: "#363537",
   accent: "#1E90FF",
   highlight: "midnightblue",
+  link :"salmon",
 }
 
 export const darkTheme = {
   body: '#363537',
-  text: '#FAFAFA',
-  toggleBorder: '#6B8096',
-  background: 'midnightblue',
-  buttonText: "black",
+  text: "white",
+  toggleBorder: '#222b2a',
+  background: '#b8baba',
+  buttonText: "#222b2a",
   buttonBackground: "lightgray",
   accent:  "#1E90FF",
   highlight: "lightblue",
+  link: "pink",
 }
 
 export const Theme = ({ children }) => (

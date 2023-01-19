@@ -21,6 +21,9 @@ PRIO 3:
 PRIO 4:
 --------------STUDENTLOGIN/REGISTER:
 
+
+PRIO 3: Ändra inlogg och se hur man kan söka i databas. 
+
 PRIO 3A: Routes - > registerStudent och login: städa upp och separera 
 se kommentar i routes.jsx
 
