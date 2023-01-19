@@ -1,10 +1,10 @@
 import { FormInstructions} from "../../StylingElements/Form/Form";
 import ValidationModal from "../../ui/Modal/ValidationModal";
+import Modal from "../../ui/Modal/Modal";
 import { useFirebase } from "../../utils/useFirebase";
 import { useNavigate } from "react-router-dom";
 import { useRef, useEffect, useState,} from "react";
-import { getDatabase, ref, set} from "firebase/database"
-
+import { getDatabase, ref, set, remove} from "firebase/database"
 import styled from "styled-components";
 
 const Competences = styled.div`
@@ -38,16 +38,16 @@ const TeacherChangeForm = ({teacher, onChange }) => {
   const [chosenCompetences, setCompetences] = useState([])
   const [teacherID, setTeacherID] = useState(teacher.id)
   const [allaKurser, setKurser] = useState([])
-
-  //form behaviours
-  const [instructions, setInstructions] = useState(false)
-  const [isLoading, setLoading] = useState(false)
-  const [infoMessage, setInfoMessage] = useState("")
-  const [youDisobeyedInstruction, setYouDisobeyedInstruction] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [disabledPid, setDisabledPid] = useState(false)
   const [selectedOption, setSelected] = useState(teacher.competences)
   const [selected, setSelectedSelect] = useState("")
+  
+  //form behaviours
+  const [instructions, setInstructions] = useState(false)
+  const [infoMessage, setInfoMessage] = useState("")
+  const [youDisobeyedInstruction, setYouDisobeyedInstruction] = useState(false)
+  const [showModal2, setShowModal2] = useState(false)
+  const [showModal, setShowModal] = useState(false)
+  const [disabledPid, setDisabledPid] = useState(false)
   const [instructionsKompetens, setInstructionsKompetens] = useState(false)
   const [moreThanOneCompetence, setMoreThanOneCompetence] = useState(null)
   
@@ -57,16 +57,6 @@ const TeacherChangeForm = ({teacher, onChange }) => {
     }
   },[data])
 
-
-  useEffect(() => {
-    if(isLoading){
-        setTimeout(() => {
-            setLoading(false)
-        }, 2000);
-    }}, [isLoading])
-
-   
- 
     const sendEditToFirebase = (firstName, lastName, personalID, email, mobileNo, competences, ID) => {
       const db = getDatabase()
       set(ref(db, "/teachers/" + ID ),{
@@ -84,11 +74,10 @@ const TeacherChangeForm = ({teacher, onChange }) => {
 
   const confirmSave =(e) =>{
     e.preventDefault()
-    console.log(chosenCompetences, selectedOption)
+    
     if(chosenCompetences.length === 0){
       setCompetences(teacher.competences)
     }
-      setLoading(true)
       const firstName = firstNameRef.current.value 
       const lastName = lastNameRef.current.value
       const personalID = personalIDRef.current.value
@@ -104,7 +93,7 @@ const TeacherChangeForm = ({teacher, onChange }) => {
         mobileNo,
         competences,
         ID )
-      navigate("/larare/" + ID)
+        navigate("/larare/" + ID)
   }
 
   const handleSelect = (e) => {
@@ -165,15 +154,31 @@ const TeacherChangeForm = ({teacher, onChange }) => {
     }
    }
 
+   const deleteTeacher = () =>{
+    
+    const db = getDatabase()
+    remove(ref(db, "/teachers/" + teacherID)).then(()=>{
+      setShowModal(false)
+      showModal2(true)
+      
+    })
+    
+   }
+
   return (
   <FormInstructions 
   onSubmit={confirmSave}>
-    {/* {showModal && <ValidationModal
+    {showModal && <ValidationModal
     title="Är du säker?"
     message="Det går ej att ångra."
     onClickYes={() => deleteTeacher}
     onClick={() => setShowModal(false)}
-    />}  */}
+    />} 
+    {showModal2 && <Modal
+    title="Hejdå!"
+    message="Nu är läraren borta ur systemet."
+    onClick={() => setShowModal2(false)}
+    />}
     <h1>Ändra profil:</h1>
     <div className="Row">
     <label 
@@ -299,8 +304,11 @@ const TeacherChangeForm = ({teacher, onChange }) => {
       value="Spara"/>
       <button 
       onClick={onChange}>
-        Stäng 
+        Stäng formulär 
       </button> 
+      <button onClick={()=>setShowModal(true)}>
+        Avskeda lärare
+      </button>
   </FormInstructions>);
 }
  

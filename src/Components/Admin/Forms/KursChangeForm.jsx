@@ -4,8 +4,8 @@ import Modal from "../../ui/Modal/Modal";
 
 import { useNavigate } from "react-router-dom";
 import { useDates } from "../../utils/useDates";
-import { useRef, useEffect, useState } from "react";
-import { getDatabase, ref, set} from "firebase/database"
+import { useRef, useState } from "react";
+import { getDatabase, ref, set, remove} from "firebase/database"
 
 
 const KursChangeForm = ({course, onChange}) => {
@@ -40,17 +40,10 @@ const KursChangeForm = ({course, onChange}) => {
     }
 
 
-  useEffect(() => {
-    if(isLoading){
-        setTimeout(() => {
-            setLoading(false)
-        }, 2000);
-    }}, [isLoading])
     
-
-    
-  const deleteCourse=(courseID) => {
-    ref.doc(courseID).delete()
+  const deleteCourse=() => {
+    const db = getDatabase()
+    remove(ref(db, "/courses/" + courseID))
     setShowModal(false)
   }
 
