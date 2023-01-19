@@ -8,7 +8,7 @@ gap:2px;
 `
 
 const Courses = styled.div`
-background:none;
+
 display:flex; 
 align-items:flex-start;
 justify-content:flex-start;
@@ -24,9 +24,16 @@ h3{
   font-size:2rem;
   line-height:1rem;
 }
+a{
+  &:hover{
+    color: ${({ theme }) => theme.accent};
+  }
+ 
+}
 
 `
 const Content = styled.div`
+background:  ${({ theme }) => theme.background};
 h2{
 text-align: flex-start;
 }`

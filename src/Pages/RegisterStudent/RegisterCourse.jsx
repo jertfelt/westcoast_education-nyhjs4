@@ -1,10 +1,10 @@
-import { useState, useRef, useContext, useEffect } from "react";
+import { useState, useRef, useContext} from "react";
 import { useFetch } from "../../Components/utils/useFetch";
 import StudentContext from "../../Context/StudentContext";
 import styled from "styled-components";
 import { FormWOInstructions as Form } from "../../Components/StylingElements/Form/Form";
 import Button from "../../Components/StylingElements/Buttons/FormButton";
-import Modal from "../../Components/ui/Modal/Modal";
+
 
 const Section = styled.section`
 padding:3rem;
@@ -17,7 +17,7 @@ justify-content:center;`
 
 const RegistreringKurs = (props) => {
   const context = useContext(StudentContext);
-  const [showModal, setShowModal] = useState(false)
+ 
   const [validInputs, setValidInputs] = useState(false)
   const emailInputRef = useRef()
   const courseInputRef = useRef()
@@ -88,9 +88,12 @@ fetch(STUDENTS_URL, {
         data-testid="optionDefault"
         label={props.name ||"Välj:"}/>
 
-        {data && data.filter(function (course){return course.courseName !== props.name}).map(item => ( <option value={item.courseName}
+        {data && data.filter(function (course){return course.courseName !== props.name}).map(item => ( 
+        <option 
+        value={item.courseName}
         key={item.courseID}>
-          {item.courseName}</option>)
+          {item.courseName}
+          </option>)
         )}
       </select>
       

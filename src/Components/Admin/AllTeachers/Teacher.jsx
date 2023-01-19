@@ -1,4 +1,4 @@
-import { useNavigate, useParams, Link } from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import { useFirebase } from "../../utils/useFirebase";
 import { useState, useEffect } from "react";
 import { Section, InfoRuta, ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
@@ -23,8 +23,9 @@ const Teacher = () => {
 
   return ( 
   <Section>
-    {loading && <p>Laddar..</p>}
+    
     {error && <p>Något har blivit fel med servern</p>}
+    {loading ? (<h2>Laddar..</h2>):(
     <InfoRuta>
       {changeForm ? (<>
         {data && data.filter(item => item.id === noId).map(item => (
@@ -46,24 +47,22 @@ const Teacher = () => {
         <ul>
         {item.competences.map((comp => (
           <li key={comp}>
-            <Link to="/kurser">{comp}
-            </Link>
-            </li>
+           {comp} </li>
         )))}
         </ul>
         <ButtonContainer>
-        <button 
-    onClick={() => navigate(-1)}>
-    Gå  tillbaka
-  </button>
-  <button 
+          <button 
+            onClick={() => navigate(-1)}>
+            Gå  tillbaka
+          </button>
+          <button 
           onClick={() => setChangeForm(true)}>Redigera</button>
           </ButtonContainer>
       </div>
     ))}
     </>)}
     
-  </InfoRuta>
+  </InfoRuta>)}
   </Section> 
   );
 }

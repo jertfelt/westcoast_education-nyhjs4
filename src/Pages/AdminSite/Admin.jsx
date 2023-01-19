@@ -18,7 +18,7 @@ h2{
   color: ${({ theme }) => theme.buttonText};
 }
 a{
-  color: ${({ theme }) => theme.buttonText};
+  
   &:hover{
     color: ${({ theme }) => theme.accent};
   }

@@ -53,12 +53,12 @@ const Routing = () => {
     </Route> 
 
     <Route path="/kurser">
-      <Route index element={isAdminLoggedIn ?<AllaKurser/>:<Navigate to="/admin/login"/>}/>
+      <Route index element={isAdminLoggedIn ?<Admin/>:<Navigate to="/admin/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?<Kurs/>:<Navigate to="/admin/login"/>}/>
     </Route>
 
     <Route path="/larare">
-      <Route index element={isAdminLoggedIn ?<AllTeachers/>:<Navigate to="/admin/login"/>}/>
+      <Route index element={isAdminLoggedIn ?<Admin/>:<Navigate to="/admin/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?<Teacher/>:<Navigate to="/admin/login"/>}/>
     </Route>
 

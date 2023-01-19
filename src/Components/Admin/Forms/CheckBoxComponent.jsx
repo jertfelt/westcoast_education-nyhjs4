@@ -6,16 +6,18 @@ align-items:flex-end;
 justify-content:flex-end;
 `
 
-const CheckBoxComponent = ({key, id, item, isChecked}) => {
+const CheckBoxComponent = ({ id, item, isChecked, onChange}) => {
   return ( 
-  <Checkbox key={key}>
+  <Checkbox key={id}>
     <label htmlFor={id}>
       {item}</label>
       <input 
       type="checkbox"
       id={id}
+      
       name={id}
       checked = {isChecked}
+      onChange={onChange}
       />
   </Checkbox>  );
 }

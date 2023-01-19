@@ -3,7 +3,7 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useFirebase } from "../../utils/useFirebase";
-import { useRef } from "react";
+
 import { useEffect } from "react";
 
 const Grid = styled.div`

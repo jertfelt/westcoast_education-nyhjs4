@@ -1,16 +1,14 @@
 import { FormInstructions} from "../../StylingElements/Form/Form";
 import ValidationModal from "../../ui/Modal/ValidationModal";
-import Modal from "../../ui/Modal/Modal";
 import { useNavigate } from "react-router-dom";
-import { useDates } from "../../utils/useDates";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState,} from "react";
 import { getDatabase, ref, set} from "firebase/database"
-import CheckBoxComponent from "./CheckBoxComponent";
+
 import styled from "styled-components";
 
-const TwoColumns = styled.div`
+const Competences = styled.div`
 display:flex;
-gap:1rem;
+gap:4px;
 `
 
 const TeacherChangeForm = ({teacher, allaKompetenser}) => {
@@ -21,6 +19,7 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
   const personalIDRef = useRef()
   const emailRef =  useRef()
   const mobileNoRef = useRef()
+  
   const [allCompetences, setCompetences] = useState([])
   const [teacherID, setTeacherID] = useState(teacher.id)
 
@@ -31,8 +30,8 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
   const [youDisobeyedInstruction, setYouDisobeyedInstruction] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [disabledPid, setDisabledPid] = useState(false)
-  console.log(allaKompetenser)
-  
+  const [selectedOption, setSelected] = useState(teacher.competences)
+ 
 
   useEffect(() => {
     if(isLoading){
@@ -92,6 +91,15 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
       navigate("/larare/" + ID)
   }
 
+  const handleSelect = (e) => {
+    setSelected(prev => [...prev, e.target.value])
+  }
+
+  const handleTakeAway = (listitem) => {
+   let newList = selectedOption.filter(item => item)
+   console.log(newList, listitem, "test")
+  }
+
   const instructionsUnclear=(e) => {
     if(e.target.id === "pIDChangeInput"){
      setInfoMessage("Du får bara mata in siffror! 10- 12 stycken.")
@@ -118,9 +126,9 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
       setDisabledPid(true)
       setYouDisobeyedInstruction(true)
     }
-   
-    
    }
+
+  
 
   return (
   <FormInstructions 
@@ -205,61 +213,50 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
           disabled={disabledPid ? true : false}
     />
     </div>
-    <legend>
-          Kompetenser:
-    </legend>
-    <TwoColumns>
-    <div>
-    {allaKompetenser.map((kitem, i) => {
-      if(i % 2 === 0){
-      if(teacher.competences.includes(kitem)){
-        return (
-          <CheckBoxComponent
-          key={i}
-          id ={`${kitem}${i}`}
-          item= {kitem}
-          isChecked = {true}
-          />
-        )
-      }
-     else{
-      return (
-        <CheckBoxComponent
-        key={i}
-        id ={`${kitem}${i}`}
-        item= {kitem}
-        isChecked = {false}
-        />
-      )
-     }
-      }})}
-     </div>
+ 
+   
      <div>
-     {allaKompetenser.map((kitem, i) => {
-      if(i % 2 !== 0){
-      if(teacher.competences.includes(kitem)){
-        return (
-          <CheckBoxComponent
-          key={i}
-          id ={`${kitem}${i}`}
-          item= {kitem}
-          isChecked = {true}
-          />
-        )
-      }
-     else{
-      return (
-        <CheckBoxComponent
-        key={i}
-        id ={`${kitem}${i}`}
-        item= {kitem}
-        isChecked = {false}
-        />
-      )
-     }
-      }})}
+     
+    
+      
+     
+      <label htmlFor="kompetenser">
+        Lägg till kompetenser:
+      </label>
+      <select 
+      id="kompetenser"
+      data-testid="kompetensSelect"
+      value={selectedOption}
+      onChange = {(e) => handleSelect(e)}
+      >
+        <option 
+        value={"Välj:"} 
+        data-testid="optionDefault"
+        label={"Välj:"}/>
+        {allaKompetenser.map((kitem, i) =>{
+          if (!selectedOption.includes(kitem)){
+          return(
+            <option key={`${kitem}-${i}`}
+          value={kitem}>
+            {kitem}
+          </option>
+          )
+        }
+        })}
+      </select>
+      <h3>Valda kompetenser:</h3>
+      {selectedOption.map(item => (
+           <Competences key={`${item}--${item}`}
+           >
+           <p>{item}</p>
+           <button 
+           value={item}
+           onClick={handleTakeAway()}>
+            Ta bort</button>
+         </Competences>
+        ))}
      </div>
-     </TwoColumns>
+    
       <input 
       type="submit"
       value="Spara"/>
