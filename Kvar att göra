@@ -3,38 +3,26 @@
 PRIO 1: 
 -----------------ADMINPORTAL
 
-1A) ---------Lägg till lärare formulär
-              - Kompetenser checkboxes renderat
-              - Kurs i select option
-1B) ---------Lägg till kurs formulär
-               - Lärare i select option
+1A) ---------Lägg till kurs formulär
+              
+
+1B) --------- Dubbelkolla och skriv klart testerna
+
+1C) ----------- Förfina formulär = återanvänd dem och gör till en komponent. DNR
 
 
-PRIO 3: 
----- Skriv klart tester
+OM JAG HINNER:
+1)STUDENTLOGIN/REGISTER:
+- Ändra till firebase
+- sök efter studenter i databas + ändra 
+
+2)Kursformulär:  Lärare i select option, utifrån kompetenser.
+
+3)om jag hinner lägg in så att det blir en count på kurserna utifrån antalet studenter som har den kursen i databasen.
+(filter students och kör length på student.coursesnames --> )
 
 
-PRIO 4:
---------------STUDENTLOGIN/REGISTER:
-
-
-PRIO 3: Ändra inlogg och se hur man kan söka i databas. 
-
-PRIO 3A: Routes - > registerStudent och login: städa upp och separera 
-se kommentar i routes.jsx
-
-PRIO 3B: 
 https://stackoverflow.com/questions/37910008/check-if-value-exists-in-firebase-db 
-
-
-Påbörjat processen här:
 
 https://blog.logrocket.com/user-authentication-firebase-react-apps/
 
-att göra:
-1 - 
-
-
-----------REGISTER KURS : 
-om jag hinner lägg in så att det blir en count på kurs 
-(filter students och kör length på student.coursesnames --> )
