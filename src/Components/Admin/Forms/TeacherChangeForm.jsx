@@ -1,5 +1,6 @@
 import { FormInstructions} from "../../StylingElements/Form/Form";
 import ValidationModal from "../../ui/Modal/ValidationModal";
+import { useFirebase } from "../../utils/useFirebase";
 import { useNavigate } from "react-router-dom";
 import { useRef, useEffect, useState,} from "react";
 import { getDatabase, ref, set} from "firebase/database"
@@ -8,20 +9,35 @@ import styled from "styled-components";
 
 const Competences = styled.div`
 display:flex;
-gap:4px;
+
+li{
+  margin-top:-8px;
+  list-style:none;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  gap:1rem;
+  justify-content: center;
+  button{
+    margin-top:-1px;
+  }
+}
 `
 
-const TeacherChangeForm = ({teacher, allaKompetenser}) => {
+
+const TeacherChangeForm = ({teacher, onChange }) => {
   const navigate = useNavigate()
-  
+  const {data} = useFirebase("/competences")
+
   const firstNameRef = useRef()
   const lastNameRef = useRef()
   const personalIDRef = useRef()
   const emailRef =  useRef()
   const mobileNoRef = useRef()
   
-  const [allCompetences, setCompetences] = useState([])
+  const [chosenCompetences, setCompetences] = useState([])
   const [teacherID, setTeacherID] = useState(teacher.id)
+  const [allaKurser, setKurser] = useState([])
 
   //form behaviours
   const [instructions, setInstructions] = useState(false)
@@ -31,7 +47,16 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
   const [showModal, setShowModal] = useState(false)
   const [disabledPid, setDisabledPid] = useState(false)
   const [selectedOption, setSelected] = useState(teacher.competences)
- 
+  const [selected, setSelectedSelect] = useState("")
+  const [instructionsKompetens, setInstructionsKompetens] = useState(false)
+  const [moreThanOneCompetence, setMoreThanOneCompetence] = useState(null)
+  
+  useEffect(() => {
+    if(data){
+      setKurser(data.map(item => item))
+    }
+  },[data])
+
 
   useEffect(() => {
     if(isLoading){
@@ -40,21 +65,11 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
         }, 2000);
     }}, [isLoading])
 
-  const handleDiscard = (e) => {
-    clearForm()
-  }
-
-  const clearForm = () =>{
-    firstNameRef.current.value = ""
-   lastNameRef.current.value = ""
-    personalIDRef.current.value = ""
-    emailRef.current.value = ""
-   mobileNoRef.current.value = ""
-    }
-
-    const sendEditToFirebase = (ID, firstName, lastName, personalID, competences, mobileNo, email) => {
+   
+ 
+    const sendEditToFirebase = (firstName, lastName, personalID, email, mobileNo, competences, ID) => {
       const db = getDatabase()
-      set(ref(db, "teachers/" + ID ),{
+      set(ref(db, "/teachers/" + ID ),{
         competences: competences,
         id: ID,
         firstName : firstName,
@@ -65,20 +80,21 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
       })
     }
 
-    const deleteTeacher=(teacherID) => {
-      ref.doc(teacherID).delete()
-      setShowModal(false)
-    }
+    
 
   const confirmSave =(e) =>{
     e.preventDefault()
-    setLoading(true)
+    console.log(chosenCompetences, selectedOption)
+    if(chosenCompetences.length === 0){
+      setCompetences(teacher.competences)
+    }
+      setLoading(true)
       const firstName = firstNameRef.current.value 
       const lastName = lastNameRef.current.value
       const personalID = personalIDRef.current.value
       const email = emailRef.current.value
       const mobileNo = mobileNoRef.current.value
-      const competences = allCompetences
+      const competences = chosenCompetences
       const ID = teacherID
       sendEditToFirebase(
         firstName,
@@ -93,12 +109,33 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
 
   const handleSelect = (e) => {
     setSelected(prev => [...prev, e.target.value])
+    setCompetences(prev => [...prev, e.target.value])
+    
   }
 
-  const handleTakeAway = (listitem) => {
-   let newList = selectedOption.filter(item => item)
-   console.log(newList, listitem, "test")
+  const takeAwaySelect = (e) => {
+    if(selectedOption.length > 1){
+      let newList = selectedOption.filter(item => item !== e.target.value)
+      setSelected(newList)
+      setCompetences(newList)
+    }
+    else{
+      setInfoMessage("Du måste ha minst en kompetens!")
+      setInstructionsKompetens(true)
+    }
   }
+
+  useEffect(() => {
+    if(selectedOption.length === 1){
+      setMoreThanOneCompetence(false)
+    }
+    else if(selectedOption.length > 1){
+      setMoreThanOneCompetence(true)
+    }
+    else {
+      setMoreThanOneCompetence(true)
+    }
+  },[selectedOption])
 
   const instructionsUnclear=(e) => {
     if(e.target.id === "pIDChangeInput"){
@@ -128,17 +165,15 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
     }
    }
 
-  
-
   return (
   <FormInstructions 
   onSubmit={confirmSave}>
-    {showModal && <ValidationModal
+    {/* {showModal && <ValidationModal
     title="Är du säker?"
     message="Det går ej att ångra."
     onClickYes={() => deleteTeacher}
     onClick={() => setShowModal(false)}
-    />}
+    />}  */}
     <h1>Ändra profil:</h1>
     <div className="Row">
     <label 
@@ -216,24 +251,21 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
  
    
      <div>
-     
-    
-      
-     
+      <div className="Row">
       <label htmlFor="kompetenser">
         Lägg till kompetenser:
       </label>
       <select 
       id="kompetenser"
       data-testid="kompetensSelect"
-      value={selectedOption}
+      value={selected}
       onChange = {(e) => handleSelect(e)}
       >
         <option 
         value={"Välj:"} 
         data-testid="optionDefault"
         label={"Välj:"}/>
-        {allaKompetenser.map((kitem, i) =>{
+         {allaKurser.map((kitem, i) =>{
           if (!selectedOption.includes(kitem)){
           return(
             <option key={`${kitem}-${i}`}
@@ -242,31 +274,33 @@ const TeacherChangeForm = ({teacher, allaKompetenser}) => {
           </option>
           )
         }
-        })}
+        })} 
       </select>
+      </div>
+      
       <h3>Valda kompetenser:</h3>
+      {instructionsKompetens && <p>{infoMessage}</p>}
       {selectedOption.map(item => (
-           <Competences key={`${item}--${item}`}
-           >
-           <p>{item}</p>
-           <button 
-           value={item}
-           onClick={handleTakeAway()}>
-            Ta bort</button>
+           <Competences 
+           key={`${item}--${item}`}>
+           <li>
+            <p>{item}</p>
+          {moreThanOneCompetence && <>
+           <button value={item}
+           onClick={takeAwaySelect}>Ta bort</button>
+           </>}
+           </li>
+          
          </Competences>
         ))}
      </div>
-    
       <input 
       type="submit"
       value="Spara"/>
-         <button 
-      onClick={handleDiscard}>
+      <button 
+      onClick={onChange}>
         Stäng 
-        </button>
-        <button onClick={()=>setShowModal(true)}>
-        Ta bort lärare
-      </button>
+      </button> 
   </FormInstructions>);
 }
  

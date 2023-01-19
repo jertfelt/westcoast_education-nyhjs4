@@ -11,15 +11,8 @@ const Teacher = () => {
   let noId = Number(id)
   const [changeForm, setChangeForm] = useState(false);
   const [competences, setCompetences] = useState([])
-  useEffect(() => {
-    if(data){
-      let comp = data.map(item => item.competences)
-      const flatten = [].concat(...comp)
-      setCompetences(flatten)
-    }
-  },[data])
 
-
+  
 
   return ( 
   <Section>
@@ -28,11 +21,10 @@ const Teacher = () => {
     {loading ? (<h2>Laddar..</h2>):(
     <InfoRuta>
       {changeForm ? (<>
-        {data && data.filter(item => item.id === noId).map(item => (
+      {data && data.filter(item => item.id === noId).map(item => (
       <TeacherChangeForm 
-      key={item.firstName}
+      key={`${item.firstName}-${item.id}$`}
       teacher = {item}
-      allaKompetenser = {competences}
       onChange = {() => setChangeForm(false)}
       />
     ))}
@@ -45,8 +37,8 @@ const Teacher = () => {
         <p>Mobil: {item.mobileNo}</p>
         <h3>Kompetenser:</h3>
         <ul>
-        {item.competences.map((comp => (
-          <li key={comp}>
+        {item.competences.map(((comp, indx) => (
+          <li key={`${comp}--${indx}${indx}`}>
            {comp} </li>
         )))}
         </ul>

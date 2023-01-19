@@ -56,20 +56,7 @@ const Kurs = () => {
       
     )}
     </InfoRuta>
-    {/*
-  
-        
-   ( <div>
-         
-          
-
-          </div>
-
-)}
-          </div>
-        ))
-        }
-    </InfoRuta>  */}
+    
   </Section> );
 }
  

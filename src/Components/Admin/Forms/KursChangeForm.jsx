@@ -8,7 +8,7 @@ import { useRef, useEffect, useState } from "react";
 import { getDatabase, ref, set} from "firebase/database"
 
 
-const KursChangeForm = ({course}) => {
+const KursChangeForm = ({course, onChange}) => {
   const navigate = useNavigate()
   const {year, nextYear} = useDates()
   const courseNameRef = useRef()
@@ -23,18 +23,7 @@ const KursChangeForm = ({course}) => {
   const [infoMessage, setInfoMessage] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [showModal2, setShowModal2] = useState(false)
- 
-  const handleDiscard = (e) => {
-    clearForm()
-  }
 
-  const clearForm = () =>{
-    courseNameRef.current.value = ""
-    courseDescriptionRef.current.value = ""
-    startDateref.current.value = ""
-    lengthWeeksRef.current.value = ""
-    studentsAssignedRef.current.value = ""
-    }
 
     const sendEditToFirebase = (coursename, description, startdate, weeks, students, published, ID) => {
       const db = getDatabase()
@@ -206,7 +195,7 @@ const KursChangeForm = ({course}) => {
         Radera kurs
       </button>
        <button 
-      onClick={handleDiscard}>
+      onClick={onChange}>
         Stäng 
         </button>
     </>}

@@ -69,10 +69,7 @@ const AllTeachers = () => {
     }
   },[data])
 
-
-
   const filterTeacher = (e) => {
-    
     if(e.target.value ==="default"){
       setDefault(true)
     }
@@ -80,7 +77,6 @@ const AllTeachers = () => {
       setFilterValue(e.target.value)
       setDefault(false)
     }
-    
   }
 
   return (
@@ -96,7 +92,7 @@ const AllTeachers = () => {
         <option value="default">Välj:</option>
       {data && competences.map((item,indx) => (
          <option 
-         key={item}
+         key={`${item}--${item}--${indx}1`}
          value={item} 
          >{item}</option>
       ))}
@@ -119,7 +115,7 @@ const AllTeachers = () => {
           </div>
           </GridTeacher>
         )))}    
-        </>):(<>{
+        </>):(<>{data && 
           data.filter(item => item.competences.includes(filterValue)).map(teacher => (
             <GridTeacher 
             key={teacher.personalID}
