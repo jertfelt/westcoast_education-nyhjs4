@@ -35,7 +35,7 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
     if(typeOfForm === "changeTeacher"){
       setURL("/competences")
     }
-  },[])
+  },[typeOfForm])
   
   const {data,error,loading} = useFirebase(URL)
   const [chosenCompetences, setCompetences] = useState([])
@@ -374,14 +374,16 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
         value={"Välj:"} 
         data-testid="optionDefault"
         label={"Välj:"}/>
-        {selectedOption !== undefined && allaKurser.map((kitem, i) =>{
-          if (!selectedOption.includes(kitem)){
+        {selectedOption !== undefined && allaKurser.map((kitem, i) =>{if (!selectedOption.includes(kitem)){
           return(
             <option key={`${kitem}-${i}`}
             value={kitem}>
             {kitem}
             </option>
           )
+        }
+        else{
+          return(<></>)
         }
         })} 
       </select>

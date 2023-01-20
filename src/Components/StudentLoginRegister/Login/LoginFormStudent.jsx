@@ -18,14 +18,13 @@ const LoginFormStudent = () => {
   const [showModal, setShowModal] = useState(false)
 
   const {data, error, loading} = useFirebase("/students")
-  const [studentsEmail, setStudentsEmail] = useState([])
   const [students, setStudents] = useState([])
 
   useEffect(() => {
     if(data){
-      setStudent(data.map(item => item))
+      setStudents(data.map(item => item))
     }
-  }, [])
+  }, [data])
 
   useEffect(() => {
     userRef.current.focus()

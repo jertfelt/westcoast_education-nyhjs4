@@ -42,7 +42,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         setAssignedStudents1(Number(courseExists.studentsAssigned))
       }
     }
-  },[])
+  },[courseExists, students,teachers, courses, typeOfForm])
 
   const courseNameRef = useRef()
   const courseDescriptionRef = useRef()

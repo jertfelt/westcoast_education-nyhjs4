@@ -37,7 +37,7 @@ const RegisterStudent = () => {
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
   const matchPasswordInputRef = useRef()
-  const {year,nextYear} = useDates()
+  const {nextYear} = useDates()
   const [studentName, setUsername] = useState('');
   const [studentEmail, setEmail] = useState('')
   const [studentPassword, setPassword] = useState('');
@@ -58,19 +58,21 @@ const RegisterStudent = () => {
     if(data){
       setID(data.length)
     }
-  })
+  },[setID, data])
 
-  const USER_REGEX = /^\[A-z\][A-z0-9-_]{3,23}$/;
-  const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+  
+ 
 
   useEffect(() => {
+    const USER_REGEX = /^\[A-z\][A-z0-9-_]{3,23}$/;
     setValidName(USER_REGEX.test(studentName));
-  }, [studentName, USER_REGEX]);
+  }, [studentName]);
 
   useEffect(() => {
+    const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
     setValidPassword(PWD_REGEX.test(studentPassword));
     setValidMatch(studentPassword === matchPassword);
-  }, [studentPassword, matchPassword, PWD_REGEX]);
+  }, [studentPassword, matchPassword]);
 
   useEffect(() => {
     setMatchFocus(true)

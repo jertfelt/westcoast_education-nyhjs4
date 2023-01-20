@@ -16,6 +16,7 @@ const AddNewTeacher = () => {
 
   return ( 
   <Section>
+    {showModal && <></>}
     <InfoRuta>
     <TeacherAddOrChange 
     data-testid="formTeacher"
