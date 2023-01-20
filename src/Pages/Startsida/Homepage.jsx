@@ -2,7 +2,7 @@ import styled from "styled-components";
 import {Line} from "../../Components/StylingElements/Line/Line"
 import { Link } from "react-router-dom";
 import { useState, useEffect} from "react";
-import { useFetch } from "../../Components/utils/useFetch";
+import { useFirebase } from "../../Components/utils/useFirebase";
 
 const Intro = styled.div`
 min-height:50vh;
@@ -78,9 +78,10 @@ button{
 `
 
 const HomePage = () => {
-  const coursesURL = "http://localhost:8000/courses"
+  
   const [year, setYear] = useState(new Date().getFullYear())
-  const {data,loading,error} = useFetch(coursesURL)
+  const {data,loading,error} = useFirebase("/courses")
+  
   if(error){
     console.log(error)
   }

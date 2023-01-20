@@ -27,11 +27,14 @@ const AddTeacherOrCourseToggle = () => {
     <select id="chooseForm" 
     onChange={chooseYourForm}
     > 
-    <option value="" 
-    label={msg}></option>
-      <option value="teacher" 
+      <option 
+      value="" 
+      label={msg}/>
+      <option 
+      value="teacher" 
       label="Lärare">Lärare</option>
-      <option value="course" 
+      <option 
+      value="course" 
       label="Kurs">Kurs</option>
     </select>
   </Form>  );

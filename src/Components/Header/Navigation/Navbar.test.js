@@ -6,7 +6,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 
 describe("Menu button", () => {
- 
   it("should reveal a dropdown menu when pressed", () => {
     render(<Navbar/>, {wrapper: MemoryRouter});
     userEvent.click(screen.getByRole("button", {name: /meny/i}));

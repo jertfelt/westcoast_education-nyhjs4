@@ -12,9 +12,8 @@ const Teacher = () => {
   let noId = Number(id)
   const [changeForm, setChangeForm] = useState(false);
  
-
   return ( 
-  <Section>    
+  <Section data-testid="teacherItem">    
     {error && <p>Något har blivit fel med servern</p>}
     {loading ? (<h2>Laddar..</h2>):(
     <InfoRuta>

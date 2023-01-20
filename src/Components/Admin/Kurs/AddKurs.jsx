@@ -28,11 +28,12 @@ const AddKurs = () => {
   }, [data1, data2, data3])
   
   return ( 
-  <Section>
+  <Section data-testid="addkurswrapper">
     <InfoRuta>
       {loading && <p>Laddar...</p>}
       {data2 && data2 && data3 &&  
       <KursAddOrChange
+      data-testid="formKurs"
       typeOfForm = {"registerNew"}
       students = {students}
       teachers = {teachers}

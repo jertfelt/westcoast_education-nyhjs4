@@ -20,7 +20,6 @@ const Kurs = () => {
       setStudents(data2.map(item => item))
       setCourses(data3.map(item => item))
     }
-    
   }, [data1, data2, data3])
 
   return ( 

@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 describe("Login page", () => {
   const setup = () => render(<Login/>, {wrapper: MemoryRouter})
-
   it("should have an username input", () => {
     setup()
     expect(screen.getByPlaceholderText("Användarnamn")).toBeInTheDocument()
@@ -18,7 +17,6 @@ describe("Login page", () => {
     setup()
       expect(screen.getByRole('button', {name: "Logga In"})).toBeInTheDocument()
   })
-  
 })
 
 describe("Interactions", () => {

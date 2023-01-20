@@ -8,7 +8,6 @@ gap:2px;
 `
 
 const Courses = styled.div`
-
 display:flex; 
 align-items:flex-start;
 justify-content:flex-start;
@@ -40,7 +39,7 @@ text-align: flex-start;
 const AllaKurser = () => {
   const {data,error,loading} = useFirebase("/courses")
   return (
-  <Content>
+  <Content data-testid="allakurser">
     <h2>Alla kurser</h2>
     {error && <p>Något har blivit fel med servern</p>}
     {loading && <p>Laddar..</p>}
@@ -48,7 +47,7 @@ const AllaKurser = () => {
     {data && data.map(courses => (
       <Courses key={courses.courseID}>
         <Link to={`/kurser/${courses.courseID}`}>
-        <h3>{courses.courseName}</h3>
+        <h3 data-testid="kurstest">{courses.courseName}</h3>
         {courses.published ? (<p>Start: {courses.startDate}</p>):(<p>Start: N/A</p>)}
         <p>Antal studenter: {courses.studentsAssigned}</p>
         </Link>

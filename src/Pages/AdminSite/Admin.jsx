@@ -73,7 +73,7 @@ const Admin = () => {
     <MainContent>
     <FormContainer>
         <AddTeacherOrCourseToggle/>
-      </FormContainer>
+    </FormContainer>
       <TwoColumns>
         
         <AllTeachers />

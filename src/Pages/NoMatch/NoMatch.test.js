@@ -17,11 +17,11 @@ describe("NoMatch component", () => {
     setup()
     expect(screen.getByText(/Oops!/i)).toBeInTheDocument()
   })
-  it("should have a button that navigates you back one step", async () => {
+  it("should have a button that navigates you back one step",  () => {
     setup()
     const button = screen.getByRole("button", {name:/gå tillbaka/i})
     expect(button).toBeInTheDocument()
-    await userEvent.click(button)
+    userEvent.click(button)
     expect(mockedUsedNavigate).toHaveBeenCalledWith(-1)
   })
 

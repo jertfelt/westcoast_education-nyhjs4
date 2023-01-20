@@ -21,7 +21,6 @@ describe ("Homepage component", () => {
       setup();
       expect(screen.getByAltText("Education @ Westcoast")).toBeInTheDocument()
     })
-   
   })
 })
 
@@ -33,21 +32,6 @@ describe ("Homepage should have a component for published courses", () => {
       setup();
       expect(screen.getByText(/Våra kurser/i)).toBeInTheDocument()
     })
-    it("will have a list of courses", async () => {
-      setup()
-      window.fetch = jest.fn()
-      window.fetch.mockResolvedValueOnce({
-        json:async () => [
-          {"courseID": 1,
-        "courseName": "Engelska A",
-        "lengthWeeks": 3,
-        "courseDescription": "English for beginners",
-        "startDate": "2023-23-4",
-        "published": true}
-        ]
-      })
-      const courses = await screen.findAllByRole("button")
-      expect(courses).not.toHaveLength(0)
-    })
+   
   })
 })

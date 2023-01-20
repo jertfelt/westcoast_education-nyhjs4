@@ -24,7 +24,7 @@ const ModalOverlay = (props) => {
 const ValidationModal = (props) => {
   return (
     <>
-     {ReactDOM.createPortal(
+    {ReactDOM.createPortal(
       <Overlay/>,
       document.querySelector("#overlay-root")
     )}

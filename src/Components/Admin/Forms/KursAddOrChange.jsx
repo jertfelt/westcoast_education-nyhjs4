@@ -12,9 +12,10 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
   const navigate = useNavigate()
   const {year, nextYear} = useDates()
   const [courseID, setCourseID] = useState(ID)
-  const [publishedStatus, setPublishedStatus] = useState(courseExists.published || false)
-  const [assignedStudents1, setAssignedStudents1] = useState(Number(courseExists.studentsAssigned) || 0)
+  const [publishedStatus, setPublishedStatus] = useState(false)
+  const [assignedStudents1, setAssignedStudents1] = useState(0)
   
+
   const [loading, setLoading] = useState(false)
   const [modalTitle, setTitle] = useState("")
   const [modalMsg, setMsg] = useState("")
@@ -33,6 +34,12 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       }
       if(students){
         setLoading(false)
+      }
+    }
+    else{
+      if(courseExists && courses){
+        setPublishedStatus(courseExists.published)
+        setAssignedStudents1(Number(courseExists.studentsAssigned))
       }
     }
   },[])
@@ -147,6 +154,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
   return (
     <>
   <FormInstructions
+  data-testid="formaddorchange"
     onSubmit={confirmSave}>
       {loading ? (<h1>Laddar</h1>) :(<>
 
@@ -174,7 +182,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           id="courseNameInput"
           type="text"
           ref={courseNameRef}
-          defaultValue={courseExists.courseName || "Kursnamn"}
+          defaultValue={courseExists ? courseExists.courseName : "Kursnamn"}
     />
     </div>
  
@@ -188,7 +196,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           type="text"
           maxLength="50"
           ref={courseDescriptionRef}
-          defaultValue={courseExists.courseDescription || "Beskrivning"}
+          defaultValue={courseExists ? courseExists.courseDescription : "Beskrivning"}
           onFocus={(e) => instructionsUnclear(e)}
           onBlur={() => setInstructions(false)}
     />
@@ -197,7 +205,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     <p className="instructions">
       {infoMessage}</p>
     }
-    {courseExists.startDate < year &&
+    {courseExists && courseExists.startDate < year &&
     <p>Startdatum har redan passerat!</p>
     }
 
@@ -213,7 +221,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           min={year}
           required
           max={nextYear}
-          defaultValue={courseExists.startDate || year}
+          defaultValue={courseExists ? courseExists.startDate : year}
           ref={startDateref}
           onChange={checkDate}
           onFocus={(e) => instructionsUnclear(e)}
@@ -228,7 +236,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     <input
           id="lengthWeeksInput"
           type="number"
-          defaultValue={courseExists.lengthWeeks || 2}
+          defaultValue={courseExists ? courseExists.lengthWeeks : 2}
           min={2}
           max={15}
           ref={lengthWeeksRef}
@@ -241,7 +249,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     </label>
     <input
         id="studentsAssignedChangeInput"
-        defaultValue={assignedStudents1 || 0}
+        defaultValue={courseExists ? assignedStudents1 : 0}
         type="number"
         onChange= {(e) => setAssignedStudents1(Number(e.target.value))}
         ref={studentsAssignedRef}
@@ -254,7 +262,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     {typeOfForm==="changeCourse" &&
     <button className="smallBtn"
     onClick={()=>setShowModal(true)}
-      disabled = {publishedStatus ? true : false}>
+      disabled = {courseExists && courseExists.published ? true : false}>
       Radera kurs
     </button>}
 
@@ -270,6 +278,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
   </FormInstructions>
   <ButtonContainerOutsideForm>
    <button
+   data-testid="testingPublishBtn"
     disabled ={assignedStudents1 >= 5 ? false : true }
     onClick = {publishCourse}
     >

@@ -14,7 +14,7 @@ describe("Student portal", () => {
   })
   it("should show account details from context", () => {
     setup()
-    expect(screen.getByTitle("Dina uppgifter:")).toBeInTheDocument()
+    expect(screen.getByText("Dina uppgifter:")).toBeInTheDocument()
     expect(screen.getByTestId("paragraph")).toBeInTheDocument()
   })
   describe("should be two buttons that says 'ändra'", () => {
@@ -22,9 +22,9 @@ describe("Student portal", () => {
       setup()
       expect(screen.getAllByText("Ändra")).toHaveLength(2)
     })
-    it("should show a form when clicked", async() => {
+    it("should show a form when clicked", () => {
       setup()
-      await userEvent.click(screen.getByTestId("changePAragraph"))
+       userEvent.click(screen.getByTestId("changeParagraph"))
       expect(screen.getByTestId("formTest")).toBeInTheDocument()
       expect(screen.getByTestId("paragraph").classList.contains("offscreen")).toBe(true)
     })

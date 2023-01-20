@@ -7,5 +7,4 @@ describe("Header", () => {
     render(<Header/>, {wrapper: MemoryRouter});
     expect(screen.getByRole("button", {name: /meny/i})).toBeInTheDocument();
   })
-  
 })

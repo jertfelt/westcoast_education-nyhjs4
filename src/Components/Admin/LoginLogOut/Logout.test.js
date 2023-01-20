@@ -8,5 +8,4 @@ describe("Logout button", () => {
     render(<LogOut/>, {wrapper: MemoryRouter})
     expect(screen.getByText("Logga ut")).toBeInTheDocument()
   })
-  
 })

@@ -230,8 +230,7 @@ const StudentPortal = () => {
             <input id="student"
             ref={studentNameInput}
             type="text"
-            
-            value={studentName}
+            defaultValue={studentName}
             />
             <input type="submit"
             value="Ändra"/>
@@ -248,7 +247,7 @@ const StudentPortal = () => {
             <input id="studentEmailNew"
             ref={studentEmailInput}
             type="email"
-            value={studentEmail}
+            defaultValue={studentEmail}
             />
             <input type="submit"
             value="Ändra"/>
@@ -260,7 +259,7 @@ const StudentPortal = () => {
             <input id="studentNewPassword"
             ref={studentPasswordInput}
             type="email"
-            value={studentPassword}
+            defaultValue={studentPassword}
             />
             <input type="submit"
             value="Ändra"/>

@@ -17,8 +17,6 @@ import Kurs from "../Components/Admin/Kurs/Kurs";
 import AddNewTeacher from "../Components/Admin/AllTeachers/AddNewTeacher";
 import Teacher from "../Components/Admin/AllTeachers/Teacher"
 
-
-
 //? STUDENT ROUTES
 import RegisterKurs from "../Components/RegisterKursParam/RegisterKursParam";
 import RegistreringKurs from "../Pages/RegisterStudent/RegisterCourse";
@@ -31,13 +29,11 @@ const Routing = () => {
   const isAdminLoggedIn = contextAdmin.loggedIn
   const isStudentLoggedIn = contextStudent.studentLoggedIn
 
-
   return (   
   <Routes>
     <Route path="/" 
     element={<HomePage/>}/>
    
-
     <Route path="/admin/login"
     element={<Login/>}/>
 
@@ -69,7 +65,7 @@ const Routing = () => {
 
     <Route path="*" element={<NoMatch/>}/>
   </Routes>
-   );
+  );
 }
  
 export default Routing;

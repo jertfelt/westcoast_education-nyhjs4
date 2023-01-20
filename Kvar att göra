@@ -3,11 +3,13 @@
 PRIO 1: 
 -----------------ADMINPORTAL
 
-1A) ---------Lägg till kurs formulär - c:a 1/2h
+<!-- 1A) ---------Lägg till kurs formulär - c:a 1/2h -->
 
 1B) --------- Dubbelkolla och skriv klart testerna c:a 2h-3h
 
-1C) --- Lägg till bekräftelse eller navigate i changeCourse 
+-notering: onChange value prop i select ändra till defaultValue i studentportal
+
+<!-- 1C) --- Lägg till bekräftelse eller navigate i changeCourse  -->
 
 1D) --- Städa i projektet
 

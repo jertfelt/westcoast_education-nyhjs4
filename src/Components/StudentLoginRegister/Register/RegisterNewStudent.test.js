@@ -7,8 +7,7 @@ import toHaveClass from "@testing-library/jest-dom"
 
 describe("Register a new student component", () => {
   const setup = () => render(<RegisterStudent/>, {wrapper: MemoryRouter})
-
-
+  
   it("Has a form element with a title", () => {
     setup()
     expect(screen.getByText(/Registrera dig:/i)).toBeInTheDocument()

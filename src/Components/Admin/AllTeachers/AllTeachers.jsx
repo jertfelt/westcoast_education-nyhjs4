@@ -3,7 +3,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useFirebase } from "../../utils/useFirebase";
-
 import { useEffect } from "react";
 
 const Grid = styled.div`
@@ -60,7 +59,6 @@ const AllTeachers = () => {
   const [defaultView, setDefault] =useState(true)
   const [filterValue, setFilterValue] = useState("")
 
- 
   useEffect(() => {
     if(data){
       let comp = data.map(item => item.competences)
@@ -87,7 +85,7 @@ const AllTeachers = () => {
     <Filter>
       <label htmlFor="filterTeachers">Filtrera:</label>
       <select id ="chooseTeachers"
-      aria-label="Select"
+      aria-labelledby ="Filtrera"
       onChange={filterTeacher}>
           <option value="default">Välj:</option>
           {data && competences.map((item,indx) => (

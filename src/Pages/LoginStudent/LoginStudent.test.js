@@ -5,7 +5,6 @@ import { MemoryRouter } from 'react-router-dom';
 
 describe("Login section", () => {
   const setup = () => render(<LoginStudent/>,{wrapper: MemoryRouter})
-  
   it("should have a button", () => {  
     setup()
     expect(screen.getByRole("button", {name:/Klicka här/i})).toBeInTheDocument()
