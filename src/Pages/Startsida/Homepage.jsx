@@ -128,11 +128,11 @@ const HomePage = () => {
         <h3>{course.courseName}</h3>
         <p>{course.courseDescription}</p>
         <p>Startdatum: {course.startDate}</p>
-        <Link 
+        {/* <Link 
         to={`/kurser/${course.courseName}`}>
-          Läs mer här </Link>
+          Läs mer här </Link> */}
         <Link
-        to={`/register/${course.courseName}`}><button >Anmäl dig till kursen här</button></Link>
+        to={`/student/student-kurser/register/${course.courseName}`}><button >Anmäl dig till kursen här</button></Link>
       </div>
     )
   })}
