@@ -56,10 +56,9 @@ max-width: 1200px;
 margin: 0 auto;
 gap: 1rem;
 div{
-  background: ${({ theme }) => theme.highlight};
+  background: ${({ theme }) => theme.accent};
   padding:2rem;
-  
-  color: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.buttonText};
   h3{
     font-size:30px;
     margin-top:1rem;
