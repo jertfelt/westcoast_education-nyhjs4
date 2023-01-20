@@ -36,7 +36,13 @@ const Row = styled.div`
 display:flex;
 align-items: center;
 justify-content:center;
-gap:1rem;` 
+gap:1rem;
+
+.bigSpace{
+  @media (max-width:700px){
+    flex-direction:column;
+  }
+}` 
 
 const AllTeachersContent = styled.div`
 display:flex;
@@ -51,7 +57,10 @@ padding-bottom:1rem;`
 const Filter= styled.div`
 display:flex;
 align-items: center;
-gap: 4px;`
+gap: 4px;
+@media (max-width: 700px){
+  flex-direction:column;
+}`
 
 const AllTeachers = () => {
   const {data,error,loading} = useFirebase("/teachers")
@@ -80,7 +89,7 @@ const AllTeachers = () => {
   return (
   <AllTeachersContent 
   data-testid="allTeachers">
-    <Row>
+    <Row className="bigSpace">
     <h2>Alla lärare</h2>
     <Filter>
       <label htmlFor="filterTeachers">Filtrera:</label>

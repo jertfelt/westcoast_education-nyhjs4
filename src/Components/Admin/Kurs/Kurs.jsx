@@ -17,7 +17,13 @@ const Kurs = () => {
   useEffect(() => {
     if(data1){
       setTeachers(data1.map(item =>item))
+     
+      
+    }
+    if(data2){
       setStudents(data2.map(item => item))
+    }
+    if(data3){
       setCourses(data3.map(item => item))
     }
   }, [data1, data2, data3])
