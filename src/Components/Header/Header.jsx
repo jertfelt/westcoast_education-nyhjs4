@@ -2,7 +2,6 @@ import styled from "styled-components";
 import Navbar from "./Navigation/Navbar"
 import { Link } from "react-router-dom";
 
-
 const Headerdiv = styled.header`
 display:flex;
 align-items:center;
@@ -16,13 +15,14 @@ nav{
 @media screen and (max-width: 700px) {
   flex-direction:column;
   h1{
-    line-height:1rem;
+    line-height:1.8rem;
     font-size:30px;
   }
 }
 h1 a{
   color:${({ theme }) => theme.text};
 }
+
 `
 
 

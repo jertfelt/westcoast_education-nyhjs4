@@ -15,11 +15,19 @@ display:flex;
 flex-direction:column;
 gap:10px;
 font-family: Sofia Sans;
+@media (max-width: 700px){
+  padding:0px;
+  width:100%;
+  
+}
 `
 
 export const FormInstructions = styled(Form)`
 button{
   padding: 4px 8px;
+  @media (max-width: 700px){
+    padding:1px;
+  }
     border:none;
     font-size:14px;
     border-radius:30px;
@@ -31,6 +39,9 @@ button{
     cursor: pointer;
 }
 .smallBtn {
+  @media (max-width: 700px){
+    width:300px;
+  }
   width:30%;
 }
 .instructions{
@@ -58,6 +69,9 @@ button{
     }
   }
   input[type="submit"] {
+    @media (max-width: 700px){
+      width:50%;
+    }
     padding: 4px 8px;
     border:none;
     font-size:14px;

@@ -12,7 +12,7 @@ const DropDMenu = styled.nav`
   font-size:1rem;
   position: absolute;
   top: 10vh;
-  left:30%;
+  left:10%;
   min-width:200px;
   max-width:400px;
   z-index: 100;
@@ -23,6 +23,7 @@ const DropDMenu = styled.nav`
       left: calc(50% - 20rem);
       width: 50rem;
   }
+  
 
 button{
   background: transparent;

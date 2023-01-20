@@ -7,6 +7,9 @@ align-items:center;
 flex-direction:column;
 justify-content:center;
 padding:10rem;
+@media (max-width: 700px){
+  padding:0;
+}
 `
 
 export const ButtonContainer = styled.div`
