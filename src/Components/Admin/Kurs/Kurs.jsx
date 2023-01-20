@@ -1,5 +1,5 @@
 import { Navigate, useParams } from "react-router-dom";
-import { useFirebase } from "../../utils/useFirebase";
+
 import { useState, useEffect } from "react";
 import { Section, InfoRuta, ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
 import KursAddOrChange from "../Forms/KursAddOrChange";
@@ -8,7 +8,7 @@ import { useSeveralRoutesFirebase } from "../../utils/useSeveralRoutesFirebase";
 const Kurs = () => {
   const {id} = useParams()
   let noId = Number(id)
-  // const {data} = useFirebase("/courses")
+
   const [changeForm, setChangeForm] = useState(false);
   const [teachers, setTeachers] = useState([])
   const [students,setStudents] = useState([])
@@ -26,6 +26,8 @@ const Kurs = () => {
   return ( 
   <Section>
     <h1>Kursdetaljer</h1>
+    {error && <p>Något är fel på servern..</p>}
+    {loading && <p>Laddar..</p>}
     {courses && courses.filter(item => item.courseID === noId).map(item => ( 
       
     <InfoRuta key={noId}>

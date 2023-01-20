@@ -1,7 +1,6 @@
 import { FormInstructions } from "../../StylingElements/Form/Form";
 import ValidationModal from "../../ui/Modal/ValidationModal";
 import Modal from "../../ui/Modal/Modal";
-import { useFirebase } from "../../utils/useFirebase";
 import { useNavigate } from "react-router-dom";
 import {useRef,useEffect,useState} from "react"
 import { getDatabase, ref, set, remove } from "firebase/database";
@@ -13,14 +12,28 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
   const navigate = useNavigate()
   const {year, nextYear} = useDates()
   const [courseID, setCourseID] = useState(ID)
-  const [allCourses, setAllCourses] = useState(courses)
-  const [thisCourse, setThisCourse] = useState(courseExists || [])
   const [publishedStatus, setPublishedStatus] = useState(courseExists.published || false)
   const [assignedStudents1, setAssignedStudents1] = useState(Number(courseExists.studentsAssigned) || 0)
+  
+  const [loading, setLoading] = useState(false)
+  const [modalTitle, setTitle] = useState("")
+  const [modalMsg, setMsg] = useState("")
+
 
   useEffect(() => {
     if(typeOfForm === "registerNew"){
-      setCourseID(allCourses.length) 
+      setLoading(true)
+      if(courses){
+        setCourseID(courses.length)
+        setLoading(false)
+      }
+      if(teachers){
+
+      setLoading(false)
+      }
+      if(students){
+        setLoading(false)
+      }
     }
   },[])
 
@@ -34,14 +47,16 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
   const [infoMessage, setInfoMessage] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [showModal2, setShowModal2] = useState(false)
-  
-  const sendEditToFirebase = (coursename, 
-      description, 
-      startdate, 
-      weeks, 
-      students, 
-      published, 
-      ID) => {
+
+  const sendEditToFirebase = (
+      coursename,
+      description,
+      startdate,
+      weeks,
+      students,
+      published,
+      ID,
+      ) => {
       const db = getDatabase()
       set(ref(db, "courses/" + ID ),{
         courseName: coursename,
@@ -51,6 +66,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         studentsAssigned: students,
         published: published,
         courseID: ID,
+        
       }).then(
         navigate("/admin")
       )
@@ -65,8 +81,9 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         const students = studentsAssignedRef.current.value
         const published = publishedStatus
         const ID = courseID
+        
         if(
-          coursename === "" || description === "" || startdate === "" || weeks === "" || students === "" || published === "" || ID === ""
+          coursename === "" || description === "" || startdate === "" || weeks === "" || students === "" || published === "" || ID === "" 
         ){
           setShowModal2(true)
           setTitle("Något är fel")
@@ -74,13 +91,14 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         }
         else{
         sendEditToFirebase(
-          coursename, 
-          description, 
-          startdate, 
-          weeks, 
-          students, 
+          coursename,
+          description,
+          startdate,
+          weeks,
+          students,
           ID,
-          published,  )
+          published,
+           )
         }
     }
 
@@ -104,15 +122,16 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           setMsg("Tryck på SPARA så är sidan avpublicerad")
       }
       else{
-          
+
           setPublishedStatus(true)
           setShowModal2(true)
           setTitle("Nästan färdig")
           setMsg("Tryck på SPARA så är sidan publicerad")
         }
-     
+
     }
-    
+
+
   const instructionsUnclear=(e) => {
     if(e.target.id === "courseDescriptionChangeInput"){
       setInfoMessage("Högst 50 tecken, inga länkar tillåtna.")
@@ -124,14 +143,13 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     }
   }
 
-  const [modalTitle, setTitle] = useState("")
-  const [modalMsg, setMsg] = useState("")
-
+ 
   return (
     <>
-  <FormInstructions 
+  <FormInstructions
     onSubmit={confirmSave}>
-  
+      {loading ? (<h1>Laddar</h1>) :(<>
+
     {typeOfForm === "changeCourse" && <>
       {showModal && <ValidationModal
       title="Är du säker?"
@@ -146,24 +164,26 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       onClick={() => setShowModal2(false)}
       />}
     <h1>{title}</h1>
+
     <div className="Row">
-    <label 
+    <label
           htmlFor="courseNameInput">
           Kursnamn:
     </label>
-    <input 
+    <input
           id="courseNameInput"
           type="text"
           ref={courseNameRef}
           defaultValue={courseExists.courseName || "Kursnamn"}
     />
     </div>
+ 
       <div className="Row">
-      <label 
+      <label
           htmlFor="courseDescriptionInput">
             Kursbeskrivning:
     </label>
-    <textarea 
+    <textarea
           id="courseDescriptionInput"
           type="text"
           maxLength="50"
@@ -173,21 +193,21 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           onBlur={() => setInstructions(false)}
     />
     </div>
-    {instructions && 
+    {instructions &&
     <p className="instructions">
       {infoMessage}</p>
     }
-    {courseExists.startDate < year && 
+    {courseExists.startDate < year &&
     <p>Startdatum har redan passerat!</p>
     }
 
     {typeOfForm === "changeCourse" &&
     <div className="Row">
-    <label 
+    <label
           htmlFor="startDateInput">
-          Startdatum: 
+          Startdatum:
     </label>
-    <input 
+    <input
           id="startDateInput"
           type="date"
           min={year}
@@ -198,14 +218,14 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           onChange={checkDate}
           onFocus={(e) => instructionsUnclear(e)}
           onBlur={() => setInstructions(false)}
-    /> 
+    />
     </div>}
     <div className="Row">
-    <label 
+    <label
     htmlFor="lengthWeeksInput">
       Antal veckor:
     </label>
-    <input 
+    <input
           id="lengthWeeksInput"
           type="number"
           defaultValue={courseExists.lengthWeeks || 2}
@@ -215,11 +235,11 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     />
     </div>
     <div className="Row">
-    <label 
+    <label
     htmlFor="studentsAssignedChangeInput">
       Antal studenter:
     </label>
-    <input 
+    <input
         id="studentsAssignedChangeInput"
         defaultValue={assignedStudents1 || 0}
         type="number"
@@ -229,25 +249,27 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     </div>
    
 
+
     <ButtonContainer>
-    {typeOfForm==="changeCourse" && 
+    {typeOfForm==="changeCourse" &&
     <button className="smallBtn"
     onClick={()=>setShowModal(true)}
       disabled = {publishedStatus ? true : false}>
       Radera kurs
     </button>}
-    
-    <input 
+
+    <input
       type="submit"
       value="Spara"/>
     <button className="smallBtn"
       onClick={typeOfForm === "changeCourse" ? onChangeForm : () => navigate(-1)}>
-        Stäng 
+        Stäng
     </button>
     </ButtonContainer>
+    </>)}
   </FormInstructions>
   <ButtonContainerOutsideForm>
-   <button 
+   <button
     disabled ={assignedStudents1 >= 5 ? false : true }
     onClick = {publishCourse}
     >
@@ -256,5 +278,5 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     </ButtonContainerOutsideForm></>
    );
 }
- 
+
 export default KursAddOrChange;

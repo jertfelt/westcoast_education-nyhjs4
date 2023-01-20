@@ -1,0 +1,74 @@
+    {/* {typeOfForm === "registerNew" && 
+    <div className="Row">
+      {!competences && <p>Laddar...</p>}
+      {competences && <>
+        <label htmlFor="chooseTeacherFromCompetences">
+        Välj ämne:
+        </label>
+        <select
+        id="kompetenser"
+        data-testid="kompetensSelect"
+        onChange = {(e) => handleSelectOption(e)}
+        >
+        {competences.map((item, i) =>{
+          return(
+            <option key={`${item}-${i}`}
+            value={item}>
+            {item}
+            </option>
+          )
+        })}
+        
+      </select>
+      </>}
+    {revealSelectTeacher && <>
+      <label htmlFor="chooseTeacherFromCompetencespart2">
+        Välj lärare:
+      </label>
+      <select
+      id="chooseTeacherFromCompetencespart2"
+      data-testid="larareSelect"
+      defaultValue="Välj"
+      onChange = {(e) => setTeacher(e.target.value)}
+      >
+      {options && options.map((item, i) => (
+        <option key={`${item.firstName}-${i}${item.lastName}`}
+        value={item.id}>
+          {item.firstName} {item.lastName}
+        </option>
+      ))}
+      </select>
+
+    </>}
+
+    </div>}
+
+    
+    const handleSelectOption = (e) => {
+      setSelected(prev => [...prev, e.target.value])
+      checkForTeacher(e.target.value)
+    }
+
+    const checkForTeacher = (subject) => {
+      let result = teachers.filter(item => item.competences.includes(subject))
+      if(result.length >1 ){
+        setRevealSelectTeacher(true)
+        setOptions(result)
+      }
+      else{
+        setRevealSelectTeacher(false)
+        setTeacher(result)
+      }
+    }
+
+          const allComp = []
+      allComp.push(teachers.map(item => item.competences))
+      const merge = allComp.flat(2)
+      let unique = [...new Set(merge)]
+      setCompetences(unique)
+
+      const [competences, setCompetences] = useState("")
+  const [selected, setSelected] = useState("")
+  const [teacher, setTeacher] = useState("")
+  const [revealSelectTeacher, setRevealSelectTeacher] = useState(false)
+  const [options, setOptions] = useState("")

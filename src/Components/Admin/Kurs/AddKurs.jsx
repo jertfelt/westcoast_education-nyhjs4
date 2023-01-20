@@ -15,7 +15,13 @@ const AddKurs = () => {
   useEffect(() => {
     if(data1){
       setTeachers(data1.map(item =>item))
+     
+    }
+    if(data2){
       setStudents(data2.map(item => item))
+      
+    }
+    if(data3){
       setCourses(data3.map(item => item))
     }
     
@@ -25,7 +31,7 @@ const AddKurs = () => {
   <Section>
     <InfoRuta>
       {loading && <p>Laddar...</p>}
-      {courses && 
+      {data2 && data2 && data3 &&  
       <KursAddOrChange
       typeOfForm = {"registerNew"}
       students = {students}
