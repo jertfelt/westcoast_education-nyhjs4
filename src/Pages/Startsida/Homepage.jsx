@@ -132,7 +132,7 @@ const HomePage = () => {
         to={`/kurser/${course.courseName}`}>
           Läs mer här </Link> */}
         <Link
-        to={`/student/student-kurser/register/${course.courseName}`}><button >Anmäl dig till kursen här</button></Link>
+        to={`/student/student-kurser/register/${course.courseID}`}><button >Anmäl dig till kursen här</button></Link>
       </div>
     )
   })}

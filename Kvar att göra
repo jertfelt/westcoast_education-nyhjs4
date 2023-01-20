@@ -2,10 +2,11 @@
 
 OM JAG HINNER:
 1) Anmälan till kursen: länk fungerar inte till homepage
-2) Ta bort "läs mer här" på homepage
+
 3) fixa till registrering till kurs - firebase 
-4) fixa Admin genom firebase istället, och fixa .env
+4) fixa Admin genom firebase istället, 
 5) css:fixar - knappar och annat behöver ses över
+image.png se studentportal :De
 6) läs om kursen fast ej inloggad
 
 2)Kursformulär:  Lärare i select option, utifrån kompetenser.
