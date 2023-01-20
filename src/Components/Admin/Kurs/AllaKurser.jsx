@@ -28,7 +28,6 @@ a{
   &:hover{
     color: ${({ theme }) => theme.accent};
   }
- 
 }
 
 `
@@ -50,7 +49,8 @@ const AllaKurser = () => {
       <Courses key={courses.courseID}>
         <Link to={`/kurser/${courses.courseID}`}>
         <h3>{courses.courseName}</h3>
-        <p>Start: {courses.startDate}</p>
+        {courses.published ? (<p>Start: {courses.startDate}</p>):(<p>Start: N/A</p>)}
+        <p>Antal studenter: {courses.studentsAssigned}</p>
         </Link>
       </Courses>
     ))}

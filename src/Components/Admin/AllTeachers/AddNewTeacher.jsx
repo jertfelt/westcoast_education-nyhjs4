@@ -1,7 +1,6 @@
 import { useFirebase } from "../../utils/useFirebase";
 import { useState, useEffect } from "react";
 import TeacherAddOrChange from "../Forms/TeacherAddOrChange";
-import styled from "styled-components";
 import { Section, InfoRuta } from "../../StylingElements/SectionsAdmin/AdminComponents";
 
 const AddNewTeacher = () => {
@@ -25,7 +24,8 @@ const AddNewTeacher = () => {
     onClick= {() => setShowModal(false)}
     />
     </InfoRuta>
-  </Section> );
+  </Section> 
+  );
 }
  
 export default AddNewTeacher;

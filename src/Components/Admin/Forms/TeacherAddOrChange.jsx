@@ -1,4 +1,4 @@
-import { FormInstructions} from "../../StylingElements/Form/Form";
+import { ButtonContainerOutsideForm, FormInstructions} from "../../StylingElements/Form/Form";
 import ValidationModal from "../../ui/Modal/ValidationModal";
 import Modal from "../../ui/Modal/Modal";
 import { useFirebase } from "../../utils/useFirebase";
@@ -240,6 +240,7 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
   
 
   return (
+    <>
   <FormInstructions
   onSubmit={confirmSave}>
 
@@ -408,7 +409,11 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
           disabled={disabledButton ? true :false}
           />
 
-          {typeOfForm === "registerNew" ? (
+      </>)}
+  </FormInstructions>
+  <ButtonContainerOutsideForm>
+    
+    {typeOfForm === "registerNew" ? (
           <button onClick={() => navigate(-1)}>
             Gå tillbaka</button>):(<>
             <button 
@@ -419,8 +424,8 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
             Avskeda lärare
           </button></>
       )}
-      </>)}
-  </FormInstructions>);
+  </ButtonContainerOutsideForm>
+  </>);
 }
  
 export default TeacherAddOrChange

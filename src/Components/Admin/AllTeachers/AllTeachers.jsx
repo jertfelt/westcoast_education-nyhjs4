@@ -109,6 +109,7 @@ const AllTeachers = () => {
           >
           <div>
           <h3>{teacher.firstName} {teacher.lastName}</h3>
+          <p>{teacher.email}</p>
           
           <Link to={`/larare/${teacher.id}`}>Se mer </Link>
           </div>

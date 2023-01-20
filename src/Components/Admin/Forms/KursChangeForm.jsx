@@ -25,7 +25,13 @@ const KursChangeForm = ({course, onChange}) => {
   const [showModal2, setShowModal2] = useState(false)
 
 
-    const sendEditToFirebase = (coursename, description, startdate, weeks, students, published, ID) => {
+    const sendEditToFirebase = (coursename, 
+      description, 
+      startdate, 
+      weeks, 
+      students, 
+      published, 
+      ID) => {
       const db = getDatabase()
       set(ref(db, "courses/" + ID ),{
         courseName: coursename,
@@ -36,7 +42,6 @@ const KursChangeForm = ({course, onChange}) => {
         courseID: ID,
         published: published,
       })
-      
     }
 
 
@@ -69,7 +74,8 @@ const KursChangeForm = ({course, onChange}) => {
       const students = studentsAssignedRef.current.value
       const published = publishedStatus
       const ID = courseID
-      sendEditToFirebase(coursename, 
+      sendEditToFirebase(
+        coursename, 
         description, 
         startdate, 
         weeks, 
@@ -77,7 +83,7 @@ const KursChangeForm = ({course, onChange}) => {
         published, 
         ID )
       navigate("/kurser/" + ID)
-   
+
   }
 
   const instructionsUnclear=(e) => {

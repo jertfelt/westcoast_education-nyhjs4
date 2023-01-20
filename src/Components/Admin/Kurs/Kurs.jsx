@@ -1,32 +1,46 @@
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import { useFirebase } from "../../utils/useFirebase";
-import { useState } from "react";
-import { Section, InfoRuta } from "../../StylingElements/SectionsAdmin/AdminComponents";
-import KursChangeForm from "../Forms/KursChangeForm";
-
+import { useState, useEffect } from "react";
+import { Section, InfoRuta, ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
+import KursAddOrChange from "../Forms/KursAddOrChange";
+import { useSeveralRoutesFirebase } from "../../utils/useSeveralRoutesFirebase";
 
 const Kurs = () => {
   const {id} = useParams()
   let noId = Number(id)
-  const {data} = useFirebase("/courses")
+  // const {data} = useFirebase("/courses")
   const [changeForm, setChangeForm] = useState(false);
-  
+  const [teachers, setTeachers] = useState([])
+  const [students,setStudents] = useState([])
+  const [courses, setCourses] = useState([])
+  const {data1, data2, data3, error, loading} = useSeveralRoutesFirebase("/teachers", "/students", "/courses")
+  useEffect(() => {
+    if(data1){
+      setTeachers(data1.map(item =>item))
+      setStudents(data2.map(item => item))
+      setCourses(data3.map(item => item))
+    }
+    
+  }, [data1, data2, data3])
+
   return ( 
   <Section>
     <h1>Kursdetaljer</h1>
-    <InfoRuta>
-      {changeForm ? (<>
-    {data && data.filter(item => item.courseID === noId).map(item => (
-      <KursChangeForm 
-      key={item.courseID}
-      course = {item}
-      onChange = {() => setChangeForm(false)}
-      />
-    ))}
-    </>
+    {courses && courses.filter(item => item.courseID === noId).map(item => ( 
+      
+    <InfoRuta key={noId}>
+      {changeForm ? (
+      <KursAddOrChange 
+      typeOfForm={"changeCourse"}
+      students = {students}
+      teachers = {teachers}
+      courses = {courses}
+      title = {"Ändra:"}
+      ID={noId}
+      onChangeForm = {() => setChangeForm(false)}
+      courseExists={item}/>
+   
     ):(<>
-    {data && data.filter(item => item.courseID === noId).map(item => ( 
-      <div key={noId}>
         <h1>{item.courseName}</h1>
           <p>Beskrivning: {item.courseDescription}</p>
           {item.published && <>
@@ -45,13 +59,18 @@ const Kurs = () => {
           <p>Start:{item.startDate}</p>
           <p>Minimum deltagare: 5 <br /> Antal deltagare anmälda hittills: {item.studentsAssigned}</p>
           </>}
+          <ButtonContainer>
+          <button 
+          onClick={() => Navigate(-1)}>
+          Gå tillbaka</button>
           <button 
           onClick={() => setChangeForm(true)}>
-            Redigera kurs</button>
-      </div>
-    ))}</>
+          Redigera kurs</button>
+          </ButtonContainer>
+      </>
     )}
     </InfoRuta>
+    ))}
   </Section> );
 }
 export default Kurs;

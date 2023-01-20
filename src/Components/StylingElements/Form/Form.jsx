@@ -18,6 +18,21 @@ font-family: Sofia Sans;
 `
 
 export const FormInstructions = styled(Form)`
+button{
+  padding: 4px 8px;
+    border:none;
+    font-size:14px;
+    border-radius:30px;
+    margin-top:1rem;
+    &:hover{
+      background: ${({ theme }) => theme.toggleBorder};
+    color: ${({ theme }) => theme.accent};
+    }
+    cursor: pointer;
+}
+.smallBtn {
+  width:30%;
+}
 .instructions{
   font-size:12px;
 }
@@ -52,8 +67,30 @@ export const FormInstructions = styled(Form)`
       background: ${({ theme }) => theme.toggleBorder};
     color: ${({ theme }) => theme.accent};
     }
+    cursor: pointer;
+    width:30%;
   }
 
+`
+
+export const ButtonContainerOutsideForm = styled.div`
+padding:2rem;
+display:flex;
+flex-direction:column;
+gap:10px;
+font-family: Sofia Sans;
+button{
+  padding: 4px 8px;
+    border:none;
+    font-size:14px;
+    border-radius:30px;
+    margin-top:1rem;
+    &:hover{
+      background: ${({ theme }) => theme.toggleBorder};
+    color: ${({ theme }) => theme.accent};
+    }
+    cursor: pointer;
+}
 `
 export const FormWOInstructions = styled(Form)`
 label{

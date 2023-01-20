@@ -38,6 +38,7 @@ p{
 const MainContent = styled.div`
 padding:1rem;
 display: flex;
+flex-direction:column;
 align-items:center;
 justify-content:center;`
 
@@ -56,12 +57,11 @@ gap: 20px;
 justify-content:space-around;`
 
 const FormContainer = styled.aside`
+width:100%;
+max-width:1000px;
 background: ${({ theme }) => theme.link};
-padding:2rem;
+padding:3rem;
 display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
 color: ${({ theme }) => theme.buttonText};
 `
 const Admin = () => {
@@ -71,13 +71,16 @@ const Admin = () => {
   data-testid="Admin">
     <h1>Välkommen, {context.userName}</h1>
     <MainContent>
-      <TwoColumns>
-        <AllTeachers />
-        <AllaKurser />
-      <FormContainer>
+    <FormContainer>
         <AddTeacherOrCourseToggle/>
       </FormContainer>
+      <TwoColumns>
+        
+        <AllTeachers />
+        <AllaKurser />
+      
       </TwoColumns> 
+     
     </MainContent>
   </AdminSite>  );
 }
