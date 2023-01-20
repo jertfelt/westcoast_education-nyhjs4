@@ -23,9 +23,9 @@ const RegistreringKurs = (props) => {
   const courseInputRef = useRef()
   const courseInputRef2 = useRef()
   const coursesURL = "http://localhost:8000/courses"
-  const {data,loading,error} = useFetch(coursesURL)
+  const {data} = useFetch(coursesURL)
   const [course2, setCourse2] = useState("")
-  const [errorMsg, setErrMsg] = useState("")
+  
   const STUDENTS_URL = "http://localhost:8000/students"
 
 const clearForm = () => {

@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import {Line} from "../../Components/StylingElements/Line/Line"
 import { Link } from "react-router-dom";
-import { useState, useEffect} from "react";
+import { useState} from "react";
 import { useFirebase } from "../../Components/utils/useFirebase";
 
 const Intro = styled.div`
@@ -79,7 +79,7 @@ button{
 
 const HomePage = () => {
   
-  const [year, setYear] = useState(new Date().getFullYear())
+  const year = useState(new Date().getFullYear())
   const {data,loading,error} = useFirebase("/courses")
   
   if(error){

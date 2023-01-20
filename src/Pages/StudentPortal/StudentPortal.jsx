@@ -122,7 +122,7 @@ const StudentPortal = () => {
     setName(context.studentName)
     setEmail(context.studentEmail)
     setPassword(context.studentPassword)
-  }, [])
+  }, [context.studentName, context.studentEmail, context.studentPassword])
 
 
   
