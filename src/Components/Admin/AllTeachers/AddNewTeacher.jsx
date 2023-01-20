@@ -17,7 +17,8 @@ const AddNewTeacher = () => {
   return ( 
   <Section>
     <InfoRuta>
-    <TeacherAddOrChange
+    <TeacherAddOrChange 
+    data-testid="formTeacher"
     typeOfForm = {"registerNew"}
     item = {competences}
     title = {"Registrera ny lärare:"}
