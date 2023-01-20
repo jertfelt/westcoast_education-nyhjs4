@@ -155,14 +155,11 @@ const TeacherChangeForm = ({teacher, onChange }) => {
    }
 
    const deleteTeacher = () =>{
-    
     const db = getDatabase()
     remove(ref(db, "/teachers/" + teacherID)).then(()=>{
       setShowModal(false)
       showModal2(true)
-      
     })
-    
    }
 
   return (
@@ -175,7 +172,7 @@ const TeacherChangeForm = ({teacher, onChange }) => {
     onClick={() => setShowModal(false)}
     />} 
     {showModal2 && <Modal
-    title="Hejdå!"
+    title="Nu är läraren borta ur systemet."
     message="Nu är läraren borta ur systemet."
     onClick={() => setShowModal2(false)}
     />}

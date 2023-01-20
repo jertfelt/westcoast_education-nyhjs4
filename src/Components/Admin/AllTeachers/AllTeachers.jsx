@@ -89,14 +89,13 @@ const AllTeachers = () => {
       <select id ="chooseTeachers"
       aria-label="Select"
       onChange={filterTeacher}>
-        <option value="default">Välj:</option>
-      {data && competences.map((item,indx) => (
-         <option 
-         key={`${item}--${item}--${indx}1`}
-         value={item} 
-         >{item}</option>
-      ))}
-     
+          <option value="default">Välj:</option>
+          {data && competences.map((item,indx) => (
+          <option 
+          key={`${item}--${item}--${indx}1`}
+          value={item} 
+          >{item}</option>
+          ))}
       </select>
     </Filter>
     </Row>
@@ -121,11 +120,9 @@ const AllTeachers = () => {
             key={teacher.personalID}
             >
             <div>
-              
             <h3>{teacher.firstName} {teacher.lastName}</h3>
             <p>Samtliga kompetenser:</p>
             <List>
-              
             {teacher.competences.map((c, i) => (
               <li key={i}>{c}</li>
             ))}

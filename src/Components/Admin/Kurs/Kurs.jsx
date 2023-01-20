@@ -27,9 +27,8 @@ const Kurs = () => {
     ):(<>
     {data && data.filter(item => item.courseID === noId).map(item => ( 
       <div key={noId}>
-         <h1>{item.courseName}</h1>
+        <h1>{item.courseName}</h1>
           <p>Beskrivning: {item.courseDescription}</p>
-
           {item.published && <>
           <p>Start:{item.startDate}</p>
           <p>Längd: {item.lengthWeeks} veckor</p>  
@@ -46,18 +45,13 @@ const Kurs = () => {
           <p>Start:{item.startDate}</p>
           <p>Minimum deltagare: 5 <br /> Antal deltagare anmälda hittills: {item.studentsAssigned}</p>
           </>}
-          
           <button 
-          onClick={() => setChangeForm(true)}>Redigera kurs</button>
-          
+          onClick={() => setChangeForm(true)}>
+            Redigera kurs</button>
       </div>
-
     ))}</>
-      
     )}
     </InfoRuta>
-    
   </Section> );
 }
- 
 export default Kurs;

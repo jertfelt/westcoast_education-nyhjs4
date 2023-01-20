@@ -1,6 +1,8 @@
-import RegisterNewTeacherForm from "../Forms/RegisterNewTeacherForm";
 import { useFirebase } from "../../utils/useFirebase";
 import { useState, useEffect } from "react";
+import TeacherAddOrChange from "../Forms/TeacherAddOrChange";
+import styled from "styled-components";
+import { Section, InfoRuta } from "../../StylingElements/SectionsAdmin/AdminComponents";
 
 const AddNewTeacher = () => {
   const {data} = useFirebase("/competences")
@@ -14,15 +16,16 @@ const AddNewTeacher = () => {
   },[data])
 
   return ( 
-  <section>
-    <h1>Registrera ny lärare:</h1>
-    <RegisterNewTeacherForm
-    kompetenser = {competences}
+  <Section>
+    <InfoRuta>
+    <TeacherAddOrChange
+    typeOfForm = {"registerNew"}
+    item = {competences}
+    title = {"Registrera ny lärare:"}
     onClick= {() => setShowModal(false)}
     />
-
-
-  </section> );
+    </InfoRuta>
+  </Section> );
 }
  
 export default AddNewTeacher;

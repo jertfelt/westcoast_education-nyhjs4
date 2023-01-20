@@ -77,7 +77,6 @@ const confirmSave =(e) =>{
 const handleSelect = (e) => {
   setSelected(prev => [...prev, e.target.value])
   setCompetences(prev => [...prev, e.target.value])
-  
 }
 
 const takeAwaySelect = (e) => {

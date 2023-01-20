@@ -4,10 +4,7 @@ import { useNavigate } from "react-router-dom";
 
 const Form = styled.div``
 
-
-
-
-const AddTeacherOrCourseForm = () => {
+const AddTeacherOrCourseToggle = () => {
   const [msg, setMsg] = useState("Välj")
   const navigate = useNavigate()
   const chooseYourForm = (e) => {
@@ -37,8 +34,7 @@ const AddTeacherOrCourseForm = () => {
       <option value="course" 
       label="Kurs">Kurs</option>
     </select>
-  
   </Form>  );
 }
  
-export default AddTeacherOrCourseForm;
+export default AddTeacherOrCourseToggle;

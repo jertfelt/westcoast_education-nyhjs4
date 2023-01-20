@@ -1,8 +1,9 @@
 import { useNavigate, useParams} from "react-router-dom";
 import { useFirebase } from "../../utils/useFirebase";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import { Section, InfoRuta, ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
-import TeacherChangeForm from "../Forms/TeacherChangeForm";
+import TeacherAddOrChange from "../Forms/TeacherAddOrChange";
+
 
 const Teacher = () => {
   const navigate = useNavigate()
@@ -10,26 +11,25 @@ const Teacher = () => {
   const {data,error, loading} = useFirebase("/teachers")
   let noId = Number(id)
   const [changeForm, setChangeForm] = useState(false);
-  const [competences, setCompetences] = useState([])
-
-  
+ 
 
   return ( 
-  <Section>
-    
+  <Section>    
     {error && <p>Något har blivit fel med servern</p>}
     {loading ? (<h2>Laddar..</h2>):(
     <InfoRuta>
       {changeForm ? (<>
       {data && data.filter(item => item.id === noId).map(item => (
-      <TeacherChangeForm 
-      key={`${item.firstName}-${item.id}$`}
-      teacher = {item}
-      onChange = {() => setChangeForm(false)}
-      />
-    ))}
+        <TeacherAddOrChange
+        key={`${item.firstName}-${item.id}$`}
+        typeOfForm ={"changeTeacher"}
+        item={item}
+        title = {"Ändra:"}
+        onClick = {() => setChangeForm(false)}
+        />
+      ))}
       </>):(<>
-     {data && data.filter(item => item.id === noId).map(item => (
+    {data && data.filter(item => item.id === noId).map(item => (
       <div key= {noId}>
         <h1>{item.firstName} {item.lastName}</h1>
         <p>Personnummer: {item.personalID}</p>
@@ -39,7 +39,7 @@ const Teacher = () => {
         <ul>
         {item.competences.map(((comp, indx) => (
           <li key={`${comp}--${indx}${indx}`}>
-           {comp} </li>
+          {comp} </li>
         )))}
         </ul>
         <ButtonContainer>
@@ -51,9 +51,7 @@ const Teacher = () => {
           onClick={() => setChangeForm(true)}>Redigera</button>
           </ButtonContainer>
       </div>
-    ))}
-    </>)}
-    
+    ))}</>)}
   </InfoRuta>)}
   </Section> 
   );

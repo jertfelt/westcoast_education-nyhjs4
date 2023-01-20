@@ -1,7 +1,7 @@
 import { useContext} from "react";
 import AuthContext from "../../Context/Auth.Context";
 import styled from "styled-components";
-import AddTeacherOrCourseForm from "../../Components/Admin/Forms/AddTeachersOrCoursesForm";
+import AddTeacherOrCourseToggle from "../../Components/Admin/Forms/AddTeachersOrCoursesToggle";
 import AllTeachers from "../../Components/Admin/AllTeachers/AllTeachers";
 import AllaKurser from "../../Components/Admin/Kurs/AllaKurser";
 
@@ -70,21 +70,15 @@ const Admin = () => {
   <AdminSite
   data-testid="Admin">
     <h1>Välkommen, {context.userName}</h1>
- 
     <MainContent>
-    <TwoColumns>
-      <AllTeachers 
-      />
-      <AllaKurser 
-      />
-        <FormContainer>
-    <AddTeacherOrCourseForm/>
-    </FormContainer>
-    </TwoColumns> 
-  
+      <TwoColumns>
+        <AllTeachers />
+        <AllaKurser />
+      <FormContainer>
+        <AddTeacherOrCourseToggle/>
+      </FormContainer>
+      </TwoColumns> 
     </MainContent>
-    
-    
   </AdminSite>  );
 }
  
