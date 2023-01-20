@@ -59,7 +59,7 @@ justify-content:space-around;`
 const FormContainer = styled.aside`
 width:100%;
 max-width:1000px;
-background: ${({ theme }) => theme.link};
+background: ${({ theme }) => theme.accent};
 padding:3rem;
 display:flex;
 color: ${({ theme }) => theme.buttonText};

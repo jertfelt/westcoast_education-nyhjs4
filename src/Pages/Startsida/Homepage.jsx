@@ -23,7 +23,7 @@ h1{
   }
 }
 h3{
-  color: ${({ theme }) => theme.highlight};
+  color: ${({ theme }) => theme.accent};
 }
 `
 const TwoColumns = styled.div`
@@ -59,6 +59,10 @@ div{
   background: ${({ theme }) => theme.accent};
   padding:2rem;
   color: ${({ theme }) => theme.buttonText};
+  a{
+    color:${({ theme }) => theme.buttonText};
+    padding-right:6px;
+  }
   h3{
     font-size:30px;
     margin-top:1rem;
