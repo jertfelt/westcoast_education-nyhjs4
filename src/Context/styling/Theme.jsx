@@ -16,7 +16,7 @@ export const lightTheme = {
   toggleBorder: '#FFF',
   background: 'gray',
   buttonBackground: "black",
-  accent: "navy",
+  accent: "darkslateblue",
   highlight: "lightblue",
   link :"blue",
 }

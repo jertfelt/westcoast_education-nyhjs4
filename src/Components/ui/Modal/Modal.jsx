@@ -17,7 +17,7 @@ width: 80%;
 z-index: 100;
 overflow: hidden;
 button{
-  background: ${({ theme }) => theme.highlight};
+  background: ${({ theme }) => theme.accent};
   color: ${({ theme }) => theme.body};
   font-size:1rem;
   padding: 6px;

@@ -8,7 +8,7 @@ display:flex;
 gap:20px;
 align-items: center;
 justify-content: flex-end;
-background: ${({ theme }) => theme.highlight};
+background: ${({ theme }) => theme.accent};
 border-radius:30px;
 color: ${({ theme }) => theme.body};
 padding: 1rem;
@@ -52,9 +52,6 @@ const determineMember = () => {
   return (
   <section>
   <Content>
-  
-  {/* {!notMemberYet && <Register/>}  */}
-     {/* {notMemberYet && <LoginTest/>} */}
     {!notMemberYet && <RegisterStudent/>}
     {notMemberYet && <LoginFormStudent/>}
     <QuestionDiv>

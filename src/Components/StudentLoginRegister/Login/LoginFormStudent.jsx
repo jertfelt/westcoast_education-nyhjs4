@@ -6,6 +6,7 @@ import Modal from "../../ui/Modal/Modal";
 import { FormWOInstructions as Form } from "../../StylingElements/Form/Form";
 import Button from "../../StylingElements/Buttons/FormButton";
 import { useFetch } from "../../utils/useFetch";
+import { useFirebase } from "../../utils/useFirebase";
 
 const LoginFormStudent = () => {
   const context = useContext(StudentContext);
@@ -16,9 +17,15 @@ const LoginFormStudent = () => {
   const [errMsg, setErrMsg] = useState("")
   const [showModal, setShowModal] = useState(false)
 
-  const STUDENTS_URL = "http://localhost:8000/students"
-  const {data, error, loading} = useFetch(STUDENTS_URL)
+  const {data, error, loading} = useFirebase("/students")
   const [studentsEmail, setStudentsEmail] = useState([])
+  const [students, setStudents] = useState([])
+
+  useEffect(() => {
+    if(data){
+      setStudent(data.map(item => item))
+    }
+  }, [])
 
   useEffect(() => {
     userRef.current.focus()
@@ -28,52 +35,36 @@ const LoginFormStudent = () => {
     setErrMsg("")
   }, [studentEmail, studentPassword])
 
-  useEffect(() => {
-    const dataFetch = async () => {
-      const data2 = await (
-        await fetch(
-          STUDENTS_URL
-        )
-      ).json()
-      setStudentsEmail(data2)
-    }
-    dataFetch()
-  }, [])
-
 
 
   const handleSubmit =  (e) => {
     e.preventDefault()
-
-    //egentligen inte såhär saker ska gå till, det ska användas post till en databas - jag får dock inte till detta utan att det SKAPAS en ny användare oavsett, men för att få en fungerande testing site..
     
-  if(studentsEmail.map(student => student.studentEmail).includes(studentEmail)){
-   const result = studentsEmail.filter(student => student.studentEmail === studentEmail)
-
-   if(result.map(student => student.studentPassword === studentPassword)){
-    let studentName = result.filter(student => student.studentPassword === studentPassword).map(student => student.studentName)
-    let studentLoggedIn = true
-    context.onLogin({
-            studentName,
-            studentEmail,
-            studentPassword,
-            studentLoggedIn
-          })
-          setStudent("")
-          setPassword("")
-          navigate("/student")
-   }
-   else{
-    setShowModal(true)
-    setErrMsg("Fel lösenord!")
-   }
-  }
+    if(students.map(item => item.studentEmail).includes(studentEmail)){
+      const result = students.filter(student => student.studentEmail === studentEmail)
+      if(result.map(student => student.studentPassword === studentPassword)){
+        let studentName = result.filter(student => student.studentPAssword === studentPassword).map(student => student.studentName)
+        let studentLoggedIn = true
+        context.onLogin({
+                    studentName,
+                    studentEmail,
+                    studentPassword,
+                    studentLoggedIn
+                  })
+                  navigate("/student")
+      }
+      else{
+        setShowModal(true)
+         setErrMsg("Fel lösenord!")
+          }
+    }
+      
   else{
     setShowModal(true)
     setErrMsg("Användaren finns inte!")
   }
-  
-}
+    
+  }
 
   return (
     <>
