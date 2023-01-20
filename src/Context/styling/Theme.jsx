@@ -14,11 +14,11 @@ export const lightTheme = {
   text: '#363537',
   buttonText: "#FFF",
   toggleBorder: '#FFF',
-  background: '#363537',
+  background: 'gray',
   buttonBackground: "black",
-  accent: "#1E90FF",
-  highlight: "midnightblue",
-  link :"salmon",
+  accent: "navy",
+  highlight: "lightblue",
+  link :"blue",
 }
 
 export const darkTheme = {

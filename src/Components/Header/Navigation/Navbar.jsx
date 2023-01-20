@@ -51,13 +51,13 @@ a{
   color:${({ theme }) => theme.buttonText};
   font-family: Sofia Sans;
   &:hover{
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.buttonText};
   }
   &:focus{
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.body};
   }
   &:active{
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.link};
   }
 }
 `
