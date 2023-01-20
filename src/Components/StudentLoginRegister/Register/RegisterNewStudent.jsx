@@ -3,7 +3,11 @@ import { useContext, useState, useRef, useEffect } from "react";
 import StudentContext from "../../../Context/StudentContext";
 import { useNavigate } from "react-router-dom";
 import { FormInstructions as Form } from "../../StylingElements/Form/Form";
+import Modal from "../../ui/Modal/Modal";
 import Button from "../../StylingElements/Buttons/FormButton";
+import { useFirebase } from "../../utils/useFirebase";
+import { getDatabase, ref, set} from "firebase/database";
+import { useDates } from "../../utils/useDates";
 
 const Container = styled.div`
 display:flex;
@@ -33,7 +37,7 @@ const RegisterStudent = () => {
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
   const matchPasswordInputRef = useRef()
-
+  const {year,nextYear} = useDates()
   const [studentName, setUsername] = useState('');
   const [studentEmail, setEmail] = useState('')
   const [studentPassword, setPassword] = useState('');
@@ -44,6 +48,17 @@ const RegisterStudent = () => {
   const [matchFocus, setMatchFocus] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
+  const {data} = useFirebase("/students")
+  const [id, setID] = useState(nextYear)
+  const [showModal2, setShowModal2] = useState(false)
+  const [modalTitle, setTitle] = useState("")
+  const [modalMsg, setMsg] = useState("")
+
+  useEffect(() => {
+    if(data){
+      setID(data.length)
+    }
+  })
 
   const USER_REGEX = /^\[A-z\][A-z0-9-_]{3,23}$/;
   const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
@@ -61,30 +76,57 @@ const RegisterStudent = () => {
     setMatchFocus(true)
   }, [setMatch])
 
-  const studentUser = {
-    studentName, studentEmail,studentPassword
+
+
+  const sendEditToFirebase = (
+   studentName,
+   studentEmail,
+   studentID,
+   ID,
+   studentPassword
+    ) => {
+    const db = getDatabase()
+    set(ref(db, "/students/" + ID ),{
+      studentName : studentName,
+      studentEmail : studentEmail,
+      studentID : ID,
+      id: ID,
+      password: studentPassword,
+    })
+    let studentLoggedIn = true
+    context.onLogin({
+      studentEmail,
+      studentLoggedIn,
+      studentName,
+      studentPassword
+    })
+    navigate("/student")
   }
 
-  //*lägg in en if student redan finns så poppar en modal upp med det felmeddelandet:
   const handleSubmit = (e) => {
     e.preventDefault()
+    const studentName = nameInputRef.current.value
+    const studentEmail = emailInputRef.current.value
+    const studentID = id
+    const studentPassword = passwordInputRef.current.value
+    const ID = id
     
-      fetch("http://localhost:8000/students", {
-        method:"POST",
-        headers:{
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(studentUser)
-      })
-      let studentLoggedIn = true
-      context.onLogin({
-        studentEmail,
-        studentLoggedIn,
-        studentName,
-        studentPassword
-      })
-     
-      navigate("/student")
+    if(
+     studentName === "" || studentEmail === ""
+    ){
+      setShowModal2(true)
+      setTitle("Något är fel")
+      setMsg("Något saknas, du måste fylla i alla fälten")
+    }
+    else{
+    sendEditToFirebase(
+     studentName,
+     studentEmail,
+     studentID,
+     ID,
+     studentPassword
+       )
+    }
   }
   
   
@@ -93,6 +135,11 @@ const RegisterStudent = () => {
   return (
     <Form 
       onSubmit={handleSubmit}>
+      {showModal2 && <Modal
+      title={modalTitle}
+      message={modalMsg}
+      onClick={() => setShowModal2(false)}
+      />}
         <h1>Registrera dig:</h1>
         <Container>
       <label htmlFor="username">

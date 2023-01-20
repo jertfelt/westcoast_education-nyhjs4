@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import RegisterStudent from './RegisterNewStudent';
 import { MemoryRouter } from 'react-router-dom';
-import toHaveClass from "@testing-library/jest-dom"
+
 
 
 describe("Register a new student component", () => {

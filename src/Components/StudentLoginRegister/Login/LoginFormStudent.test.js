@@ -1,9 +1,10 @@
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import LoginFormStudent from './LoginFormStudent';
+import { MemoryRouter } from 'react-router-dom';
 
 describe("A login form", () => {
-  const setup = () => render(<LoginFormStudent/>)
+  const setup = () => render(<LoginFormStudent/>, {wrapper: MemoryRouter})
   it("should have a login button", () => {
     setup()
     expect(screen.getByRole("button", {name:/Logga in/i})).toBeInTheDocument()

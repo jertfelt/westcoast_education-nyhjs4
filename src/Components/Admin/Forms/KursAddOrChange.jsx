@@ -65,7 +65,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       ID,
       ) => {
       const db = getDatabase()
-      set(ref(db, "courses/" + ID ),{
+      set(ref(db, "/courses/" + ID ),{
         courseName: coursename,
         courseDescription : description,
         startDate : startdate,
