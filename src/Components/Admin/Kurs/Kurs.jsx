@@ -1,5 +1,4 @@
 import { Navigate, useParams } from "react-router-dom";
-
 import { useState, useEffect } from "react";
 import { Section, InfoRuta, ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
 import KursAddOrChange from "../Forms/KursAddOrChange";

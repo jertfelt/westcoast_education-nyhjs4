@@ -15,14 +15,14 @@ display:flex;
 flex-direction:column;
 gap:10px;
 font-family: Sofia Sans;
+
 @media (max-width: 700px){
   padding:0px;
-  width:100%;
-  
 }
 `
 
 export const FormInstructions = styled(Form)`
+
 button{
   padding: 4px 8px;
   @media (max-width: 700px){
@@ -40,7 +40,7 @@ button{
 }
 .smallBtn {
   @media (max-width: 700px){
-    width:300px;
+    width:50%;
   }
   width:30%;
 }
@@ -83,6 +83,7 @@ button{
     }
     cursor: pointer;
     width:30%;
+    
   }
 
 `
