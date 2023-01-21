@@ -159,9 +159,8 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
     }).then(()=>{
       setShowModal(false)
       showModal2(true)
-    }).then(
-      navigate("/admin")
-    )
+    })
+    navigate("/")
   }
   
   //form functions
@@ -430,9 +429,10 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
             onClick={onClick}>
             Stäng formulär 
           </button> 
-          <button onClick={()=>setShowModal(true)}>
+          {/* <button onClick={()=>setShowModal(true)}>
             Avskeda lärare
-          </button></>
+          </button>*/}
+          </> 
       )}
   </ButtonContainerOutsideForm>
   </>);

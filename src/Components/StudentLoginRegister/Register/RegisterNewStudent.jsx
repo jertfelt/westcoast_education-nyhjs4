@@ -66,7 +66,6 @@ const RegisterStudent = () => {
         else{
           setID(data.length+2)
         }
-   
     }
     
   },[setID, data])

@@ -266,12 +266,12 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
 
 
     <ButtonContainer>
-    {typeOfForm==="changeCourse" &&
+    {/* {typeOfForm==="changeCourse" &&
     <button className="smallBtn"
     onClick={()=>setShowModal(true)}
       disabled = {courseExists && courseExists.published ? true : false}>
       Radera kurs
-    </button>}
+    </button>} */}
 
     <input
       type="submit"

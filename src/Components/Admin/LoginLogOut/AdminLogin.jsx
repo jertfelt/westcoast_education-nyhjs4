@@ -36,6 +36,7 @@ display:flex;
 align-items:center;
 gap:10px;
 max-width:60%;
+font-family: Sofia Sans;
 @media (min-width: 900px){
   max-width:500px;
 }
