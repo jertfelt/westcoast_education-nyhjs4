@@ -186,7 +186,7 @@ const RegisterStudent = () => {
       minLength="8"
       required
       onChange={(e) => setPassword(e.target.value)}
-      placeholder="Email"
+      placeholder="Lösenord"
       ref={passwordInputRef}
       aria-invalid={validPassword ? "false": "true"}
       onFocus={() => setPwdFocus(true)}

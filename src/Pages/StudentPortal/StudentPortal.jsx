@@ -1,106 +1,9 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import StudentContext from "../../Context/StudentContext";
 import { Link } from "react-router-dom";
-import styled from "styled-components";
+import { HashLink } from "react-router-hash-link";
 import Modal from "../../Components/ui/Modal/Modal";
-
-const Section = styled.section`
-padding:3rem;
-min-height:80vh;
-color: ${({ theme }) => theme.text};
-display:flex;
-gap:2rem;
-flex-direction:column;
-align-items: center;
-justify-content:center;
-@media (min-width: 800px){
-  flex-direction:row;
-}
-h1{
-  font-size:48px;
-}
-a{
-  font-size:14px;
-  color: ${({ theme }) => theme.accent};
-  &:acive{
-    color: ${({ theme }) => theme.accent};
-  }
-  &:focus{
-    color: ${({ theme }) => theme.accent};
-  }
-  &:hover{
-    color: ${({ theme }) => theme.text};
-  }
-}
-img{
-  max-width:300px;
-  border-radius: 50%;
-}
-button{
-  font-size:14px;
-  border:none;
-  padding:4px 6px;
-  &:hover{
-    background: ${({ theme }) => theme.accent};
-    color: ${({ theme }) => theme.body};
-  }
-}
-.logoutBtn{
-  margin-top:1rem;
-}
-
-form{
-  margin-top:1rem;
-  display:flex; 
-  gap: 5px;
-  align-items:center;
-  flex-direction:column;
-  @media (min-width:768px){
-    flex-direction:row;
-  }
-  input{
-    padding: 4px;
-  }
-  input[type=submit]{
-    border:none;
-    padding: 4px 6px;
-    background: ${({ theme }) => theme.text};
-    color: ${({ theme }) => theme.body};
-    &:active{
-      background: ${({ theme }) => theme.body};
-    color: ${({ theme }) => theme.text};
-    }
-    &:focus{
-      background: ${({ theme }) => theme.accent};
-      color: ${({ theme }) => theme.highlight};
-    }
-    &:hover{
-      background: ${({ theme }) => theme.body};
-      color: ${({ theme }) => theme.text};
-    }
-  }
-}
-`
-
-const ParagraphWithButton = styled.div`
-margin-top:-2rem;
-  display:flex;
-  gap:10px;
-  align-items:center;
-
-.offscreen{
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
-}
-`
-
-//!ej testat om den här komponenten funkat ännu (alltså att uppdatera databas) pga denna ingår inte i skoluppgiften
+import { ProfileSection as Section , ParagraphWithButton} from "../../Components/StylingElements/StudentSections/StudentSections";
 
 const StudentPortal = () => {
   const STUDENTS_URL = "http://localhost:8000/students"
@@ -271,7 +174,7 @@ const StudentPortal = () => {
     <h2>Dina kurser:</h2>
     <div>
     {!context.studentCourses && <><p>Du har inte anmält dig till några kurser än!</p>
-    <Link to ="/">Se kurserna här</Link><br/>
+    <HashLink smooth to ="/#kurser">Se kurserna här</HashLink><br/>
     <Link to="/register">Anmäl dig här</Link><br/>
     <button className="logoutBtn" 
     onClick={context.onLogout}>Logga ut</button>
@@ -283,8 +186,8 @@ const StudentPortal = () => {
     </div>
     </div>
     <div>
-    <img src="https://scontent.fbma5-1.fna.fbcdn.net/v/t1.6435-9/28870185_10215744456110109_4939343953838211072_n.jpg?_nc_cat=108&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=cM58egjGx10AX9TxYEI&tn=LqcIJUAqGIqBwfZ5&_nc_ht=scontent.fbma5-1.fna&oh=00_AfBgt1G7fq-Ooa-HEJI9okiU6n0NyC5YoWMVdLSh1BWSUQ&oe=63EE1AA0" 
-    alt="Student posing"></img>
+    <img src="https://picsum.photos/300/300" 
+    alt="Placeholder from Lorem Picsum."></img>
     </div>
     
   </Section> );
