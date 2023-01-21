@@ -1,4 +1,4 @@
-import {useContext, Fragment} from "react";
+import { Fragment} from "react";
 
 //*----styling & darkmode/lightmode:
 import Theme, { lightTheme, darkTheme }  from "./Context/styling/Theme";
@@ -11,28 +11,25 @@ import { ThemeProvider } from "styled-components";
 import Toggle from "./Components/ThemeModes/Toggler";
 
 //*---routing
-import {BrowserRouter, Link} from "react-router-dom";
+import {BrowserRouter} from "react-router-dom";
 import Routing from "./Config/Routes"
 
-// //*context
-import AuthContext from "./Context/Auth.Context";
-import StudentContext from "./Context/StudentContext";
+
 
 //*---other components
 import Header from "./Components/Header/Header";
 import { Line } from "./Components/StylingElements/Line/Line";
 import {FooterStyle as Footer} from "./Components/StylingElements/Footer/FooterStyles"
+import LinksInFooter from "./Components/FooterLinks/LinksInFooter";
 
 
 function App() {
-  const context = useContext(AuthContext)
-  const contextStudent = useContext(StudentContext)
+
   //*theme:
   const [theme, themeToggler, mountedComponent] = useDarkMode();
   const themeMode = theme === 'light' ? lightTheme : darkTheme;
   if(!mountedComponent) return <div/>
  
-
   return (
     <Fragment>
     <Theme>
@@ -52,30 +49,9 @@ function App() {
         <Toggle 
         theme={theme} 
         toggleTheme={themeToggler} 
-        />  
-      {context.loggedIn  && <>
-      <li>
-        <Link to="/admin">
-          Admin</Link>
-        </li>
-      <li>
-        <button onClick={context.onLogout}>
-          Logga ut</button>
-        </li>
-      </>
-      }
-      {!context.loggedIn && <>
-        {contextStudent.studentLoggedIn && <>
-        <li>
-          <Link to="/student">
-            Studentportal</Link>
-        </li>
-        <li>
-          <button onClick={contextStudent.onLogout}>
-            Logga ut</button>
-            </li> 
-        </>}
-      </>}
+        /> 
+      <LinksInFooter
+      />
       </Footer>
       </BrowserRouter>
     </div>
