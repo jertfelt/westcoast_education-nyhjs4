@@ -87,7 +87,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         const weeks = lengthWeeksRef.current.value
         const students = studentsAssignedRef.current.value
         const published = publishedStatus
-        const ID = (courseID + 923 + Math.floor((1 + Math.random())* 2000))
+        const ID = courseID
         
         if(
           coursename === "" || description === "" || startdate === "" || weeks === "" || students === "" || published === "" || ID === "" 
@@ -105,7 +105,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           students,
           ID,
           published,
-           )
+          )
         }
     }
 
@@ -117,7 +117,14 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
 
     const deleteCourse=() => {
       const db = getDatabase()
-      remove(ref(db, "/courses/" + courseID))
+      set(ref(db, "/courses/" + courseID ),{
+        courseName: "DELETED",
+        courseDescription : "",
+        startDate : "",
+        lengthWeeks : "",
+        studentsAssigned: "",
+        published: "",
+        courseID: "",})
       setShowModal(false)
     }
 

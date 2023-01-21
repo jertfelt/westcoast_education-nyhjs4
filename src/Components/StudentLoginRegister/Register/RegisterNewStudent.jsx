@@ -6,8 +6,9 @@ import { FormInstructions as Form } from "../../StylingElements/Form/Form";
 import Modal from "../../ui/Modal/Modal";
 import Button from "../../StylingElements/Buttons/FormButton";
 import { useFirebase } from "../../utils/useFirebase";
-import { getDatabase, ref, set} from "firebase/database";
+import { getDatabase, push, ref, set} from "firebase/database";
 import { useDates } from "../../utils/useDates";
+import { is } from "ecma/object";
 
 const Container = styled.div`
 display:flex;
@@ -56,9 +57,16 @@ const RegisterStudent = () => {
 
   useEffect(() => {
     if(data){
-      setID(data.length)
+      
       setAllstudents(data.map(item =>item))
-      console.log(id, data.length)
+      if(data.filter(function (student){ 
+        return student.studentID === data.length}) !== 0){
+          setID(data.length)
+        }
+        else{
+          setID(data.length+2)
+        }
+   
     }
     
   },[setID, data])
@@ -90,7 +98,7 @@ const RegisterStudent = () => {
    studentPassword
     ) => {
     const db = getDatabase()
-    set(ref(db, "/students/" + studentID ),{
+    set(ref(db, "/students/"+studentID),{
       id : id,
       studentName : studentName,
       studentEmail : studentEmail,
@@ -118,7 +126,7 @@ const RegisterStudent = () => {
     e.preventDefault()
     const studentName = nameInputRef.current.value
     const studentEmail = emailInputRef.current.value
-    const studentID = (id + id/2)
+    const studentID = id
     const studentPassword = passwordInputRef.current.value
     
     let checkForStudent = allstudents.filter(function (student){

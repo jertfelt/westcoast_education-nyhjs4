@@ -131,7 +131,7 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
       const email = emailRef.current.value
       const mobileNo = mobileNoRef.current.value
       const competences = selectedOption
-      const ID = (teacherID + teacherID)
+      const ID = teacherID
 
       sendEditToFirebase(
         firstName,
@@ -148,7 +148,15 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
   const deleteTeacher = (e) =>{
     e.preventDefault()
     const db = getDatabase()
-    remove(ref(db, "/teachers/" + teacherID)).then(()=>{
+    set(ref(db, "/teachers/" + teacherID ),{
+      competences: "",
+      id: "",
+      firstName : "DELETED",
+      lastName: "DELETED",
+      mobileNo: "",
+      email: "",
+      personalID: "",
+    }).then(()=>{
       setShowModal(false)
       showModal2(true)
     }).then(
