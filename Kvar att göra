@@ -2,20 +2,23 @@
 
 OM JAG HINNER:
 
-1) Göra om lärare delete funktion så det matchar 
 
-3) fixa till registrering till kurs - firebase 
-4) fixa Admin genom firebase istället, 
-5) css:fixar - knappar och annat behöver ses över
+
+1) fixa till registrering till kurs - firebase 
+- kom ihåg filter och kom ihåg att det ska vara updata
+
+2) fixa Admin genom firebase istället, 
+
+3) se samtidigt över env
+4) css:fixar - knappar och annat behöver ses över
 image.png se studentportal :De
 
-avkommenterat radera-knappar pga vill researcha firebase delete/remove funktion och hur det påverkar data (data blir oläsbar om ett id försvinner. alltså bör alla lärare och kurser få nya id:s när jag raderar en)
 
 2)Kursformulär:  Lärare i select option, utifrån kompetenser.
 <--- Finns, men koden buggar
 
-3)om jag hinner lägg in så att det blir en count på kurserna utifrån antalet studenter som har den kursen i databasen.
-(filter students och kör length på student.coursesnames --> )
+5)om jag hinner lägg in så att det blir en count på kurserna utifrån antalet studenter som har den kursen i databasen.
+(filter students och kör length på student.coursesnames --> coursename === thiscourse )
 
 
 https://stackoverflow.com/questions/37910008/check-if-value-exists-in-firebase-db 
