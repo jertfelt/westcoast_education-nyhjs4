@@ -1,13 +1,13 @@
 
 
 OM JAG HINNER:
-1) Anmälan till kursen: länk fungerar inte till homepage
 
 3) fixa till registrering till kurs - firebase 
 4) fixa Admin genom firebase istället, 
 5) css:fixar - knappar och annat behöver ses över
 image.png se studentportal :De
 
+avkommenterat radera-knappar pga vill researcha firebase delete/remove funktion och hur det påverkar data (data blir oläsbar om ett id försvinner. alltså bör alla lärare och kurser få nya id:s när jag raderar en)
 
 2)Kursformulär:  Lärare i select option, utifrån kompetenser.
 <--- Finns, men koden buggar
