@@ -1,11 +1,10 @@
 import { Fragment} from "react";
 
 //*----styling & darkmode/lightmode:
-import Theme, { lightTheme, darkTheme }  from "./Context/styling/Theme";
-import GlobalStyle from "./Context/styling/globalStyles";
+import Theme, { lightTheme, darkTheme }  from "./Components/styling/Theme";
+import GlobalStyle from "./Components/styling/globalStyles"
 import { useDarkMode } from "./Components/ThemeModes/useDarkMode";
 import { ThemeProvider } from "styled-components";
-
 
 //*toggler darkmode/lightmode
 import Toggle from "./Components/ThemeModes/Toggler";
@@ -13,8 +12,6 @@ import Toggle from "./Components/ThemeModes/Toggler";
 //*---routing
 import {BrowserRouter} from "react-router-dom";
 import Routing from "./Config/Routes"
-
-
 
 //*---other components
 import Header from "./Components/Header/Header";
@@ -40,8 +37,7 @@ function App() {
       <Header/>
       <Line/>
       <main >
-      <Routing 
-      />
+      <Routing />
       </main>
       <Line/>
       <Footer 
