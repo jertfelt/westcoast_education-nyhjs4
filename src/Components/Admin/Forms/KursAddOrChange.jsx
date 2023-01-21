@@ -27,7 +27,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     if(typeOfForm === "registerNew"){
       setLoading(true)
       if(courses){
-        
+
         setCourseID(courses.length)
         setLoading(false)
       }
@@ -127,8 +127,8 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       set(ref(db, "/courses/" + courseID ),{
         courseName: "DELETED",
         courseID: courseID,})
-      console.log(courses.map(item => item.courseID))
-       setShowModal(false)
+        console.log(courses.map(item => item.courseID))
+        setShowModal(false)
     }
 
     const publishCourse = (e) => {

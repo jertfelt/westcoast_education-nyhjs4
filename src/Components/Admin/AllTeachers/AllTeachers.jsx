@@ -70,7 +70,8 @@ const AllTeachers = () => {
 
   useEffect(() => {
     if(data){
-      let comp = data.map(item => item.competences)
+      let comp = data.filter(function (teacher){
+        return teacher.status !== "DELETED"}).map(item => item.competences)
       const flatten = [].concat(...comp)
       setCompetences(flatten)
     }
@@ -110,7 +111,8 @@ const AllTeachers = () => {
         {error && <p>Något är fel på servern.</p>}
         {loading && <p>Laddar..</p>}
         {defaultView ? (<>
-        {data && data.map(((teacher) => (
+        {data && data.filter(function (item){
+          return item.status !== "DELETED"}).map(((teacher) => (
           <GridTeacher 
           key={teacher.personalID}
           >

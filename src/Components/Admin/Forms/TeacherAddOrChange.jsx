@@ -149,10 +149,13 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
   const deleteTeacher = (e) =>{
     e.preventDefault()
     const db = getDatabase()
-    
 
-
-    // set(ref(db, "/teachers/" + teacherID ),{
+    set(ref(db, "/teachers/" + teacherID),{
+      status: "DELETED",
+      id: teacherID,})
+     
+      setShowModal(false)
+       // set(ref(db, "/teachers/" + teacherID ),{
     //   competences: "",
     //   id: "",
     //   firstName : "DELETED",
@@ -164,8 +167,11 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
     //   setShowModal(false)
     //   showModal2(true)
     // })
-    // navigate("/")
+     navigate("/")
+  
   }
+
+   
   
   //form functions
   const instructionsUnclear=(e) => {
@@ -248,7 +254,10 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
     }
   },[selectedOption])
 
-  
+  const confirmDelete = (e) => {
+    e.preventDefault()
+    setShowModal2(true)
+  }
 
   return (
     <>
@@ -433,9 +442,9 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
             onClick={onClick}>
             Stäng formulär 
           </button> 
-          {/* <button onClick={()=>setShowModal(true)}>
+          <button onClick={(e)=>confirmDelete(e)}>
             Avskeda lärare
-          </button>*/}
+          </button>
           </> 
       )}
   </ButtonContainerOutsideForm>
