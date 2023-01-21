@@ -131,8 +131,8 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
       const email = emailRef.current.value
       const mobileNo = mobileNoRef.current.value
       const competences = selectedOption
-      const ID = teacherID
-      console.log(competences, ID, "comp")
+      const ID = (teacherID + teacherID)
+
       sendEditToFirebase(
         firstName,
         lastName, 

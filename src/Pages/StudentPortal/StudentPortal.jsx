@@ -175,7 +175,7 @@ const StudentPortal = () => {
     <div>
     {!context.studentCourses && <><p>Du har inte anmält dig till några kurser än!</p>
     <HashLink smooth to ="/#kurser">Se kurserna här</HashLink><br/>
-    <Link to="/register">Anmäl dig här</Link><br/>
+    <Link to="/student/student-kurser/register">Anmäl dig här</Link><br/>
     <button className="logoutBtn" 
     onClick={context.onLogout}>Logga ut</button>
     </>

@@ -1,10 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Arya:wght@400;700&family=Sofia+Sans:ital,wght@0,400;0,500;0,600;0,800;0,900;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mukta:wght@400;500;700&display=swap');
+x
 
 body{
   font-family: "Sofia Sans"
 }
 h1,h2{
-  font-family: "Arya"
+  font-family: "Mukta";
 }
 h3, h4{
   font-family: "Sofia Sans"
@@ -12,11 +14,11 @@ h3, h4{
 p{
   font-family: "Sofia Sans";
   font-size:1.2rem;
-  
 }
 button{
   font-family: "Sofia Sans"
 }
 a{
+  font-family: "Sofia Sans";
   text-decoration: none;
 }

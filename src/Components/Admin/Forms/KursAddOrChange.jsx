@@ -87,7 +87,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         const weeks = lengthWeeksRef.current.value
         const students = studentsAssignedRef.current.value
         const published = publishedStatus
-        const ID = courseID
+        const ID = (courseID + 923 + Math.floor((1 + Math.random())* 2000))
         
         if(
           coursename === "" || description === "" || startdate === "" || weeks === "" || students === "" || published === "" || ID === "" 

@@ -32,7 +32,6 @@ width:100%;
 const RegisterStudent = () => {
   const context = useContext(StudentContext);
   const navigate = useNavigate()
-
   const nameInputRef = useRef()
   const emailInputRef = useRef()
   const passwordInputRef = useRef()
@@ -49,6 +48,7 @@ const RegisterStudent = () => {
   const [pwdFocus, setPwdFocus] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
   const {data} = useFirebase("/students")
+  const [allstudents, setAllstudents] = useState("")
   const [id, setID] = useState(nextYear)
   const [showModal2, setShowModal2] = useState(false)
   const [modalTitle, setTitle] = useState("")
@@ -57,7 +57,10 @@ const RegisterStudent = () => {
   useEffect(() => {
     if(data){
       setID(data.length)
+      setAllstudents(data.map(item =>item))
+      console.log(id, data.length)
     }
+    
   },[setID, data])
 
   
@@ -84,51 +87,62 @@ const RegisterStudent = () => {
    studentName,
    studentEmail,
    studentID,
-   ID,
    studentPassword
     ) => {
     const db = getDatabase()
-    set(ref(db, "/students/" + ID ),{
+    set(ref(db, "/students/" + studentID ),{
+      id : id,
       studentName : studentName,
       studentEmail : studentEmail,
-      studentID : ID,
-      id: ID,
-      password: studentPassword,
+      studentID : studentID,
+      studentPassword: studentPassword,
     })
+  }
+
+  const login = (
+    studentName,
+    studentEmail,
+    studentID) => {
+
     let studentLoggedIn = true
     context.onLogin({
+      studentName,
       studentEmail,
       studentLoggedIn,
-      studentName,
-      studentPassword
+      studentID
     })
-    navigate("/student")
+    
   }
 
   const handleSubmit = (e) => {
     e.preventDefault()
     const studentName = nameInputRef.current.value
     const studentEmail = emailInputRef.current.value
-    const studentID = id
+    const studentID = (id + id/2)
     const studentPassword = passwordInputRef.current.value
-    const ID = id
     
-    if(
-     studentName === "" || studentEmail === ""
-    ){
-      setShowModal2(true)
-      setTitle("Något är fel")
-      setMsg("Något saknas, du måste fylla i alla fälten")
-    }
-    else{
-    sendEditToFirebase(
-     studentName,
-     studentEmail,
-     studentID,
-     ID,
-     studentPassword
-       )
-    }
+    let checkForStudent = allstudents.filter(function (student){
+      return student.studentEmail === studentEmail}).map(item => item)
+      
+      if(checkForStudent.length >= 1){
+        setShowModal2(true)
+        setTitle("Fel!")
+        setMsg("Användaren är redan registrerad")
+      }
+      else{
+        sendEditToFirebase(
+          studentName,
+          studentEmail,
+          studentID,
+          studentPassword
+        )
+        login( 
+          studentName,
+            studentEmail,
+            studentID,)
+        
+        navigate("/student")
+      }
   }
   
   
@@ -192,7 +206,6 @@ const RegisterStudent = () => {
       onFocus={() => setPwdFocus(true)}
       onBlur={() => setPwdFocus(false)}
       />
-     
       </Container>
       <p className={pwdFocus && !validPassword ? "instructions" : "offscreen"} 
       data-testid="testingParagraph">

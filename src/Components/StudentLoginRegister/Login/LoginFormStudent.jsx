@@ -29,9 +29,7 @@ const LoginFormStudent = () => {
     userRef.current.focus()
   }, [])
 
-  useEffect(() => {
-    setErrMsg("")
-  }, [studentEmail, studentPassword])
+
 
 
   const modalFunction = (message) => {
@@ -40,31 +38,46 @@ const LoginFormStudent = () => {
   }
 
 
+
   const handleSubmit =  (e) => {
     e.preventDefault()
-    
-    if(students.map(item => item.studentEmail).includes(studentEmail)){
-      const result = students.filter(student => student.studentEmail === studentEmail)
-      if(result.map(student => student.studentPassword === studentPassword)){
-        let studentName = result.filter(student => student.studentPAssword === studentPassword).map(student => student.studentName)
-        let studentLoggedIn = true
-        context.onLogin({
-                    studentName,
-                    studentEmail,
-                    studentPassword,
-                    studentLoggedIn
-                  })
-                  navigate("/student")
+    let checkForStudent = students.filter(function (student){
+      return student.studentEmail === studentEmail}).map(item => item)
+      if(checkForStudent.length === 0){
+        modalFunction("Användaren finns inte!")
       }
-      else{
-        modalFunction("Fel lösenord!")
-          }
-    }
+       else{
+        let checkPassword = checkForStudent.map(item => {
+          return item.studentPassword
+        })
+        if(studentPassword !== checkPassword[0]){
+          modalFunction("Fel lösenord!")
+        }
+        else{
+          console.log(checkForStudent)
+        }
+        
+        
+       }
+        
+        
+
+      //   let studentLoggedIn = true
+      //   context.onLogin({
+      //               studentName,
+      //               studentEmail,
+      //               studentLoggedIn,
+      //               studentID
+      //             })
+      //             navigate("/student")
+      // 
       
-  else{
-    modalFunction("Användaren finns inte!")
-  }
-  }
+     
+ 
+     
+    }
+     
+    
 
   return (
     <>

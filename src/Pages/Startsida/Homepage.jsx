@@ -50,6 +50,7 @@ const HomePage = () => {
       <div
       key={course.courseID}>
         <h3>{course.courseName}</h3>
+        
         <p>{course.courseDescription}</p>
         <p>Startdatum: {course.startDate}</p>
         <Link
