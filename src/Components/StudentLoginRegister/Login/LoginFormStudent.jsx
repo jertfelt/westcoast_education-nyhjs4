@@ -3,9 +3,8 @@ import { useContext, useState,  useRef, useEffect } from "react";
 import StudentContext from "../../../Context/StudentContext";
 import { useNavigate} from "react-router-dom";
 import Modal from "../../ui/Modal/Modal";
-import { FormWOInstructions as Form } from "../../StylingElements/Form/Form";
-import Button from "../../StylingElements/Buttons/FormButton";
-
+import { FormInstructions as Form } from "../../StylingElements/Form/Form";
+import Studentsections from "../../StylingElements/StudentSections/StudentSections";
 import { useFirebase } from "../../utils/useFirebase";
 
 const LoginFormStudent = () => {
@@ -35,6 +34,11 @@ const LoginFormStudent = () => {
   }, [studentEmail, studentPassword])
 
 
+  const modalFunction = (message) => {
+    setShowModal(prev => !prev)
+    setErrMsg(message)
+  }
+
 
   const handleSubmit =  (e) => {
     e.preventDefault()
@@ -53,16 +57,13 @@ const LoginFormStudent = () => {
                   navigate("/student")
       }
       else{
-        setShowModal(true)
-         setErrMsg("Fel lösenord!")
+        modalFunction("Fel lösenord!")
           }
     }
       
   else{
-    setShowModal(true)
-    setErrMsg("Användaren finns inte!")
+    modalFunction("Användaren finns inte!")
   }
-    
   }
 
   return (
@@ -81,8 +82,10 @@ const LoginFormStudent = () => {
 
     <Form onSubmit={handleSubmit}>
       <h1>Välkommen</h1>
-      
-      <label htmlFor="username">Email:</label>
+      <div className="Row">
+      <label 
+      htmlFor="username">
+        Email:</label>
         <input
               type="email"
               id="username"
@@ -92,17 +95,24 @@ const LoginFormStudent = () => {
               value={studentEmail}
               required
         />
-      <label htmlFor="password">Lösenord:</label>
+      </div>
+      <div className="Row">
+        <label 
+        htmlFor="password">
+          Lösenord:</label>
         <input
-          type="password"
+              type="password"
               id="password"
               onChange={(e) => setPassword(e.target.value)}
               value={studentPassword}
               required
-            />  
-    <Button
+            /> 
+      </div>
+    <input
+    className="centered"
     type="submit"
     value="Logga in"/>
+
   </Form>
   </>}
   </>

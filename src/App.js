@@ -5,7 +5,7 @@ import Theme, { lightTheme, darkTheme }  from "./Context/styling/Theme";
 import GlobalStyle from "./Context/styling/globalStyles";
 import { useDarkMode } from "./Components/ThemeModes/useDarkMode";
 import { ThemeProvider } from "styled-components";
-import styled from "styled-components"
+
 
 //*toggler darkmode/lightmode
 import Toggle from "./Components/ThemeModes/Toggler";
@@ -21,40 +21,7 @@ import StudentContext from "./Context/StudentContext";
 //*---other components
 import Header from "./Components/Header/Header";
 import { Line } from "./Components/StylingElements/Line/Line";
-
-const Footer = styled.footer`
-display:flex;
-align-items:center;
-justify-content: space-around;
-li{
-  list-style:none;
-  cursor:pointer;
-}
-font-family: Sofia Sans;
-font-size:1rem;
-a{
-  border-radius: 30px;
-border:none;
-padding:8px;
-  color: ${({ theme }) => theme.text};
-  &:hover,&:focus{
-    color: ${({ theme }) => theme.buttonText};
-    background: ${({ theme }) => theme.accent};}
-}
-`
-const Button = styled.button`
-padding:8px;
-border-radius: 30px;
-border:none;
-background: transparent;
-color:${({ theme }) => theme.text};
-font-size:1rem;
-&:hover,&:focus{
-  color: ${({ theme }) => theme.buttonText};
-  background: ${({ theme }) => theme.accent};
-}
-`
-
+import {FooterStyle as Footer} from "./Components/StylingElements/Footer/FooterStyles"
 
 
 function App() {
@@ -75,26 +42,39 @@ function App() {
       <BrowserRouter>
       <Header/>
       <Line/>
-      <main 
-      >
+      <main >
       <Routing 
-      
       />
       </main>
       <Line/>
-      <Footer data-testid="footer">
-        <Toggle theme={theme} 
+      <Footer 
+      data-testid="footer">
+        <Toggle 
+        theme={theme} 
         toggleTheme={themeToggler} 
         />  
       {context.loggedIn  && <>
-      <li><Link to="/admin">Admin</Link></li>
-      <li><Button onClick={context.onLogout}>Logga ut</Button></li>
+      <li>
+        <Link to="/admin">
+          Admin</Link>
+        </li>
+      <li>
+        <button onClick={context.onLogout}>
+          Logga ut</button>
+        </li>
       </>
       }
       {!context.loggedIn && <>
-      {contextStudent.studentLoggedIn && <>
-      <li><Link to="/student">Studentportal</Link></li>
-      <li><Button onClick={contextStudent.onLogout}>Logga ut</Button></li> </>}
+        {contextStudent.studentLoggedIn && <>
+        <li>
+          <Link to="/student">
+            Studentportal</Link>
+        </li>
+        <li>
+          <button onClick={contextStudent.onLogout}>
+            Logga ut</button>
+            </li> 
+        </>}
       </>}
       </Footer>
       </BrowserRouter>

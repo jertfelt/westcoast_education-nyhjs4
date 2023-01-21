@@ -22,21 +22,21 @@ font-family: Sofia Sans;
 `
 
 export const FormInstructions = styled(Form)`
-
+font-family: Sofia Sans;
 button{
   padding: 4px 8px;
-  @media (max-width: 700px){
-    padding:1px;
-  }
     border:none;
     font-size:14px;
     border-radius:30px;
     margin-top:1rem;
     &:hover{
-      background: ${({ theme }) => theme.toggleBorder};
+    background: ${({ theme }) => theme.toggleBorder};
     color: ${({ theme }) => theme.accent};
     }
     cursor: pointer;
+    @media (max-width: 700px){
+      padding:1px;
+    }
 }
 .smallBtn {
   @media (max-width: 700px){
@@ -57,7 +57,6 @@ button{
   position: absolute;
   width: 1px;
 }
-
   .Row{
     display:flex;
     align-items:center;
@@ -68,23 +67,39 @@ button{
       align-items:flex-start;
     }
   }
+  input{
+    width:100%;
+    border-color:${({ theme }) => theme.accent};
+  }
+  label{
+    font-weight:bold;
+    color: ${({ theme }) => theme.text};
+  }
+
   input[type="submit"] {
     @media (max-width: 700px){
       width:50%;
     }
-    padding: 4px 8px;
+    padding: 6px 8px;
+    background: ${({ theme }) => theme.toggleBorder};
     border:none;
-    font-size:14px;
     border-radius:30px;
     margin-top:1rem;
-    &:hover{
-      background: ${({ theme }) => theme.toggleBorder};
-    color: ${({ theme }) => theme.accent};
-    }
+      &:hover{
+      background: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.toggleBorder};
+      }
     cursor: pointer;
-    width:30%;
-    
+    max-width:50%;
+    text-transform:uppercase;
+    font-family: Sofia Sans;
+    font-weight:bold;
+    text-align:center;
   }
+  .centered{
+    align-self:center;
+  }
+  
 
 `
 

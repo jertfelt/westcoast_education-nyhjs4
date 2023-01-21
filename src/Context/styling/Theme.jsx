@@ -20,11 +20,11 @@ export const lightTheme = {
   highlight: "lightblue",
   link :"blue",
 }
-
+// '#222b2a'
 export const darkTheme = {
   body: '#363537',
   text: "white",
-  toggleBorder: '#222b2a',
+  toggleBorder: "white",
   background: '#b8baba',
   buttonText: "#222b2a",
   buttonBackground: "lightgray",

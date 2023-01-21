@@ -13,7 +13,6 @@ const Button = styled.button`
   flex-direction: row-reverse; 
   gap: 4px;
   align-items:center;
- 
   [data-icon]:before {
     font-family: 'ussfont';
     content: attr(data-icon);
@@ -22,9 +21,9 @@ const Button = styled.button`
     line-height: 1.2rem;
     -webkit-font-smoothing: antialiased;
   }
-  &:hover,focus{
+  &:hover,&:focus, &:active{
     background: ${({ theme }) => theme.accent};
-    
+    color: ${({ theme }) => theme.body};
 }
 `;
 
@@ -33,24 +32,22 @@ const Toggle = ({theme, toggleTheme }) => {
         <Button 
         onClick={toggleTheme} 
         data-testid="toggleDarkMode"
-        aria-pressed="false"
-        >
+        aria-pressed="false">
           {theme === "light" ? (
             <>
           <span 
-          className="button-icon" aria-hidden="true" 
-          data-icon="&#x263E;">
-          </span>
-          <span 
-          className="button-text">Mörkt tema</span>
+          aria-hidden="true" 
+          data-icon="&#x263E;"/>
+          <span>
+            Mörkt tema</span>
           </>
-          ) :(
+          ):(
             <>
             <span 
-            className="button-icon" aria-hidden="true" 
-            data-icon=" &#9788;"></span>
-            <span 
-            className="button-text">Ljust tema</span>
+            aria-hidden="true" 
+            data-icon=" &#9788;"/>
+            <span>
+              Ljust tema</span>
             </>
           )}
         </Button>

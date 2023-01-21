@@ -135,6 +135,7 @@ const RegisterStudent = () => {
 
 
   return (
+   
     <Form 
       onSubmit={handleSubmit}>
       {showModal2 && <Modal
