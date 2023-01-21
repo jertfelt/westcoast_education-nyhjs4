@@ -3,7 +3,7 @@ import ValidationModal from "../../ui/Modal/ValidationModal";
 import Modal from "../../ui/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import {useRef,useEffect,useState} from "react"
-import { getDatabase, ref, set, remove } from "firebase/database";
+import { getDatabase, ref, set, remove, update } from "firebase/database";
 import { ButtonContainerOutsideForm } from "../../StylingElements/Form/Form";
 import { useDates } from "../../utils/useDates";
 import { ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
@@ -14,6 +14,8 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
   const [courseID, setCourseID] = useState(ID)
   const [publishedStatus, setPublishedStatus] = useState(false)
   const [assignedStudents1, setAssignedStudents1] = useState(0)
+
+ 
   
 
   const [loading, setLoading] = useState(false)
@@ -25,6 +27,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     if(typeOfForm === "registerNew"){
       setLoading(true)
       if(courses){
+        
         setCourseID(courses.length)
         setLoading(false)
       }
@@ -64,16 +67,17 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       published,
       ID,
       ) => {
+       
       const db = getDatabase()
       set(ref(db, "/courses/" + ID ),{
-        courseName: coursename,
         courseDescription : description,
-        startDate : startdate,
+        courseID: courseID,
+        courseName: coursename,
         lengthWeeks : weeks,
-        studentsAssigned: students,
         published: published,
-        courseID: ID,
-        
+        startDate : startdate,
+        studentsAssigned: students,
+        teacherAssigned: "Default",
       }).then(
         navigate("/admin")
       )
@@ -98,13 +102,13 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         }
         else{
         sendEditToFirebase(
-          coursename,
+          coursename,   
           description,
           startdate,
           weeks,
           students,
-          ID,
           published,
+          ID,
           )
         }
     }
@@ -115,20 +119,20 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       }
     }
 
-    const deleteCourse=() => {
+    const deleteCourse=(e) => {
+      e.preventDefault()
       const db = getDatabase()
+      console.log(courses)
+      
       set(ref(db, "/courses/" + courseID ),{
         courseName: "DELETED",
-        courseDescription : "",
-        startDate : "",
-        lengthWeeks : "",
-        studentsAssigned: "",
-        published: "",
-        courseID: "",})
-      setShowModal(false)
+        courseID: courseID,})
+      console.log(courses.map(item => item.courseID))
+       setShowModal(false)
     }
 
-    const publishCourse = () => {
+    const publishCourse = (e) => {
+      e.preventDefault()
       if(publishedStatus){
         setPublishedStatus(false)
         setShowModal2(true)
@@ -266,28 +270,36 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
 
 
     <ButtonContainer>
-    {/* {typeOfForm==="changeCourse" &&
-    <button className="smallBtn"
-    onClick={()=>setShowModal(true)}
-      disabled = {courseExists && courseExists.published ? true : false}>
-      Radera kurs
-    </button>} */}
+
 
     <input
       type="submit"
       value="Spara"/>
+   
+    </ButtonContainer>
+    </>)}
+  </FormInstructions>
+  
+  <ButtonContainerOutsideForm>
+    
+  <ButtonContainer>
+    {typeOfForm==="changeCourse" &&
+    <button className="smallBtn"
+      onClick={(e)=>deleteCourse(e)}
+      disabled = {courseExists && courseExists.published ? true : false}>
+      Radera kurs
+    </button>} 
+
+    
     <button className="smallBtn"
       onClick={typeOfForm === "changeCourse" ? onChangeForm : () => navigate(-1)}>
         Stäng
     </button>
     </ButtonContainer>
-    </>)}
-  </FormInstructions>
-  <ButtonContainerOutsideForm>
    <button
    data-testid="testingPublishBtn"
     disabled ={assignedStudents1 >= 5 ? false : true }
-    onClick = {publishCourse}
+    onClick = {(e) => publishCourse(e)}
     >
       {assignedStudents1 >= 5 ? (<>{publishedStatus ? (<p>Avpublicera</p>):(<p>Publicera</p>)}</>):(<p>För att publicera kursen på hemsidan ska alla fält vara fyllda, och det måste vara fler än fem studenter</p>)}
     </button>

@@ -44,7 +44,9 @@ const AllaKurser = () => {
     {error && <p>Något har blivit fel med servern</p>}
     {loading && <p>Laddar..</p>}
     <GridKurser>
-    {data && data.map(courses => (
+    {data && data.filter(function (course){
+      return course.courseName !== "DELETED"
+    }).map(courses => (
       <Courses key={courses.courseID}>
         <Link to={`/kurser/${courses.courseID}`}>
         <h3 data-testid="kurstest">{courses.courseName}</h3>

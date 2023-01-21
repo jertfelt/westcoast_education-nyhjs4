@@ -45,7 +45,8 @@ const HomePage = () => {
   {loading && <div>Laddar..</div>}
     {data && 
   <Grid id="kurser">
-    {data.filter(function (course){ return course.published === true}).map(function (course){
+    {data.filter(function (course){ 
+      return course.published === true}).map(function (course){
     return (
       <div
       key={course.courseID}>

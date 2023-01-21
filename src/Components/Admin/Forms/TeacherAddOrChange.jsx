@@ -103,6 +103,7 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
     competences, 
     ID) => {
     const db = getDatabase()
+    
     set(ref(db, "/teachers/" + ID ),{
       competences: competences,
       id: ID,
@@ -148,19 +149,22 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
   const deleteTeacher = (e) =>{
     e.preventDefault()
     const db = getDatabase()
-    set(ref(db, "/teachers/" + teacherID ),{
-      competences: "",
-      id: "",
-      firstName : "DELETED",
-      lastName: "DELETED",
-      mobileNo: "",
-      email: "",
-      personalID: "",
-    }).then(()=>{
-      setShowModal(false)
-      showModal2(true)
-    })
-    navigate("/")
+    
+
+
+    // set(ref(db, "/teachers/" + teacherID ),{
+    //   competences: "",
+    //   id: "",
+    //   firstName : "DELETED",
+    //   lastName: "DELETED",
+    //   mobileNo: "",
+    //   email: "",
+    //   personalID: "",
+    // }).then(()=>{
+    //   setShowModal(false)
+    //   showModal2(true)
+    // })
+    // navigate("/")
   }
   
   //form functions
