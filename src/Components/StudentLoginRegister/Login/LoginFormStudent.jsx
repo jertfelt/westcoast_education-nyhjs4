@@ -54,27 +54,22 @@ const LoginFormStudent = () => {
           modalFunction("Fel lösenord!")
         }
         else{
-          console.log(checkForStudent)
+          let studentLoggedIn = true
+          let studentName = checkForStudent.map(item => {
+            return item.studentName
+          })
+                  context.onLogin({
+                    studentName,
+                    studentEmail,
+                    studentLoggedIn,
+                  })
+                  navigate("/student")
+      
         }
         
         
        }
         
-        
-
-      //   let studentLoggedIn = true
-      //   context.onLogin({
-      //               studentName,
-      //               studentEmail,
-      //               studentLoggedIn,
-      //               studentID
-      //             })
-      //             navigate("/student")
-      // 
-      
-     
- 
-     
     }
      
     

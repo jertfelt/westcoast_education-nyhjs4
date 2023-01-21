@@ -4,7 +4,7 @@ import Modal from "../../ui/Modal/Modal";
 import { useFirebase } from "../../utils/useFirebase";
 import { useNavigate } from "react-router-dom";
 import { useRef, useEffect, useState,} from "react";
-import { getDatabase, ref, set, remove} from "firebase/database"
+import { getDatabase, ref, set,} from "firebase/database"
 import styled from "styled-components";
 
 
