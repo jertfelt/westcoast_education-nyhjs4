@@ -4,9 +4,7 @@ OM JAG HINNER:
 
 
 1) fixa till registrering till kurs - firebase 
-- kom ihåg filter 
-- Nu krånglar select lite, ska städa upp useStates. 
-- Efter att filter osv fungerar ska det vara update till db
+---> TESTA OM DET FUNKAR 
 - Efter att jag testat med någon som har två kurser: kolla inga valda, eller bara en vald kurs
 
 2) fixa Admin genom firebase istället, 
@@ -20,6 +18,8 @@ OM JAG HINNER:
 
 6)lägg in så att det blir en count på kurserna utifrån antalet studenter som har den kursen i databasen.
 (filter students och kör length på student.coursesnames --> coursename === thiscourse )
+
+
 
 6) filtrera asc och desc studenter på admin allKurser 
 se kod nedan:
