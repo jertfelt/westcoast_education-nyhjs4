@@ -9,15 +9,15 @@ const overallTheme = {
 }
 
 export const lightTheme = {
-  body: 'lightgray',
+  body: '#e2e2e2',
   text: '#363537',
-  buttonText: "#FFF",
+  buttonText: "pink",
   toggleBorder: '#FFF',
-  background: 'gray',
-  buttonBackground: "black",
-  accent: "darkslateblue",
-  highlight: "lightblue",
-  link :"blue",
+  background: 'darkslateblue',
+  buttonBackground: "#363537",
+  accent: "#b86dd6",
+  highlight: "#cbb1e1",
+  link :"#FFF",
 }
 // '#222b2a'
 export const darkTheme = {

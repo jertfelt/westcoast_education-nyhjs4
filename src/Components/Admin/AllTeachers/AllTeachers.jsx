@@ -1,66 +1,10 @@
 
 import { useState } from "react";
-import styled from "styled-components";
 import { Link } from "react-router-dom";
 import { useFirebase } from "../../utils/useFirebase";
 import { useEffect } from "react";
+import { AllTeachersContent, HeadingWFilter, Filter, Grid, GridTeacher, List } from "../../StylingElements/SectionsAdmin/AdminComponents";
 
-const Grid = styled.div`
-display:flex;
-flex-direction:column;
-gap:1rem;
-`
-const GridTeacher = styled.div`
-display:flex;
-flex-direction: column;
-align-items: center;
-
-div{
-  background-color: ${({ theme }) => theme.buttonBackground};
-  color: ${({ theme }) => theme.buttonText};
-  width:100%;
-  padding:2rem;
-  padding-top:0; 
-  h3{
-    margin-bottom:1rem;
-  }
-}
-a{
-  background:${({ theme }) => theme.body};
-  color:${({ theme }) => theme.link};
-  padding: 6px;
-  border-radius:9px;
-}
-`
-const Row = styled.div`
-display:flex;
-align-items: center;
-justify-content:center;
-gap:1rem;
-
-.bigSpace{
-  @media (max-width:700px){
-    flex-direction:column;
-  }
-}` 
-
-const AllTeachersContent = styled.div`
-display:flex;
-flex-direction: column;
-background: ${({ theme }) => theme.background};
-color: ${({ theme }) => theme.buttonText};
-`
-const List = styled.ul`
-text-align:left;
-padding-bottom:1rem;`
-
-const Filter= styled.div`
-display:flex;
-align-items: center;
-gap: 4px;
-@media (max-width: 700px){
-  flex-direction:column;
-}`
 
 const AllTeachers = () => {
   const {data,error,loading} = useFirebase("/teachers")
@@ -90,7 +34,7 @@ const AllTeachers = () => {
   return (
   <AllTeachersContent 
   data-testid="allTeachers">
-    <Row className="bigSpace">
+    <HeadingWFilter>
     <h2>Alla lärare</h2>
     <Filter>
       <label htmlFor="filterTeachers">Filtrera:</label>
@@ -106,7 +50,8 @@ const AllTeachers = () => {
           ))}
       </select>
     </Filter>
-    </Row>
+    </HeadingWFilter>
+
       <Grid>
         {error && <p>Något är fel på servern.</p>}
         {loading && <p>Laddar..</p>}
@@ -114,37 +59,40 @@ const AllTeachers = () => {
         {data && data.filter(function (item){
           return item.status !== "DELETED"}).map(((teacher) => (
           <GridTeacher 
-          key={teacher.personalID}
-          >
+          key={teacher.personalID}>
           <div>
-          <h3>{teacher.firstName} {teacher.lastName}</h3>
-          <p>{teacher.email}</p>
-          
-          <Link to={`/larare/${teacher.id}`}>Se mer </Link>
+            <h3>{teacher.firstName} {teacher.lastName}</h3>
+            <p>{teacher.email}</p>
+            <Link to={`/larare/${teacher.id}`}>
+              Se mer </Link>
           </div>
           </GridTeacher>
         )))}    
         </>):(<>{data && 
           data.filter(item => item.competences.includes(filterValue)).map(teacher => (
             <GridTeacher 
-            key={teacher.personalID}
-            >
-            <div>
-            <h3>{teacher.firstName} {teacher.lastName}</h3>
-            <p>Samtliga kompetenser:</p>
-            <List>
-            {teacher.competences.map((c, i) => (
-              <li key={i}>{c}</li>
-            ))}
-            </List>
-            <Link
-            to={`/larare/${teacher.id}`}>Se mer </Link>
-            </div>
-        
+            competences
+            key={teacher.personalID}>
+              <div 
+              className={teacher.competences.length === 1 && "center_one_item"}>
+              <h3>{teacher.firstName} {teacher.lastName}</h3>
+              <p>{teacher.competences.length === 1 ? "": "Alla kompetenser:"} </p>
+              <List 
+              className={teacher.competences.length === 1 && "one_item"}>
+                {teacher.competences.map((c, i) => (
+                  <li key={i}
+                  className={c=== filterValue && "filtered"}>
+                    {c}
+                  </li>
+                ))}
+              </List>
+              <Link
+              to={`/larare/${teacher.id}`}>
+                Se mer </Link>
+              </div>
             </GridTeacher>
           ))
         }
-          
           </>
         )}
       </Grid>

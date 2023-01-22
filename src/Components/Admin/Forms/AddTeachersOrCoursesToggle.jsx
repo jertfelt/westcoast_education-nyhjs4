@@ -22,8 +22,9 @@ const AddTeacherOrCourseToggle = () => {
 
   return ( 
   <Form>
-    <h2>Lägg till kurs/lärare:</h2>
-    <label htmlFor="chooseForm">Välj:</label>
+   
+  
+    <label htmlFor="chooseForm"> <h3>Lägg till kurs/lärare:</h3></label>
     <select id="chooseForm" 
     onChange={chooseYourForm}
     > 
@@ -37,6 +38,7 @@ const AddTeacherOrCourseToggle = () => {
       value="course" 
       label="Kurs">Kurs</option>
     </select>
+  
   </Form>  );
 }
  
