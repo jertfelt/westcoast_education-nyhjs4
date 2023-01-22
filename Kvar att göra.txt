@@ -4,7 +4,10 @@ OM JAG HINNER:
 
 
 1) fixa till registrering till kurs - firebase 
-- kom ihåg filter och kom ihåg att det ska vara update
+- kom ihåg filter 
+- Nu krånglar select lite, ska städa upp useStates. 
+- Efter att filter osv fungerar ska det vara update till db
+- Efter att jag testat med någon som har två kurser: kolla inga valda, eller bara en vald kurs
 
 2) fixa Admin genom firebase istället, 
 
