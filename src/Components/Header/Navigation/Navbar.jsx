@@ -33,7 +33,7 @@ button{
   position:relative;
   left:80%;
   &:hover{
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.highlight};
   }
 }
 ul{

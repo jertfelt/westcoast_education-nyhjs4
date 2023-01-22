@@ -7,7 +7,9 @@ display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-padding-bottom:3rem;
+padding-top:3rem;
+padding-bottom:7rem;
+
 @media (max-width: 700px){
   padding:1rem;
   padding-bottom:3rem;
@@ -36,34 +38,42 @@ export const InfoRuta = styled.div`
 background: ${({ theme }) => theme.background};
 color: ${({ theme }) => theme.buttonText};
 max-width:1000px;
-padding:1rem;
+padding:2rem;
+padding-bottom:2rem;
 display:flex;
 flex-direction:column;
 align-items:center;
 justify-content: center;
-
+font-family: Sofia Sans;
 ul{
   list-style:none;
+  padding-left:0;
 }
 p{
   font-size:1rem;
 }
 margin-bottom:-2rem;
 button{
-  padding: 4px 19px;
+  padding: 4px 9px;
+  margin-right:1rem;
   border:none;
   font-size:14px;
   border-radius:30px;
-  color:${({ theme }) => theme.text};
+  color:${({ theme }) => theme.background};
   background: ${({ theme }) => theme.toggleBorder};
+
   &:hover{
     background: ${({ theme }) => theme.body};
-    color: ${({ theme }) => theme.background};
+    color: ${({ theme }) => theme.accent};
   }
 }
 `
 
 //All teacher components:
+
+export const TeacherExists = styled.div`
+padding:1rem;
+`
 
 export const Grid = styled.div`
 display: grid;

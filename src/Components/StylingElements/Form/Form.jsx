@@ -13,8 +13,9 @@ h1{
 }
 display:flex;
 flex-direction:column;
-gap:10px;
+gap:20px;
 font-family: Sofia Sans;
+
 
 @media (max-width: 700px){
   padding:0px;
@@ -74,6 +75,7 @@ button{
       flex-direction:column;
       align-items:flex-start;
     }
+
   }
   input{
     width:100%;
@@ -85,7 +87,6 @@ button{
     width:100%;
   }
   label{
-    max-width:50%;
     color: ${({ theme }) => theme.buttonText};
   }
   .number{
@@ -110,6 +111,9 @@ button{
     text-transform:uppercase;
     font-family: Sofia Sans;
     text-align:center;
+    :disabled{
+      background:transparent;
+    }
   }
   @media (max-width: 700px){
     max-width:50%;
@@ -117,6 +121,7 @@ button{
   .centered{
     align-self:center;
   }
+  
 `
 
 export const ButtonContainerOutsideForm = styled.div`
@@ -140,9 +145,9 @@ button{
     border-radius:30px;
     margin-top:1rem;
     &:hover{
-      background: ${({ theme }) => theme.accent};
-      color: ${({ theme }) => theme.toggleBorder};
-      }
+      background: ${({ theme }) => theme.toggleBorder};
+      color: ${({ theme }) => theme.accent};
+    }
 }
 
 .onlyone{

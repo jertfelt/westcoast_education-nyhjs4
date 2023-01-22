@@ -17,8 +17,8 @@ border:none;
 padding:8px;
   color: ${({ theme }) => theme.text};
   &:hover,&:focus{
-    color: ${({ theme }) => theme.buttonText};
-    background: ${({ theme }) => theme.accent};}
+    background: ${({ theme }) => theme.highlight};
+  }
 }
 button{
   padding:8px;
@@ -28,8 +28,7 @@ button{
   color:${({ theme }) => theme.text};
   font-size:1rem;
   &:hover,&:focus{
-    color: ${({ theme }) => theme.buttonText};
-    background: ${({ theme }) => theme.accent};
+    background: ${({ theme }) => theme.highlight};
 }
 `
 

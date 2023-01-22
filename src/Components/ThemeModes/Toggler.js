@@ -22,8 +22,7 @@ const Button = styled.button`
     -webkit-font-smoothing: antialiased;
   }
   &:hover,&:focus, &:active{
-    background: ${({ theme }) => theme.accent};
-    color: ${({ theme }) => theme.body};
+    background: ${({ theme }) => theme.highlight};
 }
 `;
 

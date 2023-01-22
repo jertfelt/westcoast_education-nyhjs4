@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useEffect, useState,} from "react";
 import { getDatabase, ref, set,} from "firebase/database"
 import styled from "styled-components";
+import { Line } from "../../StylingElements/Line/Line";
 
 
 const Competences = styled.div`
@@ -428,6 +429,7 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
         </Competences>
         ))}
       </div>
+         
       <input 
           className="centered"
           type="submit"
@@ -437,11 +439,12 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
       </>)}
       
   </FormInstructions>
+  
   <ButtonContainerOutsideForm>
-    
     {typeOfForm === "registerNew" ? (
           <button onClick={() => navigate(-1)}>
-            Gå tillbaka</button>):(<>
+            Gå tillbaka</button>):(
+            <div className="Row">
             <button 
             onClick={onClick}>
             Stäng formulär 
@@ -449,7 +452,7 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
           <button onClick={(e)=>confirmDelete(e)}>
             Avskeda lärare
           </button>
-          </> 
+          </div> 
       )}
   </ButtonContainerOutsideForm>
   </>);

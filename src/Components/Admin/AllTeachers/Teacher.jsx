@@ -1,8 +1,9 @@
 import { useNavigate, useParams} from "react-router-dom";
 import { useFirebase } from "../../utils/useFirebase";
 import { useState} from "react";
-import { Section, InfoRuta, ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
+import { Section, InfoRuta, ButtonContainer, TeacherExists } from "../../StylingElements/SectionsAdmin/AdminComponents";
 import TeacherAddOrChange from "../Forms/TeacherAddOrChange";
+import { Line } from "../../StylingElements/Line/Line";
 
 
 const Teacher = () => {
@@ -29,11 +30,14 @@ const Teacher = () => {
       ))}
       </>):(<>
     {data && data.filter(item => item.id === noId).map(item => (
-      <div key= {noId}>
+      <TeacherExists 
+      key= {noId}>
+        <Line/>
         <h1>{item.firstName} {item.lastName}</h1>
         <p>Personnummer: {item.personalID}</p>
         <p>Email: {item.email}</p>
         <p>Mobil: {item.mobileNo}</p>
+        <Line/>
         <h3>Kompetenser:</h3>
         <ul>
         {item.competences.map(((comp, indx) => (
@@ -41,16 +45,18 @@ const Teacher = () => {
           {comp} </li>
         )))}
         </ul>
-        <ButtonContainer>
+     
+      </TeacherExists>
+      
+    ))}</>)}
+       <ButtonContainer>
           <button 
             onClick={() => navigate(-1)}>
             Gå  tillbaka
           </button>
           <button 
           onClick={() => setChangeForm(true)}>Redigera</button>
-          </ButtonContainer>
-      </div>
-    ))}</>)}
+      </ButtonContainer>
   </InfoRuta>)}
   </Section> 
   );

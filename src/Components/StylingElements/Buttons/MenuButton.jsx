@@ -6,8 +6,7 @@ padding:8px;
 color: ${({ theme }) => theme.text};
 border-radius: 9px;
 &:hover{
-  background: ${({ theme }) => theme.accent};
-  color: ${({ theme }) => theme.body};
+background: ${({ theme }) => theme.highlight};
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 }
 font-size:1rem;
