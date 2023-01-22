@@ -52,7 +52,7 @@ max-width: 1200px;
 margin: 0 auto;
 gap: 1rem;
 div{
-  background: ${({ theme }) => theme.accent};
+  background: ${({ theme }) => theme.background};
   padding:2rem;
   color: ${({ theme }) => theme.buttonText};
   a{
