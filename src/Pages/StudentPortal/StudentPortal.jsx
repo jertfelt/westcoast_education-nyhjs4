@@ -113,7 +113,7 @@ const StudentPortal = () => {
   return ( 
   <Section data-testid="studentportal">
     <div>
-      <div class="Row-reverse">
+      <div className="Row-reverse">
     <img src="https://picsum.photos/100/100" 
     alt="Placeholder from Lorem Picsum."/>
     <h1>Välkommen, {context.studentName}</h1>
@@ -194,9 +194,11 @@ const StudentPortal = () => {
         <p></p>
       ))}
     </div>
-    <Timer/>
+  
     </div>
     
+   
+    <Timer/>
    
   </Section> );
 }

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 
 const TimerDiv = styled.div`
@@ -83,19 +84,19 @@ button{
 
 
 const Timer = () => {
+  const [started, setStarted] = useState(false)
+  const [Command, setCommand] = useState("Start")
+
   const timer = {
     pomodoro: 25,
     shortBreak: 5,
     longBreak: 15,
     longBreakInterval: 4,
     sessions: 0,
+    remainingTime: 0,
+    mode: "",
   };
-  const buttSound = new Audio('sound/button-sound.mp3');
-  
-  const mainButt = document.getElementById("timerButt");
-  const modeButtons = document.querySelector("#buttonsModes");
-
-  
+ 
   let interval;
 
   const switchMode = (mode) => {
@@ -113,22 +114,30 @@ const Timer = () => {
     updateClock();
   }
 
-  const handleMode = (event) => {
-    const { mode } = event.target.dataset;
+  const handleMode = (e) => {
+   
+    const mode = e.target.getAttribute("data-mode")
+   
     if (!mode) return;
     switchMode(mode);
     stopTimer();
   }
-  modeButtons.addEventListener('click', handleMode);
-mainButt.addEventListener('click', () => {
-  buttSound.play();
-  const { action } = mainButt.dataset;
+ 
+
+
+const startClock = (e) => {
+  e.preventDefault()
+
+  console.log(e.target.getAttribute("data-action"))
+  const action = e.target.getAttribute("data-action")
   if (action === 'start') {
-    startTimer();
+    startTimer(e);
+    setStarted(true)
   } else {
-    stopTimer();
+    stopTimer(e);
   }
-});
+}
+
 function getRemainingTime(endTime) {
   const currentTime = Date.parse(new Date());
   const difference = endTime - currentTime;
@@ -142,16 +151,17 @@ function getRemainingTime(endTime) {
   };
 }
 function startTimer() {
+  
   let { total } = timer.remainingTime;
   const endTime = Date.parse(new Date()) + total * 1000;
   if (timer.mode === 'pomodoro') timer.sessions++;
-  mainButt.dataset.action = 'stop';
-  mainButt.textContent = 'stopp';
-  mainButt.classList.add('active');
+  setCommand("Stopp")
+
   interval = setInterval(function() {
     timer.remainingTime = getRemainingTime(endTime);
     updateClock();
     total = timer.remainingTime.total;
+    console.log(total)
     if (total <= 0) {
       clearInterval(interval);
       switch (timer.mode) {
@@ -165,19 +175,20 @@ function startTimer() {
         default:
           switchMode('pomodoro');
       }
-      document.querySelector(`[data-sound="${timer.mode}"]`).play();
       startTimer();
     }
   }, 1000);
 }
+
 function stopTimer() {
   clearInterval(interval);
-  mainButt.dataset.action = 'start';
-  mainButt.textContent = 'start';
-  mainButt.classList.remove('active');
+  setCommand("Start")
+  setStarted(false)
 }
 function updateClock() {
+  
   const { remainingTime } = timer;
+  console.log(remainingTime)
   const minutes = `${remainingTime.minutes}`.padStart(2, '0');
   const seconds = `${remainingTime.seconds}`.padStart(2, '0');
   const min = document.getElementById('js-minutes');
@@ -203,6 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     id="buttonsModes">
       <button
         data-mode="pomodoro"
+        onClick={(e) =>handleMode(e)}
         className="mode-button"
         id="js-pomodoro"
       >
@@ -211,37 +223,37 @@ document.addEventListener('DOMContentLoaded', () => {
       <button
         data-mode="shortBreak"
         className="mode-button"
+        onClick={(e) =>handleMode(e)}
         id="js-short-break"
       >
         Kort paus
       </button>
       <button
         data-mode="longBreak"
+        onClick={(e) =>handleMode(e)}
         className="mode-button"
         id="longBreakButt"
       >
         Lång paus
       </button>
     </div>
-  <div className="clock" 
+  <div 
+  className="clock" 
   id="js-clock">
     <span id="js-minutes">25</span>
     <span className="separator">:</span>
     <span id="js-seconds">00</span>
   </div>
-  <button className="main-button" 
-  data-action="start" 
-  id="timerButt">
-    Start
+  <button 
+    onClick={(e) => startClock(e)}
+    className="main-button" 
+    data-action={started ? "stop" :"start"} 
+    id="timerButt">
+    {Command}
   </button>
     </div>
 
 
-    <div className="hidden">
-      <audio src="sound/backtowork.mp3" data-sound="pomodoro"></audio>
-      <audio src="sound/Radiation Meter.mp3" data-sound="shortBreak"></audio>
-      <audio src="sound/Radiation Meter.mp3" data-sound="longBreak"></audio>
-    </div>
 
   </TimerDiv> );
 }
