@@ -14,10 +14,6 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
   const [courseID, setCourseID] = useState(ID)
   const [publishedStatus, setPublishedStatus] = useState(false)
   const [assignedStudents1, setAssignedStudents1] = useState(0)
-
- 
-  
-
   const [loading, setLoading] = useState(false)
   const [modalTitle, setTitle] = useState("")
   const [modalMsg, setMsg] = useState("")
@@ -67,7 +63,6 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       published,
       ID,
       ) => {
-       
       const db = getDatabase()
       set(ref(db, "/courses/" + ID ),{
         courseDescription : description,
@@ -266,28 +261,22 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         ref={studentsAssignedRef}
     />
     </div>
-   
-
-
-    <ButtonContainer>
-
-
     <input
+      className="centered"  
       type="submit"
       value="Spara"/>
-   
-    </ButtonContainer>
+
     </>)}
   </FormInstructions>
   
   <ButtonContainerOutsideForm>
-    
+
   <ButtonContainer>
     {typeOfForm==="changeCourse" &&
-    <button className="smallBtn"
+    <button 
       onClick={(e)=>deleteCourse(e)}
       disabled = {courseExists && courseExists.published ? true : false}>
-      Radera kurs
+    Radera kurs
     </button>} 
 
     
@@ -295,14 +284,16 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       onClick={typeOfForm === "changeCourse" ? onChangeForm : () => navigate(-1)}>
         Stäng
     </button>
-    </ButtonContainer>
+  
    <button
    data-testid="testingPublishBtn"
+   className={assignedStudents1 >= 5 ? "ordinary" : "text"}
     disabled ={assignedStudents1 >= 5 ? false : true }
     onClick = {(e) => publishCourse(e)}
     >
       {assignedStudents1 >= 5 ? (<>{publishedStatus ? (<p>Avpublicera</p>):(<p>Publicera</p>)}</>):(<p>För att publicera kursen på hemsidan ska alla fält vara fyllda, och det måste vara fler än fem studenter</p>)}
     </button>
+    </ButtonContainer>
     </ButtonContainerOutsideForm></>
    );
 }

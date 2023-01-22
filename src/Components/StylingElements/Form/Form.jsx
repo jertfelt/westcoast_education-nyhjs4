@@ -22,6 +22,7 @@ font-family: Sofia Sans;
 `
 
 export const FormInstructions = styled(Form)`
+padding-bottom:0;
 font-family: Sofia Sans;
 button{
   padding: 4px 8px;
@@ -31,19 +32,19 @@ button{
     margin-top:1rem;
     &:hover{
     background: ${({ theme }) => theme.toggleBorder};
-    color: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.background};
+    }
+    &:active, &:focus{
+      background: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.background};
     }
     cursor: pointer;
     @media (max-width: 700px){
       padding:1px;
     }
 }
-.smallBtn {
-  @media (max-width: 700px){
-    width:50%;
-  }
-  width:30%;
-}
+
+ 
 .instructions{
   font-size:12px;
 }
@@ -57,10 +58,15 @@ button{
   position: absolute;
   width: 1px;
 }
+.Kompetenser{
+  display:flex;
+  flex-direction:column;
+  align-items: center;
+}
   .Row{
     display:flex;
     align-items:center;
-    gap:8px;
+    gap:1rem;
     line-height:1rem;
     @media (max-width: 600px){
       flex-direction:column;
@@ -69,17 +75,18 @@ button{
   }
   input{
     width:100%;
-    border-color:${({ theme }) => theme.accent};
+    max-width:400px;
+  }
+  textarea{
+    font-family: Sofia Sans;
+    max-width:400px;
+    width:100%;
   }
   label{
-    font-weight:bold;
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.buttonText};
   }
 
   input[type="submit"] {
-    @media (max-width: 700px){
-      width:50%;
-    }
     padding: 6px 8px;
     background: ${({ theme }) => theme.toggleBorder};
     border:none;
@@ -90,36 +97,59 @@ button{
       color: ${({ theme }) => theme.toggleBorder};
       }
     cursor: pointer;
-    max-width:50%;
+    max-width:20%;
     text-transform:uppercase;
     font-family: Sofia Sans;
-    font-weight:bold;
     text-align:center;
+  }
+  @media (max-width: 700px){
+    max-width:50%;
   }
   .centered{
     align-self:center;
   }
-  
-
 `
 
 export const ButtonContainerOutsideForm = styled.div`
-padding:2rem;
+width:100%;
+max-width:600px;
+font-family: Sofia Sans;
+padding:1rem;
+padding-top:0;
 display:flex;
 flex-direction:column;
 gap:10px;
-font-family: Sofia Sans;
+align-items:center;
+justify-content:center;
+
 button{
+  background: ${({ theme }) => theme.toggleBorder};
+  
+  cursor: pointer;
+  max-width:50%;
   padding: 4px 8px;
     border:none;
     font-size:14px;
     border-radius:30px;
     margin-top:1rem;
     &:hover{
-      background: ${({ theme }) => theme.toggleBorder};
+      background: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.toggleBorder};
+      }
+}
+.ordinary{
+  background: ${({ theme }) => theme.accent};
+  color: ${({ theme }) => theme.toggleBorder};
+  &:hover{
     color: ${({ theme }) => theme.accent};
+    background: ${({ theme }) => theme.toggleBorder};
     }
-    cursor: pointer;
+}
+.text {
+  padding: 8px;
+  background:transparent;
+  text-align:left;
+  color: ${({ theme }) => theme.toggleBorder};
 }
 `
 export const FormWOInstructions = styled(Form)`
@@ -131,9 +161,9 @@ input{
   padding:4px;
 }
 select{
-  
   padding:4px;
 }
+
 `
 
 export default Form

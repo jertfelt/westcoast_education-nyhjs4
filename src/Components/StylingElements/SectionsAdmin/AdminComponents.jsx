@@ -2,11 +2,11 @@
 import styled,{css} from "styled-components";
 
 export const Section = styled.section`
-display: flex;
-align-items:center;
+min-height:80vh;
+display:flex;
 flex-direction:column;
+align-items:center;
 justify-content:center;
-padding:10rem;
 @media (max-width: 700px){
   padding:1rem;
   padding-bottom:3rem;
@@ -15,18 +15,25 @@ padding:10rem;
 
 export const ButtonContainer = styled.div`
 display:flex;
+flex-direction:row;
 align-items:center;
+justify-content:center;
+
 @media (max-width:700px){
   flex-direction:column;
 }
-gap:1rem;`
+gap:1rem;
+`
 
 export const InfoRuta = styled.div`
-
 background: ${({ theme }) => theme.background};
 color: ${({ theme }) => theme.buttonText};
-max-width:100%;
+max-width:1000px;
 padding:1rem;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content: center;
 
 ul{
   list-style:none;

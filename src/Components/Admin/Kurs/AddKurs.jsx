@@ -28,7 +28,8 @@ const AddKurs = () => {
   }, [data1, data2, data3])
   
   return ( 
-  <Section data-testid="addkurswrapper">
+  <Section 
+  data-testid="addkurswrapper">
     <InfoRuta>
       {loading && <p>Laddar...</p>}
       {data2 && data2 && data3 &&  

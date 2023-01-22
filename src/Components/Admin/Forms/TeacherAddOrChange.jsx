@@ -19,6 +19,8 @@ li{
   gap:1rem;
   justify-content: center;
   button{
+    color: ${({ theme }) => theme.toggleBorder};
+    background : transparent;
     margin-top:-1px;
   }
 }
@@ -408,6 +410,7 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
         })} 
       </select>
       </div>
+      <div className="Kompetenser">
       <h3>Valda kompetenser:</h3>
       {instructionsKompetens && <p>{infoMessage}</p>}
       {selectedOption.length === 0 && <p>Du måste välja minst en kurs</p>}
@@ -424,14 +427,15 @@ const TeacherAddOrChange = ({typeOfForm, item, title, onClick }) => {
           </li>
         </Competences>
         ))}
-
-          <input 
+      </div>
+      <input 
+          className="centered"
           type="submit"
           value="Spara"
           disabled={disabledButton ? true :false}
           />
-
       </>)}
+      
   </FormInstructions>
   <ButtonContainerOutsideForm>
     
