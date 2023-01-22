@@ -222,6 +222,13 @@ a{
   }
 }
 
+
+${props => 
+  props.notPublished && 
+  css`
+  background: ${({ theme }) => theme.accent};
+  `}
+
 `
 export const Content = styled.div`
 background:  ${({ theme }) => theme.background};

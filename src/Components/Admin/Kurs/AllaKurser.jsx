@@ -68,7 +68,10 @@ const AllaKurser = () => {
     {defaultView && data.filter(function (course){
       return course.courseName !== "DELETED"
     }).map(courses => (
-      <Courses key={courses.courseID}>
+      
+      <Courses 
+      
+      key={courses.courseID}>
         <Link 
         to={`/kurser/${courses.courseID}`}>
         <h3 
@@ -80,7 +83,6 @@ const AllaKurser = () => {
         <p>Start: {courses.startDate}</p>
         <p>Antal studenter: {courses.studentsAssigned}</p>
         </>
-         
         ):(<><p><strong>Ej publicerad</strong></p></>)}
       
         </Link>
