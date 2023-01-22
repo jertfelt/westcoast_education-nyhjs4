@@ -32,7 +32,7 @@ const Teacher = () => {
     {data && data.filter(item => item.id === noId).map(item => (
       <TeacherExists 
       key= {noId}>
-        <Line/>
+        
         <h1>{item.firstName} {item.lastName}</h1>
         <p>Personnummer: {item.personalID}</p>
         <p>Email: {item.email}</p>

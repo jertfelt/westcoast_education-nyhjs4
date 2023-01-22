@@ -123,6 +123,13 @@ button{
 .logoutBtn{
   margin-top:1rem;
 }
+.Row-reverse{
+  display:flex;
+  flex-direction:row-reverse;
+  gap:3rem;
+  align-items:center;
+  margin-bottom:-2rem;
+}
 
 form{
   margin-top:1rem;

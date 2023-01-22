@@ -112,7 +112,7 @@ button{
     font-family: Sofia Sans;
     text-align:center;
     :disabled{
-      background:transparent;
+      display:none;
     }
   }
   @media (max-width: 700px){

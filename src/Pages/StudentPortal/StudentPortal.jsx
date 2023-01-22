@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
 import Modal from "../../Components/ui/Modal/Modal";
 import { ProfileSection as Section , ParagraphWithButton} from "../../Components/StylingElements/StudentSections/StudentSections";
+import { Line } from "../../Components/StylingElements/Line/Line";
 
 const StudentPortal = () => {
   const STUDENTS_URL = "http://localhost:8000/students"
@@ -111,12 +112,18 @@ const StudentPortal = () => {
   return ( 
   <Section data-testid="studentportal">
     <div>
+      <div class="Row-reverse">
+    <img src="https://picsum.photos/100/100" 
+    alt="Placeholder from Lorem Picsum."/>
     <h1>Välkommen, {context.studentName}</h1>
+    </div>
+    
     {showModal && <Modal 
     title="Viktigt!" 
     message= {msg} 
     onClick={() => setShowModal(false)}/>}
     <div>
+      
         <h2>Dina uppgifter:</h2>
         <div>
           <ParagraphWithButton 
@@ -171,11 +178,13 @@ const StudentPortal = () => {
         </div>
         
     </div>
+    <Line/>
     <h2>Dina kurser:</h2>
     <div>
     {!context.studentCourses && <><p>Du har inte anmält dig till några kurser än!</p>
     <HashLink smooth to ="/#kurser">Se kurserna här</HashLink><br/>
     <Link to="/student/student-kurser/register">Anmäl dig här</Link><br/>
+    <Line/>
     <button className="logoutBtn" 
     onClick={context.onLogout}>Logga ut</button>
     </>
@@ -184,12 +193,10 @@ const StudentPortal = () => {
         <p></p>
       ))}
     </div>
-    </div>
-    <div>
-    <img src="https://picsum.photos/300/300" 
-    alt="Placeholder from Lorem Picsum."></img>
+    
     </div>
     
+   
   </Section> );
 }
  

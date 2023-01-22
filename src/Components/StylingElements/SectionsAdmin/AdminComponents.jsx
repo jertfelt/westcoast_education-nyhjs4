@@ -59,9 +59,8 @@ button{
   border:none;
   font-size:14px;
   border-radius:30px;
-  color:${({ theme }) => theme.background};
+  color:${({ theme }) => theme.text};
   background: ${({ theme }) => theme.toggleBorder};
-
   &:hover{
     background: ${({ theme }) => theme.body};
     color: ${({ theme }) => theme.accent};
