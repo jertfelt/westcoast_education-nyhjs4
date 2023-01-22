@@ -167,6 +167,10 @@ export const Filter= styled.div`
 display:flex;
 align-items: center;
 gap: 8px;
+label{
+  color:${({ theme }) => theme.highlight};
+}
+margin-top:-1rem;
 list-style:none;
 @media (max-width: 700px){
   flex-direction:column;
@@ -178,7 +182,6 @@ list-style:none;
 // all courses:
 
 export const GridKurser = styled.div`
-display:grid;
 `
 
 export const Courses = styled.div`
@@ -209,5 +212,7 @@ export const Content = styled.div`
 background:  ${({ theme }) => theme.background};
 h2{
 text-align: flex-start;
+line-height:2rem;
 }
+
 `

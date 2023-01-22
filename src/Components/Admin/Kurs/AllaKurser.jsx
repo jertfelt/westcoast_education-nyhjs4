@@ -7,7 +7,6 @@ import { Content, Courses, Filter, GridKurser } from "../../StylingElements/Sect
 const AllaKurser = () => {
   const {data,error,loading} = useFirebase("/courses")
   const [defaultView, setDefault] =useState(true)
-  const [amountofStudentsView, setAmountOfStudents] = useState(true)
   const [notpublished, setCheckNotpublished] = useState(true)
   const [published, setCheckPublished] = useState(true)
   const [filtered, setShowFiltered] = useState([])

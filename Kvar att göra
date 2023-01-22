@@ -18,4 +18,40 @@ OM JAG HINNER:
 5)om jag hinner lägg in så att det blir en count på kurserna utifrån antalet studenter som har den kursen i databasen.
 (filter students och kör length på student.coursesnames --> coursename === thiscourse )
 
+6) filtrera asc och desc studenter
 
+
+ {amountofStudentsView && filtered.map(courses => (
+        <Courses 
+        key={`${courses.courseID}${courses.courseName}${courses.studentsAssigned}--assigned`}>
+        <Link 
+        to={`/kurser/${courses.courseID}`}>
+        <h3 
+        data-testid="kurstest">{courses.courseName}</h3>
+        {courses.published ? (<p>Start: {courses.startDate}</p>):(<p>Start: N/A</p>)}
+        <p>Antal studenter: {courses.studentsAssigned}</p>
+        </Link>
+      </Courses>
+      ))}
+
+case "amountOfStudents":
+        setDefault(false)
+        let allStudents = data.filter(item => {return item.status!== "DELETED"}).map(students => Number(students.studentsAssigned))
+        const descending = (a, b) => {
+          return b - a}
+        let desc = allStudents.sort(descending)
+        let 
+        console.log(desc)
+        setShowFiltered(desc)
+        console.log(filtered)
+        setAmountOfStudents(true)
+        break;
+
+        case "ascAmountOfStudents" : 
+        setDefault(false)
+        const ascending=(a, b) => {
+          return a -b}
+        let asc = allStudents.sort(ascending)
+        setShowFiltered(asc)
+        setAmountOfStudents(true)
+        break;
