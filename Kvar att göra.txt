@@ -13,6 +13,8 @@ OM JAG HINNER:
 
 3) se samtidigt över env
 
+4) alla kurser renderas oavsett :()
+
 4)Kursformulär:  Lärare i select option, utifrån kompetenser.
 <--- Finns, men koden buggar
 

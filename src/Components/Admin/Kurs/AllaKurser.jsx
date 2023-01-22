@@ -88,7 +88,7 @@ const AllaKurser = () => {
         </Link>
       </Courses>
     ))}
-    {published && publishedFilter.map(courses => (
+    {!defaultView && published && publishedFilter.map(courses => (
         <Courses 
         key={`${courses.courseID}${courses.courseID}`}>
         <Link 
@@ -101,7 +101,7 @@ const AllaKurser = () => {
         </Link>
       </Courses>
       ))}
-    {notpublished && filteredUnPublish.map(courses => (
+    {!defaultView && notpublished && filteredUnPublish.map(courses => (
           <Courses 
           key={`${courses.courseID}${courses.courseID}`}>
           <Link 

@@ -249,7 +249,7 @@ justify-content:center;
 text-align:center;
 flex-wrap:wrap;
 strong{
-  color:${({ theme }) => theme.body}
+  color:${({ theme }) => theme.accent}
 }
 
 .Row{
