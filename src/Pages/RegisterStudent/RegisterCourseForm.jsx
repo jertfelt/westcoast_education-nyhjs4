@@ -14,26 +14,50 @@ const RegisterCourseForm = ({studentid, item, coursesInDB}) => {
   const courseInputRef2 = useRef()
   const [studentEmail, setStudentEmail] = useState("")
   const [studentPassword, setStudentPassword] = useState("")
+
   const {data, error, loading} = useFirebase("/courses")
   const [courses, setCourses] = useState([])
   const [firstChoice, setFirst] = useState([])
   const [secondChoice, setSecond] = useState([])
- 
+  const [secondToDb, setSecondToDb] = useState("")
 
 console.log("id:", studentid, "kurser:", coursesInDB, "allt", item)
 
 const onSubmit = (e) => {
- const studentEmail = emailInputRef.current.value
+
  const courseInputObligatory = courseInputRef.current.value
- const courseInput2nd = courseInputRef2.current.value
+ const IDtoDB = studentid
+  const studentName = context.studentName
+
+ if (courseInputRef2.current.value  === "Välj" || courseInputRef2.current.value  === "Ingen"){
+  if(secondChoice === "Välj" || secondChoice === "Ingen"){
+    setSecondToDb(false)
+  }
+  else{
+    setSecondToDb(true)
+  }
+}
+ else {
+  console.log(firstChoice, secondChoice)
+ }
+
+
 }
 
-const checkInputs = (e) => {
+const checkInputsFirstChoice = (e) => {
   e.preventDefault()
   if(e.target.value !== "Välj:"){
+    setFirst(e.target.value)
     setValidInputs(true)
   }else{
     setValidInputs(false)
+  }
+}
+
+const checkInputsSecondChoice = (e) => {
+  e.preventDefault()
+  if(e.target.value !== "Välj" || e.target.value !== "Ingen"){
+    setSecond(e.target.value)
   }
 }
 
@@ -100,7 +124,7 @@ useEffect(() => {
       data-testid="studentcours1"
       ref={courseInputRef}
       required
-      onChange={(e) => checkInputs(e)}
+      onChange={(e) => checkInputsFirstChoice(e)}
       >
         <option 
         value={"Välj:"} 
@@ -108,30 +132,35 @@ useEffect(() => {
         label={"Välj:"}/>
 
         {data && data.filter(function (course){
-          return course.courseName !== firstChoice}).filter(function (i){
+          return course.courseName !== firstChoice})
+          .filter(function (i){
             return i.courseName !== "DELETED"
           }).map(item => ( 
         <option 
         value={item.courseName}
         key={item.courseID}>
-          {item.courseName}
+        {item.courseName}
         </option>)
         )}
       </select>
       </div>
+
       <div className="Row">
       <label htmlFor="secondChoice">
         **Kursval 2:</label>
       <select id="secondChoice" 
-      ref={courseInputRef2}
       data-testid="studentcourse2"
+      onChange={(e) => checkInputsSecondChoice(e)}
       >
       <option 
       value="Välj:" 
       name="Välj:"
       label="Välj:"/>
-        {data && data.filter(function (course){return course.courseName !== coursesInDB.firstChoice}).filter(function (i){
-            return i.courseName !== "DELETED"}).map(item => ( <option key={item.courseID} value={item.courseName}>{item.courseName}</option>)
+        {data && data.filter(function (i){
+            return i.courseName !== "DELETED"})
+            .filter(function (course){return course.courseName !== coursesInDB.firstChoice})
+            .filter(function (course){return course.courseName !== coursesInDB.secondChoice})
+            .map(item => ( <option key={item.courseID} value={item.courseName}>{item.courseName}</option>)
         )}
         <option 
         value="Ingen"
