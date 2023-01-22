@@ -5,6 +5,7 @@ import { HashLink } from "react-router-hash-link";
 import Modal from "../../Components/ui/Modal/Modal";
 import { ProfileSection as Section , ParagraphWithButton} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { Line } from "../../Components/StylingElements/Line/Line";
+import Timer from "../../Components/Timer/Timer";
 
 const StudentPortal = () => {
   const STUDENTS_URL = "http://localhost:8000/students"
@@ -193,7 +194,7 @@ const StudentPortal = () => {
         <p></p>
       ))}
     </div>
-    
+    <Timer/>
     </div>
     
    
