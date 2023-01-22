@@ -1,13 +1,46 @@
-import styled from "styled-components";
+import styled, {css} from "styled-components";
 
 const Studentsections = styled.section`
-
 display:flex;
-flex-direction:content;
+flex-direction:column;
 justify-content:center;
 align-items: center;
+padding:1rem;
+min-height:80vh;
 `
 
+export const StudentContainer = styled.div`
+background: ${({ theme }) => theme.background};
+color: ${({ theme }) => theme.body};
+
+label{
+  color:${({ theme }) => theme.toggleBorder};
+}
+padding:1rem;
+.disabled{
+  display:none;
+}
+.enabled{
+  align-self:center;
+  opacity: 1;
+  cursor:pointer;
+}
+
+`
+
+export const TwoColumns = styled.div`
+display:flex;
+flex-direction:row;
+gap: 1rem;
+${props => 
+  props.largergap && 
+  css`
+  justify-content:space-around;
+  text-align:end;
+  p{font-size:1rem;}
+   `}
+`
+ 
 
 
 export const QuestionDiv = styled.div`
@@ -140,6 +173,13 @@ margin-top:-2rem;
   position: absolute;
   width: 1px;
 }
+`
+
+export const IfAlreadyExists = styled.div`
+h2{
+  text-align:center;
+}
+padding-bottom:2rem;
 `
 
 export default Studentsections
