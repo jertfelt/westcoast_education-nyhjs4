@@ -1,12 +1,13 @@
-import { Navigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { Section, InfoRuta, ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
+import { Section, InfoRuta, ButtonContainer, KursDetails } from "../../StylingElements/SectionsAdmin/AdminComponents";
 import KursAddOrChange from "../Forms/KursAddOrChange";
 import { useSeveralRoutesFirebase } from "../../utils/useSeveralRoutesFirebase";
 
 const Kurs = () => {
   const {id} = useParams()
   let noId = Number(id)
+  const navigate = useNavigate()
 
   const [changeForm, setChangeForm] = useState(false);
   const [teachers, setTeachers] = useState([])
@@ -16,8 +17,6 @@ const Kurs = () => {
   useEffect(() => {
     if(data1){
       setTeachers(data1.map(item =>item))
-     
-      
     }
     if(data2){
       setStudents(data2.map(item => item))
@@ -29,7 +28,7 @@ const Kurs = () => {
 
   return ( 
   <Section>
-    <h1>Kursdetaljer</h1>
+ 
     {error && <p>Något är fel på servern..</p>}
     {loading && <p>Laddar..</p>}
     {courses && courses.filter(item => item.courseID === noId).map(item => ( 
@@ -46,34 +45,38 @@ const Kurs = () => {
       onChangeForm = {() => setChangeForm(false)}
       courseExists={item}/>
    
-    ):(<>
+    ):(<KursDetails>
         <h1>{item.courseName}</h1>
-          <p>Beskrivning: {item.courseDescription}</p>
+          <p><strong>Beskrivning:</strong><br/> 
+          {item.courseDescription}</p>
+          
           {item.published && <>
-          <p>Start:{item.startDate}</p>
-          <p>Längd: {item.lengthWeeks} veckor</p>  
-          <p>Publicerad kurs</p>
-          <p>Antal deltagare anmälda: {item.studentsAssigned}</p>
+          <div className="Row">
+          <p><strong>Start:</strong> {item.startDate}</p>
+          <p><strong>Längd:</strong> {item.lengthWeeks} veckor</p>
+          </div>
+          <p>Deltagare: {item.studentsAssigned}</p>
+          <h3><strong>Publicerad kurs</strong></h3>
           </>}
           {!item.published && item.studentsAssigned < 5 && <>
             <h3>Ej publicerad kurs</h3>
-            <p>Planerad start: {item.startDate}</p>
-            <p>Antal deltagare anmälda hittills: {item.studentsAssigned}/5</p>
+            <p><strong>Planerad start:</strong> {item.startDate}</p>
+            <p>Anmälda deltagare: {item.studentsAssigned}/5</p>
           </>}
           {!item.published && item.studentsAssigned >= 5 && <>
           <h3>Ej publicerad kurs</h3> 
-          <p>Start:{item.startDate}</p>
-          <p>Minimum deltagare: 5 <br /> Antal deltagare anmälda hittills: {item.studentsAssigned}</p>
+          <p><strong>Start:</strong> {item.startDate}</p>
+          <p><strong>Minimum deltagare: 5 </strong><br /> Antal anmälda: {item.studentsAssigned}</p>
           </>}
           <ButtonContainer>
           <button 
-          onClick={() => Navigate(-1)}>
+          onClick={() => navigate(-1)}>
           Gå tillbaka</button>
           <button 
           onClick={() => setChangeForm(true)}>
           Redigera kurs</button>
           </ButtonContainer>
-      </>
+      </KursDetails>
     )}
     </InfoRuta>
     ))}

@@ -7,11 +7,17 @@ display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
+padding-bottom:3rem;
 @media (max-width: 700px){
   padding:1rem;
   padding-bottom:3rem;
 }
+h1{
+  font-size:2rem;
+}
 `
+
+
 
 export const ButtonContainer = styled.div`
 display:flex;
@@ -23,6 +29,7 @@ justify-content:center;
   flex-direction:column;
 }
 gap:1rem;
+
 `
 
 export const InfoRuta = styled.div`
@@ -43,15 +50,16 @@ p{
 }
 margin-bottom:-2rem;
 button{
-  padding: 4px 8px;
-border:none;
-font-size:14px;
-border-radius:30px;
-margin-top:1rem;
-&:hover{
+  padding: 4px 19px;
+  border:none;
+  font-size:14px;
+  border-radius:30px;
+  color:${({ theme }) => theme.text};
   background: ${({ theme }) => theme.toggleBorder};
-color: ${({ theme }) => theme.accent};
-}
+  &:hover{
+    background: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.background};
+  }
 }
 `
 
@@ -221,5 +229,45 @@ h2{
 text-align: flex-start;
 line-height:2rem;
 }
+`
+
+export const KursDetails = styled.div`
+color: ${({ theme }) => theme.text}
+max-width:800px;
+display:flex;
+flex-direction: column;
+p{max-width: 60%;}
+align-items:center;
+justify-content:center;
+text-align:center;
+flex-wrap:wrap;
+strong{
+  color:${({ theme }) => theme.body}
+}
+
+.Row{
+  display:flex; 
+  gap:1rem;
+  @media (max-width: 700px){
+    flex-direction:column;
+  }
+ 
+} 
+padding-bottom: 3rem;
+
+`
+
+export const PublishBtn = styled.button`
+cursor: pointer;
+:disabled{
+  cursor:none;
+  background:transparent;
+  color: ${({ theme }) => theme.toggleBorder}
+}
+background:${({ theme }) => theme.toggleBorder}
+color: ${({ theme }) => theme.buttonText};
+margin-bottom:-1rem;
+margin-top:-1rem;
+
 
 `

@@ -24,6 +24,7 @@ font-family: Sofia Sans;
 export const FormInstructions = styled(Form)`
 padding-bottom:0;
 font-family: Sofia Sans;
+
 button{
   padding: 4px 8px;
     border:none;
@@ -42,6 +43,7 @@ button{
     @media (max-width: 700px){
       padding:1px;
     }
+
 }
 
  
@@ -83,7 +85,14 @@ button{
     width:100%;
   }
   label{
+    max-width:50%;
     color: ${({ theme }) => theme.buttonText};
+  }
+  .number{
+    max-width:70%;
+    :invalid{
+      border: 3px solid red;
+    }
   }
 
   input[type="submit"] {
@@ -124,9 +133,7 @@ justify-content:center;
 
 button{
   background: ${({ theme }) => theme.toggleBorder};
-  
   cursor: pointer;
-  max-width:50%;
   padding: 4px 8px;
     border:none;
     font-size:14px;
@@ -137,16 +144,15 @@ button{
       color: ${({ theme }) => theme.toggleBorder};
       }
 }
-.ordinary{
-  background: ${({ theme }) => theme.accent};
-  color: ${({ theme }) => theme.toggleBorder};
-  &:hover{
-    color: ${({ theme }) => theme.accent};
-    background: ${({ theme }) => theme.toggleBorder};
-    }
+
+.onlyone{
+  button {
+      max-width:50%;
+  }
 }
+
 .text {
-  padding: 8px;
+  padding: 2px;
   background:transparent;
   text-align:left;
   color: ${({ theme }) => theme.toggleBorder};

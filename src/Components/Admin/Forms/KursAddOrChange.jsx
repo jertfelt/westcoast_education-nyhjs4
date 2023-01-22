@@ -6,7 +6,7 @@ import {useRef,useEffect,useState} from "react"
 import { getDatabase, ref, set, remove, update } from "firebase/database";
 import { ButtonContainerOutsideForm } from "../../StylingElements/Form/Form";
 import { useDates } from "../../utils/useDates";
-import { ButtonContainer } from "../../StylingElements/SectionsAdmin/AdminComponents";
+import { ButtonContainer, PublishBtn } from "../../StylingElements/SectionsAdmin/AdminComponents";
 
 const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, onChangeForm, courseExists}) => {
   const navigate = useNavigate()
@@ -80,22 +80,15 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
 
     const confirmSave = (e) => {
       e.preventDefault()
+      console.log("clickat")
         const coursename = courseNameRef.current.value;
         const description = courseDescriptionRef.current.value
         const startdate = startDateref.current.value
-        const weeks = lengthWeeksRef.current.value
-        const students = studentsAssignedRef.current.value
+        const weeks = Number(lengthWeeksRef.current.value)
+        const students = Number(studentsAssignedRef.current.value)
         const published = publishedStatus
         const ID = courseID
-        
-        if(
-          coursename === "" || description === "" || startdate === "" || weeks === "" || students === "" || published === "" || ID === "" 
-        ){
-          setShowModal2(true)
-          setTitle("Något är fel")
-          setMsg("Något saknas, du måste fylla i alla fälten")
-        }
-        else{
+      
         sendEditToFirebase(
           coursename,   
           description,
@@ -105,7 +98,6 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           published,
           ID,
           )
-        }
     }
 
     const checkDate= (e) => {
@@ -158,7 +150,16 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
 
  
   return (
-    <>
+    <> 
+    <h1>{title}</h1>
+      <PublishBtn
+        data-testid="testingPublishBtn"
+        className={assignedStudents1 >= 5 ? "ordinary" : "text"}
+        disabled ={assignedStudents1 >= 5 ? false : true }
+        onClick = {(e) => publishCourse(e)}>
+      {assignedStudents1 >= 5 ? (<>{publishedStatus ? (<p>Avpublicera</p>):(<p>Publicera</p>)}</>):(<p>För att publicera kursen på hemsidan ska alla fält vara fyllda, och det måste vara fler än fem studenter</p>)}
+      </PublishBtn>
+    
   <FormInstructions
   data-testid="formaddorchange"
     onSubmit={confirmSave}>
@@ -177,7 +178,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       message={modalMsg}
       onClick={() => setShowModal2(false)}
       />}
-    <h1>{title}</h1>
+    
 
     <div className="Row">
     <label
@@ -215,7 +216,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     <p>Startdatum har redan passerat!</p>
     }
 
-    {typeOfForm === "changeCourse" &&
+ 
     <div className="Row">
     <label
           htmlFor="startDateInput">
@@ -233,30 +234,34 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           onFocus={(e) => instructionsUnclear(e)}
           onBlur={() => setInstructions(false)}
     />
-    </div>}
+    </div>
     <div className="Row">
     <label
     htmlFor="lengthWeeksInput">
-      Antal veckor:
+      Veckor längd (i siffror):
     </label>
-    <input
+    <input  
+          className="number"
           id="lengthWeeksInput"
-          type="number"
-          defaultValue={courseExists ? courseExists.lengthWeeks : 2}
-          min={2}
-          max={15}
+          type="text"
+          defaultValue={courseExists ? courseExists.lengthWeeks : "2"}
+          pattern= "[0-9]+"
+          minValue="2"
+          maxValue="15"
           ref={lengthWeeksRef}
     />
     </div>
     <div className="Row">
     <label
     htmlFor="studentsAssignedChangeInput">
-      Antal studenter:
+      Antal studenter: 
     </label>
     <input
+        className="number"
         id="studentsAssignedChangeInput"
         defaultValue={courseExists ? assignedStudents1 : 0}
-        type="number"
+        type="text"
+        pattern= "[0-9]+"
         onChange= {(e) => setAssignedStudents1(Number(e.target.value))}
         ref={studentsAssignedRef}
     />
@@ -278,20 +283,9 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
       disabled = {courseExists && courseExists.published ? true : false}>
     Radera kurs
     </button>} 
-
-    
-    <button className="smallBtn"
+    <button 
       onClick={typeOfForm === "changeCourse" ? onChangeForm : () => navigate(-1)}>
         Stäng
-    </button>
-  
-   <button
-   data-testid="testingPublishBtn"
-   className={assignedStudents1 >= 5 ? "ordinary" : "text"}
-    disabled ={assignedStudents1 >= 5 ? false : true }
-    onClick = {(e) => publishCourse(e)}
-    >
-      {assignedStudents1 >= 5 ? (<>{publishedStatus ? (<p>Avpublicera</p>):(<p>Publicera</p>)}</>):(<p>För att publicera kursen på hemsidan ska alla fält vara fyllda, och det måste vara fler än fem studenter</p>)}
     </button>
     </ButtonContainer>
     </ButtonContainerOutsideForm></>
