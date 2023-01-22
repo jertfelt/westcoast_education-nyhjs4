@@ -65,6 +65,7 @@ export const GridTeacher = styled.div`
 margin: -1rem;
 display:flex;
 flex-wrap:wrap;
+padding:1rem;
 flex-direction: column;
 align-items: center;
 justify-content:center;
@@ -171,4 +172,42 @@ list-style:none;
   flex-direction:column;
 }
 
+`
+
+
+// all courses:
+
+export const GridKurser = styled.div`
+display:grid;
+`
+
+export const Courses = styled.div`
+display:flex; 
+align-items:flex-start;
+justify-content:flex-start;
+opacity:0.8;
+
+&:hover{
+  opacity:1;
+}
+p{
+  font-size:1rem;
+  line-height:1.2rem;
+}
+h3{
+  font-size:1.2rem;
+  line-height:1.2rem;
+}
+a{
+  &:hover{
+    color: ${({ theme }) => theme.accent};
+  }
+}
+
+`
+export const Content = styled.div`
+background:  ${({ theme }) => theme.background};
+h2{
+text-align: flex-start;
+}
 `
