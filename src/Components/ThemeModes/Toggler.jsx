@@ -7,7 +7,7 @@ const Button = styled.button`
   border-radius: 30px;
   min-width:40px;
   cursor: pointer;
-  font-size:1rem;
+  font-size:1.2rem;
   padding: 0.6rem;
   display: flex;
   flex-direction: row-reverse; 

@@ -1,7 +1,7 @@
 import {Line} from "../../Components/StylingElements/Line/Line"
 import { Link } from "react-router-dom";
 import { useFirebase } from "../../Components/utils/useFirebase";
-import {Intro, TwoColumns, Column, About, Grid} from "./HomepageStyles.jsx"
+import {Intro, TwoColumns, Column, About, Grid, GoodToKnow} from "./HomepageStyles.jsx"
 
 const HomePage = () => {
   const year = new Date().getFullYear();
@@ -50,19 +50,20 @@ const HomePage = () => {
         <p>{course.courseDescription}</p>
         <p>Startdatum: {course.startDate}</p>
         <Link
-        to={`/student/student-kurser/register/${course.courseID}`}><button >Anmäl dig till kursen här</button></Link>
+        to={`/student/student-kurser/register/${course.courseName}`}><button >Anmäl dig till kursen här</button></Link>
       </div>
     )
   })}
 
   </Grid>
 }
-  
+  <GoodToKnow>
   <h3>Bra att veta:</h3>
   <p>När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med
       betalningsuppgifter och ett välkomstmeddelande. 
       Skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste
       vi tyvärr av ekonomiska skäl boka av kursen. </p>
+      </GoodToKnow>
   </About>
   </section> );
 }

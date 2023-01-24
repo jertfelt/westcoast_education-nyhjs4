@@ -14,11 +14,10 @@ const {data} = useFirebase("/students")
 const [errMsg, setErrMsg] = useState("")
 const [id, setID] = useState([])
 const [error, setError] =useState(false)
-const [coursesInDB, setCoursesInDataBase] = useState([])
 const [course1, setCourse1] = useState("default")
 const [course2, setCourse2] = useState("default")
 
-
+console.log(props.name)
 useEffect(() =>{
   if(data){
     if(context.studentID === "" || !context.studentID || context.studentID === []){
@@ -66,6 +65,7 @@ useEffect(() =>{
   data-testid="RegisterStudentKurs">
   {error ? <p>{errMsg}</p>: 
   <RegisterCourseForm 
+  ifDirected = {props.name}
   studentid = {id}
   item = {thisStudent}
   course1 = {course1}

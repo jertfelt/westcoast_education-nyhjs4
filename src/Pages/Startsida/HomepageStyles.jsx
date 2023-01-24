@@ -23,6 +23,7 @@ h3{
 }
 `
 export const TwoColumns = styled.div`
+max-width:900px;
 display:flex;
 flex-direction: row;
 gap: 2rem;
@@ -41,9 +42,20 @@ max-width:50%;
 
 
 export const About = styled.div`
+h2{text-align:center;
+font-size:2rem;}
 padding:2rem;
+
 @media screen and (max-width: 700px) {
   padding:1rem;}
+`
+export const GoodToKnow = styled.div`
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+margin-top:3rem;
+p{max-width:900px;
 `
 
 export const Grid = styled.div`
@@ -73,5 +85,6 @@ div{
 button{
   padding:8px;
   border:none;
+  font-size:1rem;
 }
 `

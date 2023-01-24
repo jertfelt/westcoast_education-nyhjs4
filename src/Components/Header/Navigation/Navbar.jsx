@@ -9,7 +9,7 @@ import MenuButton from "../../StylingElements/Buttons/MenuButton";
 const DropDMenu = styled.nav`
   background: ${({ theme }) => theme.buttonBackground};
   color: ${({ theme }) => theme.body};
-  font-size:1rem;
+  font-size:1.2rem;
   position: absolute;
   top: 10vh;
   left:10%;
@@ -30,6 +30,7 @@ button{
   color: ${({ theme }) => theme.body};
   border:none;
   padding:8px;
+  font-size:1.2rem;
   position:relative;
   left:80%;
   &:hover{

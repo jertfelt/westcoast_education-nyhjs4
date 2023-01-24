@@ -3,11 +3,11 @@ import StudentContext from "../../Context/StudentContext";
 import { FormInstructions } from "../../Components/StylingElements/Form/Form";
 import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { useFirebase } from "../../Components/utils/useFirebase";
-import { getDatabase, onValue, ref, set, update } from "firebase/database";
+import { getDatabase,  ref, set, } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 
 
-const RegisterCourseForm = ({studentid, item, course1, course2}) => {
+const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) => {
   const navigate = useNavigate()
   const context = useContext(StudentContext);
   const [validInputs, setValidInputs] = useState(false)
@@ -21,8 +21,7 @@ const RegisterCourseForm = ({studentid, item, course1, course2}) => {
   const [secondChoice, setSecond] = useState("")
   const [warning, setWarning] = useState(false)
   const [idToDB, setIDToDB] = useState(studentid)
-
-// console.log("id:", studentid, "kurser:", course1, course2, "allt", firstChoice, secondChoice, item)
+ 
 
 useEffect(() => {
   if(data){
@@ -32,6 +31,7 @@ useEffect(() => {
   }
   
 },[data, item, studentid])
+
 
 const sendEditToFb = (
     firstChoiceNew,
@@ -148,6 +148,7 @@ useEffect(() => {
   if(course2){
     setSecond(course2[0])
   }
+  
 }, [item,course2, context, course1])
 
 // const newPrio =(string, e) =>{
@@ -156,6 +157,8 @@ useEffect(() => {
     
 //   }
 // }
+
+
 
   return ( 
   <StudentContainer>
@@ -169,7 +172,6 @@ useEffect(() => {
     <h2>Du är anmäld till :</h2>
     <TwoColumns
     largergap>
-      
     <div>
     <h3>#1: {firstChoice} </h3>
     {data && data.filter(function (i){
@@ -202,6 +204,7 @@ useEffect(() => {
     <TwoColumns
     largergap>
     <div className="Row">
+      
       <label htmlFor="firstChoice">
         Kursval 1:</label>
       <select 
@@ -211,10 +214,28 @@ useEffect(() => {
       required
       onChange={(e) => checkInputsFirstChoice(e)}
       >
+        {ifDirected && <><option value={ifDirected} data-testid="optionDefault2"
+        label={ifDirected}/>
+        {ifDirected && data.filter(function (i){
+            return i.courseName !== "DELETED"
+          }).filter(j => {
+            return j.courseName !== ifDirected
+          })
+          .map(item => ( 
         <option 
-        value={"Välj:"} 
+        value={item.courseName}
+        key={item.courseID}>
+        {item.courseName}
+        
+        </option>)
+        )}
+        </>}
+        {!ifDirected && <> 
+        
+        <option 
+        value="Välj:" 
         data-testid="optionDefault"
-        label={"Välj:"}/>
+        label="Välj:"/>
 
         {data && data.filter(function (i){
             return i.courseName !== "DELETED"
@@ -226,6 +247,7 @@ useEffect(() => {
         
         </option>)
         )}
+        </>}
       </select>
      
       </div> 
