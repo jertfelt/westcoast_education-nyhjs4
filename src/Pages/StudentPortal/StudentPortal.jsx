@@ -65,6 +65,9 @@ const StudentPortal = () => {
     
   }, [context.studentName, context.studentCourseSecondChoice,context.studentCourseFirstChoice, context.studentEmail, context.studentID])
 
+
+  console.log(context.studentCourseFirstChoice)
+
   useEffect(() => {
     if(data){
       setPassword(data)
@@ -248,13 +251,10 @@ const checkForChangesAndSave = (e) => {
     <Line/>
     <h2>Dina kurser:</h2>
     <div>
-    {!courses ? <p>Du har inte anmält dig till några kurser än!</p>: 
-     <> 
-    <p>{context.studentCourseFirstChoice}</p>
-      {course2 ? 
-    <p>{context.studentCourseSecondChoice}</p> : <>
-      </>}
+    {context.studentCourseFirstChoice === true && <><p>{context.studentCourseFirstChoice}</p><br/>
+    {context.studentCourseSecondChoice && <p>{context.studentCourseSecondChoice}</p>}
     </>}
+    {!context.studentCourseFirstChoice  && <p>Du har inte anmält dig till några kurser än!</p>} 
     <HashLink smooth to ="/#kurser">
       Se alla publicerade kurser här</HashLink><br/>
     <Link to="/student/student-kurser/register">{!courses && "Anmäl dig till en kurs här"}

@@ -27,7 +27,8 @@ const determineMember = () => {
       {notMemberYet && <p data-testid="ifNotMember">
         Behöver du registrera dig?</p>}
       <button 
-    onClick={determineMember}>Klicka här</button>
+      onClick={determineMember}>
+        Klicka här</button>
     </QuestionDiv>
     </ContentLoginRegister>
   </Studentsections>  );

@@ -13,6 +13,8 @@ export const ButtonDiv = styled.div`
 display:flex;
 flex-direction:row;
 align-items:flex-end;
+max-width:300px;
+margin-top:1rem;
 button{
   font-size:1rem;
 }
@@ -66,7 +68,10 @@ background: ${({ theme }) => theme.accent};
 border-radius:30px;
 color: ${({ theme }) => theme.body};
 padding: 1rem;
-
+p{
+  font-size:2rem;
+  text-align:center;
+}
 
 button{
   margin-top:-1rem;
@@ -95,17 +100,36 @@ export const ContentLoginRegister = styled.div`
 min-height:50vh;
 background:${({ theme }) => theme.background};
 color: ${({ theme }) => theme.accent};
+font-size:1.2rem;
 padding:2rem;
 display:flex;
 flex-direction:column;
 justify-content:center;
 align-items:center;
 max-width:800px;
+h1{
+  font-size:2.5rem;
+  color:${({ theme }) => theme.toggleBorder};
+}
 @media (min-width:800px){
 flex-direction:row;
 gap:3rem;
 }
-
+button{
+  background: ${({ theme }) => theme.toggleBorder};
+  &:hover{
+    background: ${({ theme }) => theme.highlight};
+    color: ${({ theme }) => theme.text};
+    }
+    &:active, &:focus{
+      background: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.background};
+    }
+    cursor: pointer;
+   font-size:1rem;
+   border-radius:30px;
+   max-width:50%;
+}
 ` 
 
 
@@ -214,7 +238,7 @@ export const StudentPortalInfo = styled.div`
 display:flex;
 flex-direction:column;
 gap:1px;
-max-width:300px;
+max-width:400px;
 font-size:20px;
 p{line-height:1.2rem;}
 form{

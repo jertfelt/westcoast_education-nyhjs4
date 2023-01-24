@@ -113,14 +113,16 @@ const RegisterStudent = () => {
     studentEmail,
     studentID,
     ) => {
-
+      let studentCourseFirstChoice = ""
+      let studentCourseSecondChoice = ""
     let studentLoggedIn = true
     context.onLogin({
       studentName,
       studentEmail,
       studentLoggedIn,
       studentID,
-      
+      studentCourseFirstChoice,
+      studentCourseSecondChoice,
     })
     
   }

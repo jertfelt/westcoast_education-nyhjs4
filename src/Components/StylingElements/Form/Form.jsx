@@ -47,7 +47,6 @@ button{
 
 }
 
- 
 .instructions{
   font-size:12px;
 }
@@ -80,13 +79,16 @@ button{
   input{
     width:100%;
     max-width:400px;
+    font-size:1.2rem;
   }
   textarea{
     font-family: Sofia Sans;
     max-width:400px;
     width:100%;
+    font-size:1.2rem;
   }
   label{
+    font-size:1.2rem;
     color: ${({ theme }) => theme.buttonText};
   }
   .number{
@@ -101,14 +103,14 @@ button{
     background: ${({ theme }) => theme.toggleBorder};
     border:none;
     border-radius:30px;
-    margin-top:1rem;
+    margin-top:2rem;
       &:hover{
       background: ${({ theme }) => theme.accent};
       color: ${({ theme }) => theme.toggleBorder};
       }
     cursor: pointer;
-    max-width:20%;
-    text-transform:uppercase;
+    max-width:50%;
+    
     font-family: Sofia Sans;
     text-align:center;
     :disabled{
