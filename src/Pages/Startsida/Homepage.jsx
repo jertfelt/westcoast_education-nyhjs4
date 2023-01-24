@@ -1,17 +1,12 @@
 import {Line} from "../../Components/StylingElements/Line/Line"
 import { Link } from "react-router-dom";
-import { useState} from "react";
 import { useFirebase } from "../../Components/utils/useFirebase";
 import {Intro, TwoColumns, Column, About, Grid} from "./HomepageStyles.jsx"
 
 const HomePage = () => {
+  const year = new Date().getFullYear();
+  const {data,loading} = useFirebase("/courses");
   
-  const year = useState(new Date().getFullYear())
-  const {data,loading,error} = useFirebase("/courses")
-  
-  if(error){
-    console.log(error)
-  }
   return ( 
   <section data-testid="homepage">
   <Intro>
@@ -26,7 +21,7 @@ const HomePage = () => {
       <strong>WestCoast Education </strong> är ett utbildningsföretag som har sin placering på västkusten strax norr om Göteborg. 
       Vårt affärsmål är och har varit att tillhandahålla tekniska utbildningar inom IT-området.
       Vi har varit väldigt framgångsrika i alla år. 
-        </p>
+      </p>
       </Column>
       <Column>
       <p>

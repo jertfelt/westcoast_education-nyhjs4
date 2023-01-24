@@ -33,7 +33,7 @@ const Routing = () => {
   <Routes>
     <Route path="/" 
     element={<HomePage/>}/>
-   
+
     <Route path="/admin/login"
     element={<Login/>}/>
 

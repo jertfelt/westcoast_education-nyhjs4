@@ -14,6 +14,7 @@ describe("Login section", () => {
       setup()
       expect(screen.getByTestId("initialQuestion")).toBeInTheDocument()
     })
+    
     it("should change when pressed", () => {
       setup()
       expect(screen.getByTestId("initialQuestion")).toBeInTheDocument()
@@ -22,6 +23,5 @@ describe("Login section", () => {
       userEvent.click(screen.getByRole("button", {name:/Klicka här/i}))
       expect(screen.getByTestId("initialQuestion")).toBeInTheDocument()
     })
-
   })
 })

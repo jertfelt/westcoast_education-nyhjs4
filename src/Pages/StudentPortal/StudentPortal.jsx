@@ -212,6 +212,7 @@ const checkForChangesAndSave = (e) => {
           data-testid="paragraph">
           {showNewEmail ? <p> <strong>Email:</strong> {newEmail}</p>:<p> <strong>Email:</strong> {studentEmail}</p>}
           <button 
+          data-testid="changeParagraph"
           onClick={() => setChangeEmailForm(true)} 
           >
           Ändra</button>
@@ -244,6 +245,7 @@ const checkForChangesAndSave = (e) => {
     />}
     <ButtonDiv>
     <button 
+    data-testid="changeParagraph"
     onClick={() => setChangePassForm(true)}>Byt lösenord</button>    
     <button onClick={(e) => checkForChangesAndSave(e)}>Spara alla ändringar</button>
     </ButtonDiv>

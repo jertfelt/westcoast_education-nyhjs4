@@ -161,7 +161,7 @@ useEffect(() => {
   <StudentContainer>
     <FormInstructions
     onSubmit={onSubmit}>
-    <h1>Hej igen {context.studentName}</h1>
+    <h1 data-testid ="welcome">Hej igen {context.studentName}</h1>
     {loading ? <h2> Laddar... </h2> : <>
     {error && <h2> Något är fel på databasen</h2>}
     {firstChoice && <> 
@@ -252,7 +252,6 @@ useEffect(() => {
         )}
       <option 
         value="Ingen"
-        data-testid="IngetVal"
         name="Ingen"
         label="Ingen"/>
       </select>

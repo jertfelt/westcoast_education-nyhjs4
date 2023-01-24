@@ -3,12 +3,12 @@ import HomePage from './Homepage';
 import { MemoryRouter } from 'react-router-dom';
 
 
-//for testing responsiveness:
-const resizeWindow = (x,y) => {
-  window.innerWidth=x;
-  window.innerHeight=y;
-  window.dispatchEvent(new Event("resize")) 
-}
+// //for testing responsiveness:
+// const resizeWindow = (x,y) => {
+//   window.innerWidth=x;
+//   window.innerHeight=y;
+//   window.dispatchEvent(new Event("resize")) 
+// }
 
 describe ("Homepage component", () => {
   const setup = () => render(<HomePage/>)

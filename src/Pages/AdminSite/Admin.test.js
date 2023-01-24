@@ -8,6 +8,7 @@ describe("Admin page", () => {
     setup()
     expect(screen.getAllByTestId("allTeachers")).not.toHaveLength(0)
   })
+  
   it("should render all courses", () => {
     setup()
     expect(screen.getByTestId("allakurser")).toBeInTheDocument()
