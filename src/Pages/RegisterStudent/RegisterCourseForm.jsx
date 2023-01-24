@@ -5,6 +5,7 @@ import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/St
 import { useFirebase } from "../../Components/utils/useFirebase";
 import { getDatabase,  ref, set, } from "firebase/database";
 import { useNavigate } from "react-router-dom";
+import ValidationModal from "../../Components/ui/Modal/ValidationModal";
 
 
 const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) => {
@@ -20,17 +21,21 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) =>
   const [newSecondChoice, setNewSecond] = useState("Ingen")
   const [secondChoice, setSecond] = useState("")
   const [warning, setWarning] = useState(false)
-  const [idToDB, setIDToDB] = useState(studentid)
+  const [idToDB, setIDToDB] = useState("")
+  const [showModal, setShowModal] = useState(false)
  
-
+// console.log(studentid, "original", "idToDB:", idToDB, item.map(i => i.studentID)[0])
 useEffect(() => {
   if(data){
-    if(studentid === "" ||!studentid){
+    if(!studentid){
       setIDToDB(item.map(i => i.studentID)[0])
     }
+    else{
+      setIDToDB(studentid)
+    }
   }
-  
 },[data, item, studentid])
+
 
 
 const sendEditToFb = (
@@ -43,6 +48,7 @@ const sendEditToFb = (
   ) => {
   const db = getDatabase()
   const courseRef = ref(db, "/students/" + idToDB );
+  
 
   set(courseRef,{
     studentID: idToDB,
@@ -91,23 +97,54 @@ const studentName = context.studentName
     studentName,
     studentPassword
   )
-  
-  
 }
 
+
+const checkIfNotPublished = (value) => {
+  console.log(value, "value")
+let deleted = (data.filter(function (item) {
+  return item.courseName !== "DELETED"
+}).filter(function (notDeleted){
+  return notDeleted.published !== true
+}).map(item => item))
+console.log(deleted, "de")
+console.log(value, deleted.includes(value), "check")
+
+  if(deleted.includes(value)){
+    setWarning(true)
+  }
+  else{
+    setWarning(false)
+  }
+}
+
+const confirming = (e) => {
+  e.preventDefault()
+  setValidInputs(true)
+  setShowModal(false)
+}
+
+const notConfirming = (e) => {
+  e.preventDefault()
+  setValidInputs(false)
+  setShowModal(false)
+}
 
 
 const checkInputsFirstChoice = (e) => {
   e.preventDefault()
+  checkIfNotPublished(e.target.value)
+  
+  if(e.target.value === ifDirected){
+    setShowModal(true)
+  }
   if(e.target.value !== "Välj:"){
-    setWarning(true)
     if(e.target.value !== courseInputRef2.current.value){
-      setValidInputs(true)
+        setValidInputs(true)
     }
     else{
       setNewSecond("Ingen")
     }
-    
   }
   else{
     setValidInputs(false)
@@ -116,7 +153,7 @@ const checkInputsFirstChoice = (e) => {
 
 const checkInputsSecondChoice = (e) => {
   e.preventDefault()
-  setWarning(true)
+  checkIfNotPublished(e.target.value)
   if(e.target.value !== courseInputRef.current.value){
     if(e.target.value !== "Välj" || e.target.value !== "Ingen"){
       setNewSecond(courseInputRef2.current.value)
@@ -130,12 +167,9 @@ const checkInputsSecondChoice = (e) => {
 
 useEffect(() => {
   if(item){
-  
-  
     setStudentPassword(item.map(i=> i.studentPassword)[0])
     if(context){
       setStudentEmail(context.studentEmail)
-      console.log("grabbed from context")
     }
     else{
       setStudentEmail(item.map(i => i.studentEmail)[0])
@@ -158,10 +192,15 @@ useEffect(() => {
 //   }
 // }
 
-
-
   return ( 
   <StudentContainer>
+    {showModal && <ValidationModal
+    title={`Du har valt: ${ifDirected}`}
+    message="Stämmer det?"
+    onClickYes = {(e) => confirming(e)}
+    onClick = {(e) => notConfirming(e)}
+    />}
+
     <FormInstructions
     onSubmit={onSubmit}>
     <h1 data-testid ="welcome">Hej igen {context.studentName}</h1>
@@ -177,7 +216,12 @@ useEffect(() => {
     {data && data.filter(function (i){
             return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === firstChoice}).map((item, indx) => (
               <div key={`${indx}-${item}-${firstChoice}`}>
-                <p>Start: {item.startDate}</p>
+                {item.published && 
+                <p>Start: {item.startDate}</p>}
+                {!item.published && item.studentsAssigned <5 && <>
+                <p>Kursen är ännu inte helt bokad! Det måste vara minst fem studenter anmälda. Vi hör av oss via mail.</p>
+                <p>Just nu: {item.studentsAssigned}/5 studenter</p>
+                </>}
                 <p>Längd i veckor: {item.lengthWeeks} </p>
                 <p>Lärare: {item.teacherAssigned}</p>
                 {/* <button onClick={(e) => newPrio("2",e)}>Byt till prio #2</button> */}
@@ -190,7 +234,12 @@ useEffect(() => {
     {data && data.filter(function (i){
             return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === secondChoice}).map((item, indx) => (
               <div key={`${indx}-${item}-${firstChoice}`}>
-                <p>Start: {item.startDate}</p>
+                {item.published && 
+                <p>Start: {item.startDate}</p>}
+                {!item.published && item.studentsAssigned <5 && <>
+                <p>Kursen är ännu inte helt bokad! Det måste vara minst fem studenter anmälda. Vi hör av oss via mail.</p>
+                <p>Just nu: {item.studentsAssigned}/5 studenter</p>
+                </>}
                 <p>Längd i veckor: {item.lengthWeeks} </p>
                 <p>Lärare: {item.teacherAssigned}</p>
                 {/* <button onClick={(e) => newPrio("1",e)}>Byt till prio #1</button> */}
@@ -214,9 +263,12 @@ useEffect(() => {
       required
       onChange={(e) => checkInputsFirstChoice(e)}
       >
-        {ifDirected && <><option value={ifDirected} data-testid="optionDefault2"
+        {ifDirected && <><option 
+        value={ifDirected} 
+        data-testid="optionDefault2"
         label={ifDirected}/>
-        {ifDirected && data.filter(function (i){
+        
+        {ifDirected && data && data.filter(function (i){
             return i.courseName !== "DELETED"
           }).filter(j => {
             return j.courseName !== ifDirected

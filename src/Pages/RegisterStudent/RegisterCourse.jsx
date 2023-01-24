@@ -10,7 +10,7 @@ const RegistreringKurs = (props) => {
 const [thisStudent, setThisStudent] = useState("")
 const context = useContext(StudentContext);
 const {data} = useFirebase("/students")
-// console.log("hej", data, "cotnext:", context)
+
 const [errMsg, setErrMsg] = useState("")
 const [id, setID] = useState([])
 const [error, setError] =useState(false)
@@ -58,6 +58,7 @@ useEffect(() =>{
     }
   }
 }, [data, id, context.studentID, context.studentEmail, context.studentName])
+
 
 
   return ( 

@@ -48,7 +48,8 @@ button{
 }
 
 .instructions{
-  font-size:12px;
+  font-size:1rem;
+  max-width:400px;
 }
 .offscreen{
   border: 0;
