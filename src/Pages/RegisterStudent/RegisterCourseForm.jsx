@@ -3,7 +3,7 @@ import StudentContext from "../../Context/StudentContext";
 import { FormInstructions } from "../../Components/StylingElements/Form/Form";
 import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { useFirebase } from "../../Components/utils/useFirebase";
-import { getDatabase,  ref, set, } from "firebase/database";
+import { getDatabase,  increment,  ref, set, } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import ValidationModal from "../../Components/ui/Modal/ValidationModal";
 
@@ -23,6 +23,9 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) =>
   const [warning, setWarning] = useState(false)
   const [idToDB, setIDToDB] = useState("")
   const [showModal, setShowModal] = useState(false)
+  const [showModal2, setShowModal2] = useState(false)
+  const [courseID1, setCourseID1] = useState("")
+  const [courseID2, setCourseID2] = useState("")
  
 // console.log(studentid, "original", "idToDB:", idToDB, item.map(i => i.studentID)[0])
 useEffect(() => {
@@ -36,20 +39,17 @@ useEffect(() => {
   }
 },[data, item, studentid])
 
-
-
 const sendEditToFb = (
     firstChoiceNew,
     secondChoiceNew,
     studentEmail,
     idToDB,
     studentName,
-    studentPassword
+    studentPassword,
+   
   ) => {
   const db = getDatabase()
   const studentRef = ref(db, "/students/" + idToDB );
-    
- 
 
   set(studentRef,{
     studentID: idToDB,
@@ -59,6 +59,7 @@ const sendEditToFb = (
     studentCourseFirstChoice : firstChoiceNew,
     studentCourseSecondChoice : secondChoiceNew
   })
+
   const studentID = idToDB;
   let studentLoggedIn = true
   let studentCourseFirstChoice = firstChoiceNew
@@ -72,33 +73,89 @@ const sendEditToFb = (
     studentCourseSecondChoice,
   })
     navigate("/student")
-  
 }
- 
-const onSubmit = (e) => {
-  e.preventDefault()
-  
-const firstChoiceNew = courseInputRef.current.value
-let secondChoiceNew = ""
-const studentName = context.studentName
-  if(newSecondChoice === "Välj" || newSecondChoice === "Ingen"){
-    if(!secondChoice || secondChoice !== "Ingen" )
-      {secondChoiceNew = secondChoice;}
-    else{secondChoiceNew = "Ingen"}
-  }
-  else{
-    secondChoiceNew = courseInputRef2.current.value
+
+
+
+const sendEditToCourse = (
+  courseID1,
+  courseID2
+  ) => {
+    const db = getDatabase()
+    const course1 = ref(db, "/courses/" + courseID1)
+    set(course1, {
+      courseID1,
+      studentsAssigned: increment(1)
+    })
+    // if(courseID2){
+    //   const course2 = ref(db, "/courses/" + courseID2)
+      
+    // }
   }
 
-  sendEditToFb(
+const confirmingChange = (e) => {
+  e.preventDefault()
+  prepareData()
+  setShowModal2(false)
+}
+
+const prepareData = () => {
+  
+  const studentName = context.studentName
+  let firstChoiceNew = courseInputRef.current.value
+  let secondChoiceNew = ""
+
+  if(data){
+    if(newSecondChoice === "Välj" || newSecondChoice === "Ingen"){
+      if(!secondChoice || secondChoice !== "Ingen" )
+        {secondChoiceNew = secondChoice;}
+      else{secondChoiceNew = ""}
+    }
+    else{
+      secondChoiceNew = courseInputRef2.current.value
+      let chosen2 = data.filter(function (i){
+        return i.courseName !== "DELETED"}).filter(function (course){
+          return course.courseName === secondChoiceNew
+        }).map(item => item)
+      setCourseID2(Number(chosen2.map(item => item.courseID)))
+      
+    }
+
+    let chosen1 = data.filter(function (i){
+      return i.courseName !== "DELETED"}).filter(function (course){
+        return course.courseName === firstChoiceNew
+      }).map(item => item)
+    setCourseID1(Number(chosen1.map(item => item.courseID)))
+
+sendEditToFb(
     firstChoiceNew,
     secondChoiceNew,
     studentEmail,
     idToDB,
     studentName,
-    studentPassword
+    studentPassword, 
   )
+  sendEditToCourse(
+    courseID1,
+    courseID2
+  )
+  
+}}
+ 
+const onSubmit = (e) => {
+  e.preventDefault()
+
+  if(courseInputRef.current.value !== firstChoice && courseInputRef.current.value === ifDirected){
+    setShowModal2(true)
+  }
+  else{
+    prepareData()
+  }
+ 
 }
+
+  
+
 
 
 const checkIfNotPublished = (value) => {
@@ -200,6 +257,12 @@ useEffect(() => {
     message="Stämmer det?"
     onClickYes = {(e) => confirming(e)}
     onClick = {(e) => notConfirming(e)}
+    />}
+     {showModal2 && <ValidationModal
+    title={`Du har ändrat kurs`}
+    message={`Från ${firstChoice} till ${courseInputRef.current.value}. Stämmer detta?`}
+    onClickYes = {(e) => confirmingChange(e)}
+    onClick = {() => setShowModal2(false)}
     />}
 
     <FormInstructions
