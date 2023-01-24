@@ -4,7 +4,6 @@ import StudentContext from "../../../Context/StudentContext";
 import { useNavigate} from "react-router-dom";
 import Modal from "../../ui/Modal/Modal";
 import { FormInstructions as Form } from "../../StylingElements/Form/Form";
-import Studentsections from "../../StylingElements/StudentSections/StudentSections";
 import { useFirebase } from "../../utils/useFirebase";
 
 const LoginFormStudent = () => {
@@ -58,10 +57,14 @@ const LoginFormStudent = () => {
           let studentName = checkForStudent.map(item => {
             return item.studentName
           })
+          let courses =  checkForStudent.map(item => {
+            return item.courses
+          })
                   context.onLogin({
                     studentName,
                     studentEmail,
                     studentLoggedIn,
+                    courses,
                   })
                   navigate("/student")
       
@@ -119,7 +122,7 @@ const LoginFormStudent = () => {
     <input
     className="centered"
     type="submit"
-    value="Logga in"/>
+    value="Skicka"/>
 
   </Form>
   </>}

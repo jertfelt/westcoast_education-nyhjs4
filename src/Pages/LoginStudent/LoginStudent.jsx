@@ -1,7 +1,7 @@
 import {useState} from "react";
 import RegisterStudent from "../../Components/StudentLoginRegister/Register/RegisterNewStudent";
 import LoginFormStudent from "../../Components/StudentLoginRegister/Login/LoginFormStudent"
-import Studentsections, {QuestionDiv, Content} from "../../Components/StylingElements/StudentSections/StudentSections";
+import Studentsections, {QuestionDiv, Content, ContentLoginRegister} from "../../Components/StylingElements/StudentSections/StudentSections";
 
 
 const LoginStudent = () => {
@@ -18,7 +18,7 @@ const determineMember = () => {
 
   return (
   <Studentsections>
-  <Content>
+  <ContentLoginRegister>
     {!notMemberYet && <RegisterStudent/>}
     {notMemberYet && <LoginFormStudent/>}
     <QuestionDiv>
@@ -29,7 +29,7 @@ const determineMember = () => {
       <button 
     onClick={determineMember}>Klicka här</button>
     </QuestionDiv>
-    </Content>
+    </ContentLoginRegister>
   </Studentsections>  );
 }
  

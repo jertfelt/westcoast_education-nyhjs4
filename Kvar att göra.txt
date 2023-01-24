@@ -7,6 +7,8 @@ OM JAG HINNER:
 ---> TESTA OM DET FUNKAR 
 - Efter att jag testat med någon som har två kurser: kolla inga valda, eller bara en vald kurs
 
+städa funktioner och fetch Firebase kanske bara en gång skicka som props
+
 2) fixa Admin genom firebase istället, 
 
 3) se till att registrerade kurser syns i studentportalen

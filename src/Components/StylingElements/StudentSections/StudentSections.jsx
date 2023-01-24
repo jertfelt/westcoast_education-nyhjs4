@@ -44,6 +44,7 @@ ${props =>
 
 
 export const QuestionDiv = styled.div`
+margin-top:1rem;
 display:flex;
 gap:20px;
 flex-direction:column;
@@ -70,6 +71,18 @@ button{
 `
 export const Content = styled.div`
 min-height:80vh;
+padding:2rem;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+max-width:800px;
+` 
+
+export const ContentLoginRegister = styled.div`
+min-height:50vh;
+background:${({ theme }) => theme.text};
+color: ${({ theme }) => theme.accent};
 padding:2rem;
 display:flex;
 flex-direction:column;

@@ -6,9 +6,9 @@ import { FormInstructions as Form } from "../../StylingElements/Form/Form";
 import Modal from "../../ui/Modal/Modal";
 import Button from "../../StylingElements/Buttons/FormButton";
 import { useFirebase } from "../../utils/useFirebase";
-import { getDatabase, push, ref, set} from "firebase/database";
+import { getDatabase, ref, set} from "firebase/database";
 import { useDates } from "../../utils/useDates";
-import { is } from "ecma/object";
+
 
 const Container = styled.div`
 display:flex;
@@ -94,7 +94,8 @@ const RegisterStudent = () => {
    studentName,
    studentEmail,
    studentID,
-   studentPassword
+   studentPassword,
+   courses
     ) => {
     const db = getDatabase()
     set(ref(db, "/students/"+studentID),{
@@ -103,20 +104,23 @@ const RegisterStudent = () => {
       studentEmail : studentEmail,
       studentID : studentID,
       studentPassword: studentPassword,
+      courses: courses
     })
   }
 
   const login = (
     studentName,
     studentEmail,
-    studentID) => {
+    studentID,
+    courses,) => {
 
     let studentLoggedIn = true
     context.onLogin({
       studentName,
       studentEmail,
       studentLoggedIn,
-      studentID
+      studentID,
+      courses
     })
     
   }
@@ -127,6 +131,7 @@ const RegisterStudent = () => {
     const studentEmail = emailInputRef.current.value
     const studentID = id
     const studentPassword = passwordInputRef.current.value
+    const courses = [{firstChoice: "", secondChoice:""}]
     
     let checkForStudent = allstudents.filter(function (student){
       return student.studentEmail === studentEmail}).map(item => item)
@@ -141,12 +146,14 @@ const RegisterStudent = () => {
           studentName,
           studentEmail,
           studentID,
-          studentPassword
+          studentPassword,
+          courses
         )
         login( 
           studentName,
             studentEmail,
-            studentID,)
+            studentID,
+            courses,)
         
         navigate("/student")
       }
@@ -254,7 +261,7 @@ const RegisterStudent = () => {
       data-testid="Submitbtn"
       className={!validMatch ? "disabled" : "enabled"}
       disabled={!validMatch ? true :false}
-      value="Registrera"/>
+      value="Skicka"/>
   </Form>
     );
 }
