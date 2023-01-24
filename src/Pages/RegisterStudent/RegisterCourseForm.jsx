@@ -47,10 +47,11 @@ const sendEditToFb = (
     studentPassword
   ) => {
   const db = getDatabase()
-  const courseRef = ref(db, "/students/" + idToDB );
-  
+  const studentRef = ref(db, "/students/" + idToDB );
+    
+ 
 
-  set(courseRef,{
+  set(studentRef,{
     studentID: idToDB,
     studentName : studentName,
     studentEmail: studentEmail,
