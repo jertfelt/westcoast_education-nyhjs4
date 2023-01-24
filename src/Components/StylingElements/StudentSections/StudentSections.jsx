@@ -44,7 +44,7 @@ ${props =>
 
 
 export const QuestionDiv = styled.div`
-margin-top:1rem;
+margin-top:2rem;
 display:flex;
 gap:20px;
 flex-direction:column;
@@ -81,7 +81,7 @@ max-width:800px;
 
 export const ContentLoginRegister = styled.div`
 min-height:50vh;
-background:${({ theme }) => theme.text};
+background:${({ theme }) => theme.background};
 color: ${({ theme }) => theme.accent};
 padding:2rem;
 display:flex;
@@ -89,6 +89,11 @@ flex-direction:column;
 justify-content:center;
 align-items:center;
 max-width:800px;
+@media (min-width:800px){
+flex-direction:row;
+gap:3rem;
+}
+
 ` 
 
 
