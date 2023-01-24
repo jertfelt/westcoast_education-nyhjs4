@@ -57,7 +57,6 @@ const RegisterStudent = () => {
 
   useEffect(() => {
     if(data){
-      
       setAllstudents(data.map(item =>item))
       if(data.filter(function (student){ 
         return student.studentID === data.length}) !== 0){
@@ -104,8 +103,8 @@ const RegisterStudent = () => {
       studentName : studentName,
       studentEmail : studentEmail,
       studentPassword: studentPassword,
-      firstChoice : firstChoice,
-      secondChoice : secondChoice,
+      studentCourseFirstChoice : firstChoice,
+      studentCourseSecondChoice : secondChoice,
     })
   }
 

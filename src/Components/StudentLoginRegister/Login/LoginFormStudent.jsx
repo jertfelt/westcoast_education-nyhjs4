@@ -21,6 +21,7 @@ const LoginFormStudent = () => {
   useEffect(() => {
     if(data){
       setStudents(data.map(item => item))
+      console.log(data)
     }
   }, [data])
 
@@ -54,19 +55,41 @@ const LoginFormStudent = () => {
         }
         else{
           let studentLoggedIn = true
-          let studentName = checkForStudent.map(item => {
+          let studentName= checkForStudent.map(item => {
             return item.studentName
-          })
-          let studentidarr = checkForStudent.map(item => {
+          })[0]
+          let studentID = Number(checkForStudent.map(item => {
             return item.studentID
-          })
-          let studentID = studentidarr[0]
+          })[0])
+
+         
+          let studentCourseFirstChoice = checkForStudent.map(item => {
+            return item.studentCourseFirstChoice
+          })[0]
+          let studentCourseSecondChoice = checkForStudent.map(item => {
+            return item.studentCourseSecondChoice
+          })[0]
+         
+          
+
+          // console.log(
+          //           "id:",studentID,
+          //           studentEmail,
+          //           studentName,
+          //           studentLoggedIn,
+          //           studentID,
+          //           studentCourseFirstChoice,
+          //           studentCourseSecondChoice,
+                    
+          // )
          
                   context.onLogin({
                     studentName,
                     studentEmail,
                     studentLoggedIn,
                     studentID,
+                    studentCourseFirstChoice,
+                    studentCourseSecondChoice,
                   })
                   navigate("/student")
       

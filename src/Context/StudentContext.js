@@ -10,7 +10,8 @@ const StudentContext = createContext({
       studentCourseSecondChoice: "",
       onLogin: () => {},
       onLogout: () => {},
-      onAddingCourses: () => {}
+      onAddingCourses: () => {},
+      onUpdate: () => {}
 })
 
 export const StudentContextProvider = (props) => {
@@ -69,6 +70,23 @@ const onAddingCourses = (user) => {
   localStorage.setItem("studentCourseSecondChoice", user.studentCourseSecondChoice)
 }
 
+const onUpdate = (user) => {
+  setStudentName(user.studentName)
+  setStudentPassword(user.studentPassword)
+  setStudentID(user.studentID)
+  setStudentEmail(user.studentEmail)
+  setLoggedIn(true)
+  setCourse1(user.studentCourseFirstChoice)
+  setCourse2(user.studentCourseSecondChoice)
+  localStorage.setItem("studentCourseFirstChoice", user.studentCourseFirstChoice)
+  localStorage.setItem("studentCourseSecondChoice", user.studentCourseSecondChoice)
+  localStorage.setItem("studentLoggedIn", true)
+  localStorage.setItem("studentID", user.studentID)
+  localStorage.setItem("studentName", user.studentName)
+  localStorage.setItem("studentEmail", user.studentEmail)
+  setStudentName(localStorage.getItem("studentName"))
+}
+
 
   return (
     <StudentContext.Provider value={{
@@ -82,6 +100,7 @@ const onAddingCourses = (user) => {
       onLogin: onLogin,
       onLogout: onLogout,
       onAddingCourses: onAddingCourses,
+      onUpdate: onUpdate,
      }}>
       {props.children}
     </StudentContext.Provider>

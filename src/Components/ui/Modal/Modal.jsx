@@ -17,18 +17,19 @@ width: 80%;
 z-index: 100;
 overflow: hidden;
 button{
-  background: ${({ theme }) => theme.accent};
-  color: ${({ theme }) => theme.body};
+  background: transparent;
+  color: ${({ theme }) => theme.text};
   font-size:1rem;
   padding: 6px;
   border:none;
   cursor: pointer;
   &:hover{
-    background: ${({ theme }) => theme.body};
-    color: ${({ theme }) => theme.highlight};
+    background: ${({ theme }) => theme.toggleBorder};
+   
   }
 }
 `
+
 
 export const Overlay = styled.div`
 position: fixed;

@@ -9,6 +9,18 @@ padding:1rem;
 min-height:80vh;
 `
 
+export const ButtonDiv = styled.div`
+display:flex;
+flex-direction:row;
+align-items:flex-end;
+button{
+  font-size:1rem;
+}
+justify-content:space-between;
+@media (max-width:700px){
+  flex-direction:column;
+}`
+
 export const StudentContainer = styled.div`
 background: ${({ theme }) => theme.background};
 color: ${({ theme }) => theme.body};
@@ -100,6 +112,7 @@ gap:3rem;
 export const ProfileSection = styled.section`
 padding:3rem;
 min-height:80vh;
+
 color: ${({ theme }) => theme.text};
 display:flex;
 gap:2rem;
@@ -113,7 +126,7 @@ h1{
   font-size:48px;
 }
 a{
-  font-size:14px;
+  font-size:20px;
   color: ${({ theme }) => theme.accent};
   &:acive{
     color: ${({ theme }) => theme.accent};
@@ -129,10 +142,13 @@ img{
   max-width:300px;
   border-radius: 50%;
 }
-button{
-  font-size:14px;
+ .logoutBtn{
+  border-radius:9px;
+  font-size:1rem;
   border:none;
-  padding:4px 6px;
+  padding: 8px;
+  background: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.body};
   &:hover{
     background: ${({ theme }) => theme.accent};
     color: ${({ theme }) => theme.body};
@@ -160,6 +176,7 @@ form{
   }
   input{
     padding: 4px;
+    font-size:1rem;
   }
   input[type=submit]{
     border:none;
@@ -183,20 +200,76 @@ form{
 `
 
 export const ParagraphWithButton = styled.div`
-margin-top:-2rem;
-  display:flex;
-  gap:10px;
-  align-items:center;
 
-.offscreen{
-  border: 0;
-  clip: rect(0 0 0 0);
-  height: 1px;
-  margin: -1px;
-  overflow: hidden;
-  padding: 0;
-  position: absolute;
-  width: 1px;
+  display:flex;
+  gap:2rem;
+  align-items:center;
+  button{
+    font-size:1rem;
+  }
+ 
+`
+
+export const StudentPortalInfo = styled.div`
+display:flex;
+flex-direction:column;
+gap:1px;
+max-width:300px;
+font-size:20px;
+p{line-height:1.2rem;}
+form{
+  font-family: Sofia Sans;
+  font-size:20px;
+  margin-top:1rem;
+  display:flex; 
+  gap: 5px;
+  align-items:center;
+  flex-direction:column;
+  @media (min-width:768px){
+    flex-direction:row;
+  }
+  input{
+    font-size:18px;
+    padding: 4px;
+  }
+  input[type=submit], button{
+    border:none;
+    border-radius:9px;
+    padding: 8px;
+    background: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.body};
+    &:active{
+      background: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
+    }
+    &:focus{
+      background: ${({ theme }) => theme.accent};
+      color: ${({ theme }) => theme.highlight};
+    }
+    &:hover{
+      background: ${({ theme }) => theme.body};
+      color: ${({ theme }) => theme.text};
+    }
+  }
+}
+input[type=submit], button{
+  border:none;
+  border-radius:9px;
+  padding: 8px;
+  background: ${({ theme }) => theme.text};
+  color: ${({ theme }) => theme.body};
+  &:active{
+    background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
+  }
+  &:focus{
+    background: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.highlight};
+  }
+  &:hover{
+    background: ${({ theme }) => theme.body};
+    color: ${({ theme }) => theme.text};
+  }
 }
 `
 

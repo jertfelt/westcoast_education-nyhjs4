@@ -1,117 +1,192 @@
 import { useContext, useEffect, useState, useRef } from "react";
 import StudentContext from "../../Context/StudentContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import Modal from "../../Components/ui/Modal/Modal";
-import { ProfileSection as Section , ParagraphWithButton} from "../../Components/StylingElements/StudentSections/StudentSections";
+import { ProfileSection as Section , ParagraphWithButton, StudentPortalInfo, ButtonDiv} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { Line } from "../../Components/StylingElements/Line/Line";
 import Timer from "../../Components/Timer/Timer";
+import { getDatabase, ref, set } from "firebase/database";
+import FormModal from "../../Components/ui/Modal/FormModal";
+import { useFirebase } from "../../Components/utils/useFirebase";
+import Modal from "../../Components/ui/Modal/Modal";
 
-const StudentPortal = () => {
-  const STUDENTS_URL = "http://localhost:8000/students"
+const StudentPortal = () => { 
+  const navigate = useNavigate()
+
   const studentEmailInput = useRef()
   const studentNameInput = useRef()
   const studentPasswordInput = useRef()
   const context = useContext(StudentContext)
+
   const [studentName, setName] = useState("")
   const [studentEmail, setEmail] = useState("")
-  const [studentPassword, setPassword] = useState("")
+  const [password, setPassword] = useState("")
+  const [studentID, setID] = useState("")
+
+  const [newEmail, setNewEmail] = useState("")
+  const [newName, setNewName] = useState("")
+  const [newPassword, setNewPassword] = useState("")
+
+  const [showNewName, setShowNewName] = useState(false)
+  const [showNewEmail, setShowNewEmail] = useState(false)
+  
   const [changeNameForm, setChangeNameForm] = useState(false)
   const [changeEmailForm, setChangeEmailForm] = useState(false)
   const [changePasswordForm, setChangePassForm] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [msg, setMsg] = useState("")
+  const [courses, setCourses] = useState(true)
+  const [course2, setCourse2] = useState(false)
+  const [firstC, setFirstC] = useState("")
+  const [secondC, setSecondC] = useState("")
 
+  const [error2, setError] = useState(false)
+  const [errmsg, setErrmsg] = useState("")
+  const [showModal, setShowModal] = useState(false)
+
+  const {data,error, loading} = useFirebase(`/students/${context.studentID}/studentPassword`)
   
   useEffect(() => {
     setName(context.studentName)
     setEmail(context.studentEmail)
-    setPassword(context.studentPassword)
-  }, [context.studentName, context.studentEmail, context.studentPassword])
+    if(context.studentCourseFirstChoice){
+      setFirstC(context.studentCourseFirstChoice)
 
-
-  
-  const changeName = () =>{
-    setChangeNameForm(true)
-  }
-  const changeEmail = () => {
-    setChangeEmailForm(true)
-  }
-
-  const changePassword = () => {
-    setChangePassForm(true)
-  }
-
-  
-  const clearForms = () => {
-    studentEmailInput.current.value = ""
-    studentNameInput.current.value =""
-    studentPasswordInput.current.value =""
-  }
-
-  const CancelHandler = (e) => {
-    e.preventDefault();
-    clearForms();
-  }
-
-  const correctingPassword = () => {
-      if (studentPassword === null || undefined){
-        
-        setShowModal(true)
-        setMsg("Du behöver byta lösenord innan du går vidare.")
-      }
-  }
- 
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    setName(studentNameInput.current.value)
-    setEmail(studentEmailInput.current.value)
-    setPassword(studentPasswordInput.current.value)
-    if(studentEmailInput.current.value === null ||studentEmailInput.current.value === "" ){
-      if(studentEmail === null || studentEmail === ""){
-        setShowModal(true)
-        setMsg("Du behöver fylla i en email!")
-      }}
-  
-    if(studentNameInput.current.value === null || studentNameInput.current.value === ""){
-      if(studentName === ""|| studentName === null)
-    {
-      setShowModal(true)
-        setMsg("Du behöver fylla i ett namn!")
+        if(context.studentCourseFirstChoice === ""){
+          setCourses(false)
+        }
     }
-  }
-    if(studentPasswordInput.current.value === null){
-      correctingPassword()
+    if(context.studentCourseSecondChoice){
+      setSecondC(context.studentCourseSecondChoice)
+        if(context.studentCourseSecondChoice){
+          setCourse2(true)
+          
+        }
     }
-      
-    if(studentPassword !== null){
-    fetch(STUDENTS_URL,{
-      method:"PATCH", headers:{
-        "Content-Type": "application/json"
-      },
-    body: JSON.stringify(
-      {
-        "studentName" : studentName,
-        "studentEmail": studentEmail,
-        "studentPassword": studentPassword
-      }
-    )})
+    setID(Number(context.studentID))
+    
+  }, [context.studentName, context.studentCourseSecondChoice,context.studentCourseFirstChoice, context.studentEmail, context.studentID])
+
+  useEffect(() => {
+    if(data){
+      setPassword(data)
+    }
+    if(error){
+      setError(true)
+      setErrmsg("Något är fel och vi kan inte nå dina uppgifter via databasen. Prova igen snart!")
+    }
+  },[data,error])
+
+console.log(context)
+const handleNameSubmit = (e) => {
+  e.preventDefault()
+  setNewName(studentNameInput.current.value)
+  console.log(newName, "newName")
+  setShowNewName(true)
+  setChangeNameForm(false)
+}
+
+const handleEmailSubmit = (e) => {
+  e.preventDefault()
+  setNewEmail(studentEmailInput.current.value)
+  setShowNewEmail(true)
+  setChangeEmailForm(false)
+}
+
+const handlePasswordSubmit = (e) => {
+  e.preventDefault()
+  setNewPassword(studentPasswordInput.current.value)
+  setChangePassForm(false)
+  
+}
+
+
+const checkForChangesAndSave = (e) => {
+  e.preventDefault()
+  console.log(
+    "email:", newEmail,
+    "name:", newName,
+    "newpassword:" , newPassword,
+    "oldpassword:", password
+  )
+  if(!newEmail){
+    console.log("no new email")
+
+    setNewEmail(studentEmail)
+  }
+  else if(!newName){
+    console.log("no new name")
+
+    setNewName(studentName)
+  }
+  else if(!newPassword){
+    console.log("no new pass")
+    setNewPassword(password)
   }
   else{
-    fetch(STUDENTS_URL,{
-      method:"PATCH", headers:{
-        "Content-Type": "application/json"
-      },
-    body: JSON.stringify(
-      {
-        "studentName" : studentName,
-        "studentEmail": studentEmail,
-      }
-    )})
-  }}
+    console.log(newName, newPassword, newEmail, "id:", studentID,
+    context.studentCourseFirstChoice, "choice"
+    )
+    
+  sendEditToFb(
+    firstC,
+    secondC,
+    newEmail,
+    studentID,
+    newName,
+    newPassword
+  )
+    setShowModal(true)
+  }
+}
+
+
+  const sendEditToFb =(
+    firstC,
+    secondC,
+    studentEmail,
+    studentID,
+    studentName,
+    studentPassword
+  ) => {
+    const db = getDatabase()
+    const itemToDB = {
+      studentID: studentID,
+      studentName : studentName,
+      studentEmail: studentEmail,
+      studentPassword : studentPassword,
+      studentCourseFirstChoice :  firstC,
+      studentCourseSecondChoice : secondC,
+    }
+    const studentRef = ref(db, "/students/" + studentID );
+    set(studentRef, itemToDB)
+
+    let studentLoggedIn = true
+    let studentCourseFirstChoice = firstC
+    let studentCourseSecondChoice = secondC
+    
+    context.onUpdate({
+      studentID,
+      studentName,
+      studentLoggedIn,
+      studentEmail,
+      studentCourseFirstChoice,
+      studentCourseSecondChoice,
+    })
+    navigate("/student")
+  }
+
+ 
+  
   
   return ( 
-  <Section data-testid="studentportal">
+  <Section 
+  data-testid="studentportal">
+    {error2 && <h2>{errmsg}</h2>}
+    {loading && <h2>Laddar...</h2>}
+    {showModal && <Modal
+    title="Klart!"
+    message="Ändringar sparade"
+    onClick={() => setShowModal(false)}
+    ></Modal>}
     <div>
       <div className="Row-reverse">
     <img src="https://picsum.photos/100/100" 
@@ -119,86 +194,79 @@ const StudentPortal = () => {
     <h1>Välkommen, {context.studentName}</h1>
     </div>
     
-    {showModal && <Modal 
-    title="Viktigt!" 
-    message= {msg} 
-    onClick={() => setShowModal(false)}/>}
-    <div>
+    <h2>Dina uppgifter:</h2>
+    <StudentPortalInfo>
       
-        <h2>Dina uppgifter:</h2>
-        <div>
-          <ParagraphWithButton 
-          data-testid="paragraph"
-          className={changeNameForm ? "offscreen" : "normal"}>
-        <p>
-          Namn: {studentName}
-          </p>
-          <button onClick={changeName} data-testid="changeParagraph">Ändra</button>
-          </ParagraphWithButton>
-          {changeNameForm && <form data-testid="formTest"
-          onSubmit={handleSubmit}>
-            <label htmlFor="student">Namn:</label>
-            <input id="student"
-            ref={studentNameInput}
-            type="text"
-            defaultValue={studentName}
-            />
-            <input type="submit"
-            value="Ändra"/>
-            <button onClick={CancelHandler}>Avbryt</button>
-            </form>}
-          <ParagraphWithButton className={changeEmailForm ? "offscreen" : "normal"}>
-        <p>
-          Email: {studentEmail}
-          </p>
-          <button onClick={changeEmail}>Ändra</button>
-          </ParagraphWithButton>
-          {changeEmailForm && <form onSubmit={handleSubmit}>
-            <label htmlFor="studentEmailNew">Email:</label>
-            <input id="studentEmailNew"
-            ref={studentEmailInput}
-            type="email"
-            defaultValue={studentEmail}
-            />
-            <input type="submit"
-            value="Ändra"/>
-            <button onClick={CancelHandler}>Avbryt</button>
-            </form>}
-        <button onClick={changePassword}>Byt lösenord</button>
-        {changePasswordForm && <form onSubmit={handleSubmit}>
-            <label htmlFor="studentNewPassword">Email:</label>
-            <input id="studentNewPassword"
-            ref={studentPasswordInput}
-            type="email"
-            defaultValue={studentPassword}
-            />
-            <input type="submit"
-            value="Ändra"/>
-            <button onClick={CancelHandler}>Avbryt</button>
-            </form>}
-        </div>
-        
-    </div>
+    <ParagraphWithButton 
+          data-testid="paragraph">
+           {showNewName ? <p> <strong>Namn:</strong> {newName}</p>:<p> <strong>Namn:</strong> {studentName}</p>}
+          <button 
+          onClick={() => setChangeNameForm(true)} 
+          data-testid="changeParagraph">
+            Ändra</button>
+    </ParagraphWithButton>
+    <ParagraphWithButton 
+          data-testid="paragraph">
+          {showNewEmail ? <p> <strong>Email:</strong> {newEmail}</p>:<p> <strong>Email:</strong> {studentEmail}</p>}
+          <button 
+          onClick={() => setChangeEmailForm(true)} 
+          >
+          Ändra</button>
+    </ParagraphWithButton>
+    
+
+    {changePasswordForm &&
+    <FormModal
+    onSubmit={(e) => handlePasswordSubmit(e)}
+    reference= {studentPasswordInput}
+    default= ""
+    inputType = {"password"}
+    onClick={() => setChangePassForm(false)}
+    />}
+    
+    {changeEmailForm && <FormModal
+          onSubmit={(e) => handleEmailSubmit(e)}
+          reference= {studentEmailInput}
+          default= {studentEmail}
+          inputType = {"email"}
+          onClick={() => setChangeEmailForm(false)}
+    />}
+  
+    {changeNameForm && <FormModal
+          onSubmit={(e) => handleNameSubmit(e)}
+          reference= {studentNameInput}
+          default= {studentName}
+          inputType = {"text"}
+          onClick={() => setChangeNameForm(false)}
+    />}
+    <ButtonDiv>
+    <button 
+    onClick={() => setChangePassForm(true)}>Byt lösenord</button>    
+    <button onClick={(e) => checkForChangesAndSave(e)}>Spara alla ändringar</button>
+    </ButtonDiv>
+    </StudentPortalInfo>
     <Line/>
     <h2>Dina kurser:</h2>
     <div>
-    {!context.studentCourses && <><p>Du har inte anmält dig till några kurser än!</p>
-    <HashLink smooth to ="/#kurser">Se kurserna här</HashLink><br/>
-    <Link to="/student/student-kurser/register">Anmäl dig här</Link><br/>
+    {!courses ? <p>Du har inte anmält dig till några kurser än!</p>: 
+     <> 
+    <p>{context.studentCourseFirstChoice}</p>
+      {course2 ? 
+    <p>{context.studentCourseSecondChoice}</p> : <>
+      </>}
+    </>}
+    <HashLink smooth to ="/#kurser">
+      Se alla publicerade kurser här</HashLink><br/>
+    <Link to="/student/student-kurser/register">{!courses && "Anmäl dig till en kurs här"}
+    {courses && <>{!course2 ? "Lägg till en till kurs/ ändra kurser här" : "Ändra kurser"}</>}
+    </Link><br/>
     <Line/>
     <button className="logoutBtn" 
     onClick={context.onLogout}>Logga ut</button>
-    </>
-    }
-      {context.studentCourses && context.studentCourses.map(item => ( 
-        <p></p>
-      ))}
-    </div>
-  
-    </div>
-    
    
-    <Timer/>
+    </div>
+    </div>
+
    
   </Section> );
 }

@@ -3,9 +3,8 @@
 OM JAG HINNER:
 
 
-1) fixa till registrering till kurs - firebase 
----> TESTA OM DET FUNKAR 
-- Efter att jag testat med någon som har två kurser: kolla inga valda, eller bara en vald kurs
+1) 
+login - får inte med kurser i context
 
 städa funktioner och fetch Firebase kanske bara en gång skicka som props
 
