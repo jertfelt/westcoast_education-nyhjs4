@@ -57,22 +57,21 @@ const LoginFormStudent = () => {
           let studentName = checkForStudent.map(item => {
             return item.studentName
           })
-          let courses =  checkForStudent.map(item => {
-            return item.courses
+          let studentidarr = checkForStudent.map(item => {
+            return item.studentID
           })
+          let studentID = studentidarr[0]
+         
                   context.onLogin({
                     studentName,
                     studentEmail,
                     studentLoggedIn,
-                    courses,
+                    studentID,
                   })
                   navigate("/student")
       
         }
-        
-        
        }
-        
     }
      
     

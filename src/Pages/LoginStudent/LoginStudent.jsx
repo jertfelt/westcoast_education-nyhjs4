@@ -1,7 +1,7 @@
 import {useState} from "react";
 import RegisterStudent from "../../Components/StudentLoginRegister/Register/RegisterNewStudent";
 import LoginFormStudent from "../../Components/StudentLoginRegister/Login/LoginFormStudent"
-import Studentsections, {QuestionDiv, Content, ContentLoginRegister} from "../../Components/StylingElements/StudentSections/StudentSections";
+import Studentsections, {QuestionDiv, ContentLoginRegister} from "../../Components/StylingElements/StudentSections/StudentSections";
 
 
 const LoginStudent = () => {

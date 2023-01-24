@@ -95,16 +95,17 @@ const RegisterStudent = () => {
    studentEmail,
    studentID,
    studentPassword,
-   courses
+   firstChoice,
+   secondChoice
     ) => {
     const db = getDatabase()
-    set(ref(db, "/students/"+studentID),{
-      id : id,
+    set(ref(db, "/students/"+ studentID),{
+      studentID : studentID,
       studentName : studentName,
       studentEmail : studentEmail,
-      studentID : studentID,
       studentPassword: studentPassword,
-      courses: courses
+      firstChoice : firstChoice,
+      secondChoice : secondChoice,
     })
   }
 
@@ -112,7 +113,7 @@ const RegisterStudent = () => {
     studentName,
     studentEmail,
     studentID,
-    courses,) => {
+    ) => {
 
     let studentLoggedIn = true
     context.onLogin({
@@ -120,7 +121,7 @@ const RegisterStudent = () => {
       studentEmail,
       studentLoggedIn,
       studentID,
-      courses
+      
     })
     
   }
@@ -131,7 +132,8 @@ const RegisterStudent = () => {
     const studentEmail = emailInputRef.current.value
     const studentID = id
     const studentPassword = passwordInputRef.current.value
-    const courses = [{firstChoice: "", secondChoice:""}]
+    const firstChoice = ""
+    const secondChoice =""
     
     let checkForStudent = allstudents.filter(function (student){
       return student.studentEmail === studentEmail}).map(item => item)
@@ -147,13 +149,19 @@ const RegisterStudent = () => {
           studentEmail,
           studentID,
           studentPassword,
-          courses
+          firstChoice,
+          secondChoice,
         )
+        let studentCourseFirstChoice = ""
+        let studentCourseSecondChoice = ""
+        let studentLoggedIn = true
         login( 
-          studentName,
+            studentName,
             studentEmail,
             studentID,
-            courses,)
+            studentLoggedIn,
+            studentCourseFirstChoice,
+            studentCourseSecondChoice,)
         
         navigate("/student")
       }

@@ -15,10 +15,13 @@ const [errMsg, setErrMsg] = useState("")
 const [id, setID] = useState([])
 const [error, setError] =useState(false)
 const [coursesInDB, setCoursesInDataBase] = useState([])
+const [course1, setCourse1] = useState("default")
+const [course2, setCourse2] = useState("default")
+
 
 useEffect(() =>{
   if(data){
-    if(context.studentID === ""){
+    if(context.studentID === "" || !context.studentID || context.studentID === []){
       let check = data.filter(function (student){
         return student.studentEmail === context.studentEmail})
       if (check.length === 1){
@@ -26,32 +29,36 @@ useEffect(() =>{
           return student.studentEmail === context.studentEmail}).map(item => item))
           let iddb = check.map(item => item.studentID)
           setID(iddb[0])
-          let courses = check.map(item => item.courses)
-          setCoursesInDataBase(courses)
+          setCourse1(check.map(item => item.studentCourseFirstChoice))
+          setCourse2(check.map(item => item.studentCourseSecondChoice))
       }
       else if(check.length === 0){
         setError(true)
         setErrMsg("Finns inget mail som matchar. Prova att logga ut och in igen.")
       }
       else{
-        check.filter(function (student){
+        let checkName = check.filter(function (student){
           return student.studentName === context.studentName}).map(item => item)
+        setThisStudent(checkName)
+
+          let iddb = checkName.map(item => item.studentID)
+          setID(iddb[0])
+          setCourse1(checkName.map(item => item.studentCourseFirstChoice))
+          setCourse2(checkName.map(item => item.studentCourseSecondChoice))
       }
         
     }
-    // else{
-    //   console.log("test", data.filter(function (stud){return stud.studentEmail === context.studentEmail}))
-    //   let studentsMatching = data.filter(function (student){
-    //     return student.studentName === context.studentName})
-       
-
-    //   if(studentsMatching.length === 1){
-          
-    //     }
-    // }
+    else{
+      let studentsMatching = data.filter(function (stud){return stud.studentID === Number(context.studentID)})
+      setThisStudent(studentsMatching)
+      let idContext = Number(context.studentID)
+      setID(idContext)
+      setCourse1(studentsMatching.map(item => item.studentCourseFirstChoice))
+      setCourse2(studentsMatching.map(item => item.studentCourseSecondChoice))
+ 
+    }
   }
 }, [data, id, context.studentID, context.studentEmail, context.studentName])
-
 
 
   return ( 
@@ -61,7 +68,8 @@ useEffect(() =>{
   <RegisterCourseForm 
   studentid = {id}
   item = {thisStudent}
-  coursesInDB = {coursesInDB}
+  course1 = {course1}
+  course2 = {course2}
   />}
     
   </Studentsections> );
