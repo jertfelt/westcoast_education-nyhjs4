@@ -81,13 +81,13 @@ const sendEditToCourse = (
   courseID1,
   courseID2
   ) => {
-    console.log(courseID1, courseID2)
-    // const db = getDatabase()
-    // const course1 = ref(db, "/courses/" + courseID1)
-    // set(course1, {
-    //   courseID1,
-    //   studentsAssigned: increment(1)
-    // })
+    console.log("courseID:", courseID1, courseID2)
+    const db = getDatabase()
+    const course1 = ref(db, "/test/" + courseID1)
+    set(course1, {
+      courseID: courseID1,
+      studentsAssigned: increment(1)
+    })
     // if(courseID2){
     //   const course2 = ref(db, "/courses/" + courseID2)
       
@@ -107,26 +107,69 @@ const prepareData = () => {
   let secondChoiceNew = ""
 
   if(data){
-    if(newSecondChoice === "Välj" || newSecondChoice === "Ingen"){
-      if(!secondChoice || secondChoice !== "Ingen" )
-        {secondChoiceNew = secondChoice;}
-      else{secondChoiceNew = ""}
+   console.log("all seconds:", secondChoice, newSecondChoice, secondChoiceNew)
+    if(!secondChoice){
+     
+      if(newSecondChoice === "Ingen"){
+        secondChoiceNew = ""
+      }
+      else if (newSecondChoice === "Välj"){
+        secondChoiceNew = ""
+      }
+      else{
+        secondChoiceNew = newSecondChoice
+      }
     }
-    else{
-      secondChoiceNew = courseInputRef2.current.value
-      let chosen2 = data.filter(function (i){
+    
+    const setChosenCourse = (nameOfSet, newChoiceName) => {
+      let chosen = data.filter(function (i){
         return i.courseName !== "DELETED"}).filter(function (course){
-          return course.courseName === secondChoiceNew
+          return course.courseName === newChoiceName
         }).map(item => item)
-      setCourseID2(Number(chosen2.map(item => item.courseID)))
-      
+        console.log("chosen id 2: ", chosen)
     }
+
+
+    if(secondChoice){
+      if(secondChoice === "Välj" || secondChoice === "Ingen")
+      { 
+        if(newSecondChoice === "Ingen"){
+          secondChoiceNew = ""
+        }
+        else if (newSecondChoice === "Välj"){
+          secondChoiceNew = ""
+        }
+        else{
+          secondChoiceNew = newSecondChoice
+          setChosenCourse("setCourseID2", secondChoiceNew)
+        }
+      }
+      else{
+        if (newSecondChoice !== secondChoice){
+          if(newSecondChoice !== firstChoiceNew){
+            secondChoiceNew = newSecondChoice
+            setChosenCourse("setCourseID2", secondChoiceNew)
+          }
+        }
+        else{
+          secondChoiceNew = secondChoice  
+          setChosenCourse("setCourseID2", secondChoiceNew)
+        }
+     
+          // setCourseID2(Number(chosen2.map(item => item.courseID)))
+      }
+    }
+   
+   
 
     let chosen1 = data.filter(function (i){
       return i.courseName !== "DELETED"}).filter(function (course){
         return course.courseName === firstChoiceNew
       }).map(item => item)
     setCourseID1(Number(chosen1.map(item => item.courseID)))
+
+    console.log("courseID1:", courseID1, "kurs: ", firstChoiceNew)
+    console.log("courseID2:", courseID2, "kurs: ", secondChoiceNew)
 
 // sendEditToFb(
 //     firstChoiceNew,
@@ -186,7 +229,6 @@ notPublished.forEach(array => {
     console.log(array.courseName, value)
   }
 }
-
 )
 }
 
