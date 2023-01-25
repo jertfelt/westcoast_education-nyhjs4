@@ -6,6 +6,7 @@ import { useFirebase } from "../../Components/utils/useFirebase";
 import { getDatabase,  increment,  ref, set, } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import ValidationModal from "../../Components/ui/Modal/ValidationModal";
+import sendStudentEditToFb, { sendCourseToStudentAndUpdate } from "../../firebase/useSendToFb";
 
 
 const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) => {
@@ -13,7 +14,7 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) =>
   const context = useContext(StudentContext);
   const [validInputs, setValidInputs] = useState(false)
   const courseInputRef = useRef()
-  const courseInputRef2 = useRef()
+  
   const [studentEmail, setStudentEmail] = useState("")
   const [studentPassword, setStudentPassword] = useState("")
   const {data, error, loading} = useFirebase("/courses")
@@ -25,7 +26,7 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) =>
   const [showModal, setShowModal] = useState(false)
   const [showModal2, setShowModal2] = useState(false)
   const [courseID1, setCourseID1] = useState("")
-  const [courseID2, setCourseID2] = useState("")
+  
  
 // console.log(studentid, "original", "idToDB:", idToDB, item.map(i => i.studentID)[0])
 useEffect(() => {
@@ -39,60 +40,8 @@ useEffect(() => {
   }
 },[data, item, studentid])
 
-const sendEditToFb = (
-    firstChoiceNew,
-    secondChoiceNew,
-    studentEmail,
-    idToDB,
-    studentName,
-    studentPassword,
-   
-  ) => {
-  const db = getDatabase()
-  const studentRef = ref(db, "/students/" + idToDB );
-
-  set(studentRef,{
-    studentID: idToDB,
-    studentName : studentName,
-    studentEmail: studentEmail,
-    studentPassword : studentPassword,
-    studentCourseFirstChoice : firstChoiceNew,
-    studentCourseSecondChoice : secondChoiceNew
-  })
-
-  const studentID = idToDB;
-  let studentLoggedIn = true
-  let studentCourseFirstChoice = firstChoiceNew
-  let studentCourseSecondChoice = secondChoiceNew
-  context.onAddingCourses({
-    studentID,
-    studentName,
-    studentLoggedIn,
-    studentEmail,
-    studentCourseFirstChoice,
-    studentCourseSecondChoice,
-  })
-    navigate("/student")
-}
 
 
-
-const sendEditToCourse = (
-  courseID1,
-  courseID2
-  ) => {
-    console.log("courseID:", courseID1, courseID2)
-    const db = getDatabase()
-    const course1 = ref(db, "/test/" + courseID1)
-    set(course1, {
-      courseID: courseID1,
-      studentsAssigned: increment(1)
-    })
-    // if(courseID2){
-    //   const course2 = ref(db, "/courses/" + courseID2)
-      
-    // }
-  }
 
 const confirmingChange = (e) => {
   e.preventDefault()
@@ -100,96 +49,72 @@ const confirmingChange = (e) => {
   setShowModal2(false)
 }
 
+const contextFunction = (
+  studentID, 
+  studentName,
+  studentLoggedIn,
+  studentEmail,
+  studentCourseFirstChoice) => {
+
+  context.onAddingCourses({
+    studentID,
+    studentName,
+    studentLoggedIn,
+    studentEmail,
+    studentCourseFirstChoice,
+  })
+  }
+
 const prepareData = () => {
-  
-  const studentName = context.studentName
+
   let firstChoiceNew = courseInputRef.current.value
-  let secondChoiceNew = ""
-
-  if(data){
-   console.log("all seconds:", secondChoice, newSecondChoice, secondChoiceNew)
-    if(!secondChoice){
-     
-      if(newSecondChoice === "Ingen"){
-        secondChoiceNew = ""
-      }
-      else if (newSecondChoice === "Välj"){
-        secondChoiceNew = ""
-      }
-      else{
-        secondChoiceNew = newSecondChoice
-      }
-    }
-    
-    const setChosenCourse = (nameOfSet, newChoiceName) => {
-      let chosen = data.filter(function (i){
-        return i.courseName !== "DELETED"}).filter(function (course){
-          return course.courseName === newChoiceName
-        }).map(item => item)
-        console.log("chosen id 2: ", chosen)
-    }
-
-
-    if(secondChoice){
-      if(secondChoice === "Välj" || secondChoice === "Ingen")
-      { 
-        if(newSecondChoice === "Ingen"){
-          secondChoiceNew = ""
-        }
-        else if (newSecondChoice === "Välj"){
-          secondChoiceNew = ""
-        }
-        else{
-          secondChoiceNew = newSecondChoice
-          setChosenCourse("setCourseID2", secondChoiceNew)
-        }
-      }
-      else{
-        if (newSecondChoice !== secondChoice){
-          if(newSecondChoice !== firstChoiceNew){
-            secondChoiceNew = newSecondChoice
-            setChosenCourse("setCourseID2", secondChoiceNew)
-          }
-        }
-        else{
-          secondChoiceNew = secondChoice  
-          setChosenCourse("setCourseID2", secondChoiceNew)
-        }
-     
-          // setCourseID2(Number(chosen2.map(item => item.courseID)))
-      }
-    }
-   
-   
-
     let chosen1 = data.filter(function (i){
       return i.courseName !== "DELETED"}).filter(function (course){
         return course.courseName === firstChoiceNew
       }).map(item => item)
     setCourseID1(Number(chosen1.map(item => item.courseID)))
 
-    console.log("courseID1:", courseID1, "kurs: ", firstChoiceNew)
-    console.log("courseID2:", courseID2, "kurs: ", secondChoiceNew)
+    const studentName = context.studentName
+    let courseID = courseID1
+    const studentID = idToDB;
+    let studentLoggedIn = true
+    let studentCourseFirstChoice = firstChoiceNew
+    let referenceURL = "/students/" + idToDB
+    let referenceURLCourse = "/test/" + courseID
+    let courses = [{courseName : firstChoiceNew,
+      courseName2nd:  ""}]
 
-// sendEditToFb(
-//     firstChoiceNew,
-//     secondChoiceNew,
-//     studentEmail,
-//     idToDB,
-//     studentName,
-//     studentPassword, 
-//   )
-  sendEditToCourse(
-    courseID1,
-    courseID2
-  )
-  
-}}
+    sendCourseToStudentAndUpdate(
+      courseID,
+      referenceURLCourse
+    )
+      sendStudentEditToFb(
+        courses,
+        studentEmail,
+        studentID,
+        studentName,
+        studentPassword,
+        referenceURL
+      ).then(
+        
+        contextFunction(
+          studentID, 
+          studentName,
+          studentLoggedIn,
+          studentEmail,
+          studentCourseFirstChoice
+        )
+      )
+      setShowModal(true)
+      navigate("/")
+    
+
+}
  
 const onSubmit = (e) => {
   e.preventDefault()
 
-  if(courseInputRef.current.value !== firstChoice && courseInputRef.current.value === ifDirected){
+  if(courseInputRef.current.value === ifDirected){
     setShowModal2(true)
   }
   else{
@@ -197,8 +122,6 @@ const onSubmit = (e) => {
   }
  
 }
-
-  
 
 
 
@@ -253,32 +176,11 @@ const checkInputsFirstChoice = (e) => {
     setShowModal(true)
   }
   if(e.target.value !== "Välj:"){
-    if(e.target.value !== courseInputRef2.current.value){
-        setValidInputs(true)
-    }
-    else{
-      setNewSecond("Ingen")
-    }
-  }
-  else{
-    setValidInputs(false)
-  }
-}
+    setValidInputs(true)
 
-const checkInputsSecondChoice = (e) => {
-  e.preventDefault()
-  checkIfNotPublished(e.target.value)
-  if(e.target.value !== courseInputRef.current.value){
-    if(e.target.value !== "Välj" || e.target.value !== "Ingen"){
-      setNewSecond(courseInputRef2.current.value)
-    }
-  }
-  else{
-    setNewSecond("Ingen")
-  }
-  
-}
+}}
 
+// 
 useEffect(() => {
   if(item){
     setStudentPassword(item.map(i=> i.studentPassword)[0])
@@ -293,18 +195,10 @@ useEffect(() => {
   if(course1){
     setFirst(course1[0])
   }
-  if(course2){
-    setSecond(course2[0])
-  }
-  
-}, [item,course2, context, course1])
 
-// const newPrio =(string, e) =>{
-//   e.preventDefault()
-//   if(string === "1"){
-    
-//   }
-// }
+  
+}, [item,context, course1])
+
 
   return ( 
   <StudentContainer>
@@ -329,10 +223,9 @@ useEffect(() => {
     {firstChoice && <> 
     <IfAlreadyExists>
     <h2>Du är anmäld till :</h2>
-    <TwoColumns
-    largergap>
     <div>
-    <h3>#1: {firstChoice} </h3>
+    <div>
+    <h3>{firstChoice} </h3>
     {data && data.filter(function (i){
             return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === firstChoice}).map((item, indx) => (
               <div key={`${indx}-${item}-${firstChoice}`}>
@@ -348,34 +241,15 @@ useEffect(() => {
                 </div>
                 ))}
     </div>
-    {secondChoice && <>
-    <div>
-    <h3>#2: {secondChoice}</h3>
-    {data && data.filter(function (i){
-            return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === secondChoice}).map((item, indx) => (
-              <div key={`${indx}-${item}-${firstChoice}`}>
-                {item.published && 
-                <p>Start: {item.startDate}</p>}
-                {!item.published && item.studentsAssigned <5 && <>
-                <p>Kursen är ännu inte helt bokad! Det måste vara minst fem studenter anmälda. Vi hör av oss via mail.</p>
-                <p>Just nu: {item.studentsAssigned}/5 studenter</p>
-                </>}
-                <p>Längd i veckor: {item.lengthWeeks} </p>
-                <p>Lärare: {item.teacherAssigned}</p>
-                {/* <button onClick={(e) => newPrio("1",e)}>Byt till prio #1</button> */}
-                </div>))}
-                
+    
     </div>
-    </>}
-    </TwoColumns>
     </IfAlreadyExists>
     </>}
-    <TwoColumns
-    largergap>
+    <div>
     <div className="Row">
       
       <label htmlFor="firstChoice">
-        Kursval 1:</label>
+        Kursval:</label>
       <select 
       id="firstChoice"
       data-testid="studentcours1"
@@ -425,36 +299,10 @@ useEffect(() => {
       </div> 
      
       
-
-      <div className="Row">
-      <label htmlFor="secondChoice">
-        **Kursval 2:</label>
-      <select id="secondChoice" 
-      ref={courseInputRef2}
-      data-testid="studentcourse2"
-      onChange={(e) => checkInputsSecondChoice(e)}
-      >
-      <option 
-      value="Välj:" 
-      name="Välj:"
-      label="Välj:"/>
-        {data && data.filter(function (i){
-            return i.courseName !== "DELETED"}).map(item => ( 
-            <option key={item.courseID} 
-            value={item.courseName}>
-              {item.courseName}</option>)
-        )}
-      <option 
-        value="Ingen"
-        name="Ingen"
-        label="Ingen"/>
-      </select>
       </div>
-      </TwoColumns>
-      <p className="instructions">
-        ** Detta är inte obligatoriskt för att du ska kunna anmäla dig, men det kan vara bra att ha en back-up.</p>
+   
         {warning && !item.published && <div><h3>OBS! </h3>
-        <p className="warning">
+        <p className="instructions">
         Kursen du valt är inte publicerad ännu, det behövs vara minst fem studenter anmälda. <br/>
         Vi hör av oss i god tid till din mail innan om ditt val inte startar.</p>
         </div>

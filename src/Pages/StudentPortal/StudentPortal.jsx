@@ -5,10 +5,10 @@ import { HashLink } from "react-router-hash-link";
 import { ProfileSection as Section , ParagraphWithButton, StudentPortalInfo, ButtonDiv} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { Line } from "../../Components/StylingElements/Line/Line";
 import Timer from "../../Components/Timer/Timer";
-import { getDatabase, ref, set } from "firebase/database";
 import FormModal from "../../Components/ui/Modal/FormModal";
 import { useFirebase } from "../../Components/utils/useFirebase";
 import Modal from "../../Components/ui/Modal/Modal";
+import sendStudentEditToFb from "../../firebase/useSendToFb";
 
 const StudentPortal = () => { 
   const navigate = useNavigate()
@@ -34,9 +34,7 @@ const StudentPortal = () => {
   const [changeEmailForm, setChangeEmailForm] = useState(false)
   const [changePasswordForm, setChangePassForm] = useState(false)
   const [courses, setCourses] = useState(true)
-  const [course2, setCourse2] = useState(false)
   const [firstC, setFirstC] = useState("")
-  const [secondC, setSecondC] = useState("")
 
   const [error2, setError] = useState(false)
   const [errmsg, setErrmsg] = useState("")
@@ -49,24 +47,12 @@ const StudentPortal = () => {
     setEmail(context.studentEmail)
     if(context.studentCourseFirstChoice){
       setFirstC(context.studentCourseFirstChoice)
-
         if(context.studentCourseFirstChoice === ""){
           setCourses(false)
         }
-    }
-    if(context.studentCourseSecondChoice){
-      setSecondC(context.studentCourseSecondChoice)
-        if(context.studentCourseSecondChoice){
-          setCourse2(true)
-          
-        }
-    }
+    }    
     setID(Number(context.studentID))
-    
-  }, [context.studentName, context.studentCourseSecondChoice,context.studentCourseFirstChoice, context.studentEmail, context.studentID])
-
-
-  console.log(context.studentCourseFirstChoice)
+  }, [context.studentName,context.studentCourseFirstChoice, context.studentEmail, context.studentID])
 
   useEffect(() => {
     if(data){
@@ -78,7 +64,6 @@ const StudentPortal = () => {
     }
   },[data,error])
 
-console.log(context)
 const handleNameSubmit = (e) => {
   e.preventDefault()
   setNewName(studentNameInput.current.value)
@@ -100,16 +85,30 @@ const handlePasswordSubmit = (e) => {
   setChangePassForm(false)
   
 }
+const contextFunction = (
+  studentID, 
+  studentName,
+  studentLoggedIn,
+  studentEmail,
+  studentCourseFirstChoice) => {
 
+  context.onUpdate({
+    studentID,
+    studentName,
+    studentLoggedIn,
+    studentEmail,
+    studentCourseFirstChoice,
+  })
+  }
 
 const checkForChangesAndSave = (e) => {
   e.preventDefault()
-  console.log(
-    "email:", newEmail,
-    "name:", newName,
-    "newpassword:" , newPassword,
-    "oldpassword:", password
-  )
+  // console.log(
+  //   "email:", newEmail,
+  //   "name:", newName,
+  //   "newpassword:" , newPassword,
+  //   "oldpassword:", password
+  // )
   if(!newEmail){
     console.log("no new email")
 
@@ -125,60 +124,37 @@ const checkForChangesAndSave = (e) => {
     setNewPassword(password)
   }
   else{
-    console.log(newName, newPassword, newEmail, "id:", studentID,
-    context.studentCourseFirstChoice, "choice"
-    )
+    let courses = [{courseName : firstC,
+                    courseName2nd:  ""}]
     
-  sendEditToFb(
-    firstC,
-    secondC,
-    newEmail,
-    studentID,
-    newName,
-    newPassword
-  )
-    setShowModal(true)
-  }
-}
-
-
-  const sendEditToFb =(
-    firstC,
-    secondC,
-    studentEmail,
-    studentID,
-    studentName,
-    studentPassword
-  ) => {
-    const db = getDatabase()
-    const itemToDB = {
-      studentID: studentID,
-      studentName : studentName,
-      studentEmail: studentEmail,
-      studentPassword : studentPassword,
-      studentCourseFirstChoice :  firstC,
-      studentCourseSecondChoice : secondC,
-    }
-    const studentRef = ref(db, "/students/" + studentID );
-    set(studentRef, itemToDB)
-
+    let referenceURL = "/studentstest/" + studentID
+    let studentPassword = newPassword
     let studentLoggedIn = true
     let studentCourseFirstChoice = firstC
-    let studentCourseSecondChoice = secondC
+
+  sendStudentEditToFb(
+  courses,
+  studentEmail,
+  studentID,
+  studentName,
+  studentPassword,
+  referenceURL
+  ).then(
     
-    context.onUpdate({
-      studentID,
+    contextFunction(
+      studentID, 
       studentName,
       studentLoggedIn,
       studentEmail,
-      studentCourseFirstChoice,
-      studentCourseSecondChoice,
-    })
-    navigate("/student")
-  }
-
- 
+      studentCourseFirstChoice
+    )
+  )
+  setShowModal(true)
+  navigate("/")
   
+  
+  }
+}
   
   return ( 
   <Section 
@@ -251,16 +227,13 @@ const checkForChangesAndSave = (e) => {
     </ButtonDiv>
     </StudentPortalInfo>
     <Line/>
-    <h2>Dina kurser:</h2>
+    <h2>Vald kurs:</h2>
     <div>
-    {context.studentCourseFirstChoice === true && <><p>{context.studentCourseFirstChoice}</p><br/>
-    {context.studentCourseSecondChoice && <p>{context.studentCourseSecondChoice}</p>}
-    </>}
-    {!context.studentCourseFirstChoice  && <p>Du har inte anmält dig till några kurser än!</p>} 
+    {context.studentCourseFirstChoice && <p>{context.studentCourseFirstChoice}</p>}
+    {!context.studentCourseFirstChoice  && <p>Du har inte anmält dig till någon kurs än!</p>} 
     <HashLink smooth to ="/#kurser">
       Se alla publicerade kurser här</HashLink><br/>
-    <Link to="/student/student-kurser/register">{!courses && "Anmäl dig till en kurs här"}
-    {courses && <>{!course2 ? "Lägg till en till kurs/ ändra kurser här" : "Ändra kurser"}</>}
+    <Link to="/student/student-kurser/register">{!courses ? "Anmäl dig till en kurs här":"Ändra kurser"}
     </Link><br/>
     <Line/>
     <button className="logoutBtn" 
