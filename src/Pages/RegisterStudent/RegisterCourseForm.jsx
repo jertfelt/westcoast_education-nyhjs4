@@ -63,8 +63,8 @@ useEffect(() => {
 
 const confirmingChange = (e) => {
   e.preventDefault()
-  prepareData()
   setShowModal(false)
+  prepareData()
 }
 
 const contextFunction = (
@@ -91,6 +91,13 @@ const prepareData = () => {
         return course.courseName === firstChoiceNew
       }).map(item => item)
     setCourseID1(Number(chosen1.map(item => item.courseID)))
+    let published = (chosen1.map(item => item.published))[0]
+    let lengthWeeks = (Number(chosen1.map(item => item.lengthWeeks)))
+    let courseDescription = (chosen1.map(item => item.courseDescription))[0]
+    let courseName = (chosen1.map(item => item.courseName))[0]
+    let startDate = (chosen1.map(item => item.startDate))[0]
+    let teacherAssigned = (chosen1.map(item => item.teacherAssigned))[0]
+    
 
     const studentName = context.studentName
     let newName = studentName
@@ -101,12 +108,18 @@ const prepareData = () => {
     let studentLoggedIn = true
     let studentCourseFirstChoice = firstChoiceNew
     let referenceURL = "/students/" + idToDB
-    let referenceURLCourse = "/test/" + courseID
+    let referenceURLCourse = "/courses/" + courseID 
     let courses = {courseName : firstChoiceNew,
       courseName2nd:  ""}
     
     sendCourseToStudentAndUpdate(
-      courseID,
+      courseID, 
+      published,
+      lengthWeeks,
+      courseDescription,
+      courseName,
+      startDate,
+      teacherAssigned,
       referenceURLCourse
     )
       sendStudentEditToFb(
@@ -132,21 +145,9 @@ const prepareData = () => {
 const onSubmit = (e) => {
   e.preventDefault()
 
-  if(courseInputRef.current.value === ifDirected){
-    setShowModal(true)
-    setTitle(`Du har valt: ${ifDirected}`)
-    setMessage("Stämmer det?")
-    
-  }
-  if(firstChoice){
-    setShowModal2(true)
-    setTitle(`Du har ändrat kurs`)
-    setMessage(`Från ${firstChoice} till ${courseInputRef.current.value}. Stämmer detta?`)
-  
-  }
-  else{
+
     prepareData()
-  }
+
 }
 
 

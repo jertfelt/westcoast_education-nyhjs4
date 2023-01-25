@@ -24,12 +24,25 @@ const sendStudentEditToFb = (
  
 export default sendStudentEditToFb;
 
-export const sendCourseToStudentAndUpdate = (courseID, referenceURLCourse) => {
+export const sendCourseToStudentAndUpdate = (courseID, 
+  published,
+  lengthWeeks,
+  courseDescription,
+  courseName,
+  startDate,
+  teacherAssigned,
+  referenceURLCourse) => {
   const db = getDatabase()
   const refDb = ref(db, referenceURLCourse)
   set(refDb, {
     courseID: courseID,
-    studentsAssigned: increment(1)
+    published: published,
+    lengthWeeks: lengthWeeks,
+    courseDescription : courseDescription,
+    courseName: courseName,
+    startDate: startDate,
+    studentsAssigned: increment(1),
+    teacherAssigned: teacherAssigned,
   })
 
 }
