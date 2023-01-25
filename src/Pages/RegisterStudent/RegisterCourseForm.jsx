@@ -81,12 +81,13 @@ const sendEditToCourse = (
   courseID1,
   courseID2
   ) => {
-    const db = getDatabase()
-    const course1 = ref(db, "/courses/" + courseID1)
-    set(course1, {
-      courseID1,
-      studentsAssigned: increment(1)
-    })
+    console.log(courseID1, courseID2)
+    // const db = getDatabase()
+    // const course1 = ref(db, "/courses/" + courseID1)
+    // set(course1, {
+    //   courseID1,
+    //   studentsAssigned: increment(1)
+    // })
     // if(courseID2){
     //   const course2 = ref(db, "/courses/" + courseID2)
       
@@ -127,14 +128,14 @@ const prepareData = () => {
       }).map(item => item)
     setCourseID1(Number(chosen1.map(item => item.courseID)))
 
-sendEditToFb(
-    firstChoiceNew,
-    secondChoiceNew,
-    studentEmail,
-    idToDB,
-    studentName,
-    studentPassword, 
-  )
+// sendEditToFb(
+//     firstChoiceNew,
+//     secondChoiceNew,
+//     studentEmail,
+//     idToDB,
+//     studentName,
+//     studentPassword, 
+//   )
   sendEditToCourse(
     courseID1,
     courseID2
@@ -159,21 +160,34 @@ const onSubmit = (e) => {
 
 
 const checkIfNotPublished = (value) => {
-  console.log(value, "value")
-let deleted = (data.filter(function (item) {
+  
+let published = (data.filter(function (item) {
+  return item.courseName !== "DELETED"
+}).filter(function (notDeleted){
+  return notDeleted.published === true
+}).map(item => item))
+
+published.forEach(array => {
+  if(array.courseName === value){
+    setWarning(false)}
+})
+
+let notPublished = (data.filter(function (item) {
   return item.courseName !== "DELETED"
 }).filter(function (notDeleted){
   return notDeleted.published !== true
 }).map(item => item))
-console.log(deleted, "de")
-console.log(value, deleted.includes(value), "check")
 
-  if(deleted.includes(value)){
+
+notPublished.forEach(array => {
+  if(array.courseName === value){
+    console.log("not published")
     setWarning(true)
+    console.log(array.courseName, value)
   }
-  else{
-    setWarning(false)
-  }
+}
+
+)
 }
 
 const confirming = (e) => {
@@ -397,8 +411,11 @@ useEffect(() => {
       </TwoColumns>
       <p className="instructions">
         ** Detta är inte obligatoriskt för att du ska kunna anmäla dig, men det kan vara bra att ha en back-up.</p>
-        {warning && !item.published && <><p className="warning">OBS! Kursen du valt är inte publicerad ännu, det behövs vara minst fem studenter anmälda. <br/>Vi hör av oss i god tid till din mail innan om ditt val inte startar.</p>
-        </>
+        {warning && !item.published && <div><h3>OBS! </h3>
+        <p className="warning">
+        Kursen du valt är inte publicerad ännu, det behövs vara minst fem studenter anmälda. <br/>
+        Vi hör av oss i god tid till din mail innan om ditt val inte startar.</p>
+        </div>
         }
       <input
       className={validInputs ? "enabled" :"disabled"}

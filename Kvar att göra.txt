@@ -1,21 +1,25 @@
 
 
 OM JAG HINNER:
+se till att registrerade kurser syns i studentportalen - buggar
 
+
+6)lägg in så att det blir en count på kurserna utifrån antalet studenter som har den kursen i databasen.
+(filter students och kör length på student.coursesnames --> coursename === thiscourse )
+<- inlagt men börjat bugga. något med inmatning och courseID1 och courseID2.
 
 1) städa funktioner och fetch Firebase kanske bara en gång skicka som props
-
-2) fixa Admin genom firebase istället, 
-
-3) se till att registrerade kurser syns i studentportalen - buggar
 
 
 5)Kursformulär:  Lärare i select option, utifrån kompetenser! 
 <--- Finns, men koden buggar
 
-6)lägg in så att det blir en count på kurserna utifrån antalet studenter som har den kursen i databasen.
-(filter students och kör length på student.coursesnames --> coursename === thiscourse )
-<- inlagt men börjat bugga. något med inmatning och courseID1 och courseID2.
+2) fixa Admin genom firebase istället, 
+
+
+
+
+
 
 
 4) Laga pomofocus i studentportal

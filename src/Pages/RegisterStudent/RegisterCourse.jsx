@@ -17,7 +17,7 @@ const [error, setError] =useState(false)
 const [course1, setCourse1] = useState("default")
 const [course2, setCourse2] = useState("default")
 
-console.log(props.name)
+console.log("checking if props:", props.name)
 useEffect(() =>{
   if(data){
     if(context.studentID === "" || !context.studentID || context.studentID === []){
