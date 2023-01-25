@@ -5,12 +5,12 @@ import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/St
 import { useFirebase } from "../../Components/utils/useFirebase";
 import { useNavigate } from "react-router-dom";
 import ValidationModal from "../../Components/ui/Modal/ValidationModal";
-import sendStudentEditToFb, { sendCourseToStudentAndUpdate } from "../../firebase/useSendToFb";
+import sendStudentEditToFb, { sendCourseToStudentAndUpdate, updateCourses } from "../../firebase/useSendToFb";
 import ShowInfo from "./ShowInfo";
 
 
 
-const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) => {
+const RegisterCourseForm = ({ ifDirected, studentid, item, course1}) => {
   const navigate = useNavigate()
   const context = useContext(StudentContext);
   const [validInputs, setValidInputs] = useState(false)
@@ -21,44 +21,51 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) =>
   const {data, error, loading} = useFirebase("/courses")
   const [firstChoice, setFirst] = useState("")
   const [warning, setWarning] = useState(false)
-  const [idToDB, setIDToDB] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [showModal2, setShowModal2] = useState(false)
   const [courseID1, setCourseID1] = useState("")
   const [titleModal, setTitle] = useState("")
   const [messageModal, setMessage] = useState("")
   const [showCourseInfo, setShowCourseInfo ]= useState(false)
-  const [option, setOption] = useState("")
-  
+  const [noFirst, setNoFirst] = useState(false)
+
 useEffect(() =>{
-  if(ifDirected){
-    setOption(ifDirected)
+  if(ifDirected){   
     setShowCourseInfo(true)
   }
-})
+},[ifDirected])
+useEffect(() => {
+  if(item){
+    setStudentPassword(item.map(i=> i.studentPassword)[0])
+    if(context){
+      setStudentEmail(context.studentEmail)
+    }
+    else{
+      setStudentEmail(item.map(i => i.studentEmail)[0])
+    }
+    let oldFirstChoice = item.map(item => item.courses).map(j => j.courseName).toString()
+    if(oldFirstChoice){ 
+      setFirst(oldFirstChoice)
+    }
+    else {
+      setFirst("")
+    }
+  }
+
+  
+}, [item,context, course1])
 
 
 useEffect(() => {
-  if(data){
-    if(item){
-      const courses = item.map(i => i.courses)
-      setFirst(courses.map(item => item.courseName)[0])
-      
-      if(!studentid){
-        setIDToDB(item.map(i => i.studentID)[0])
-      }
-      else{
-        setIDToDB(studentid)
-      }
-    }
-    else{
-      if(context.studentCourseFirstChoice !== "")
-      setFirst(context.studentCourseFirstChoice)
-    }
+
+  if(firstChoice){
+    setNoFirst(false)
+
+  }else{
+    setNoFirst(true)
   }
-},[data, item, context.studentCourseFirstChoice, studentid])
-
-
+  
+},[firstChoice])
 
 
 const confirmingChange = (e) => {
@@ -83,35 +90,41 @@ const contextFunction = (
   })
   }
 
-const prepareData = () => {
+const filterNames = (name) => {
+  let test = data.filter(function (i){
+    return i.courseName !== "DELETED"}).filter(function (course){
+      return course.courseName === name
+  }).map(item => item)
+  return test
+}
 
-  let firstChoiceNew = courseInputRef.current.value
+
+
+const prepareData = (newName, studentName, newEmail, newPassword, courses, studentID, studentLoggedIn, referenceURL) => {
+ 
+
+  if(!firstChoice){
+   
+    console.log("null")
+    let firstChoiceNew = courseInputRef.current.value
     let chosen1 = data.filter(function (i){
       return i.courseName !== "DELETED"}).filter(function (course){
         return course.courseName === firstChoiceNew
-      }).map(item => item)
-    setCourseID1(Number(chosen1.map(item => item.courseID)))
+    }).map(item => item)
+
+    let newID= Number(chosen1.map(item => item.courseID))
+
+    let courseID = newID
     let published = (chosen1.map(item => item.published))[0]
+    let courseName = (chosen1.map(item => item.courseName))[0]
     let lengthWeeks = (Number(chosen1.map(item => item.lengthWeeks)))
     let courseDescription = (chosen1.map(item => item.courseDescription))[0]
-    let courseName = (chosen1.map(item => item.courseName))[0]
     let startDate = (chosen1.map(item => item.startDate))[0]
     let teacherAssigned = (chosen1.map(item => item.teacherAssigned))[0]
-    
 
-    const studentName = context.studentName
-    let newName = studentName
-    let newEmail = studentEmail
-    let newPassword = studentPassword
-    let courseID = courseID1
-    const studentID = idToDB;
-    let studentLoggedIn = true
-    let studentCourseFirstChoice = firstChoiceNew
-    let referenceURL = "/students/" + idToDB
-    let referenceURLCourse = "/courses/" + courseID 
-    let courses = {courseName : firstChoiceNew,
-      courseName2nd:  ""}
     
+    let referenceURLCourse = "/courses/" + newID
+  
     sendCourseToStudentAndUpdate(
       courseID, 
       published,
@@ -122,32 +135,113 @@ const prepareData = () => {
       teacherAssigned,
       referenceURLCourse
     )
-      sendStudentEditToFb(
-        courses,
-        newEmail,
-        studentID,
-        newName,
-        newPassword,
-        referenceURL
-      ).then(
-        contextFunction(
-          studentID, 
-          studentName,
-          studentLoggedIn,
-          studentEmail,
-          studentCourseFirstChoice
-        )
-      )
     
-      navigate("/student")
+      // sendStudentEditToFb(
+      //   courses,
+      //   newEmail,
+      //   studentID,
+      //   newName,
+      //   newPassword,
+      //   referenceURL
+      // )
+      // let studentCourseFirstChoice = firstChoiceNew
+      //   contextFunction(
+      //     studentID, 
+      //     studentName,
+      //     studentLoggedIn,
+      //     studentEmail,
+      //     studentCourseFirstChoice
+      //   )
+  }
+  else{
+    
+    console.log(firstChoice, "chosen:", courseInputRef.current.value)
+    let chosen1 = filterNames(firstChoice)
+    let oldID = Number(chosen1.map(item => item.courseID))
+    
+    let published1 = (chosen1.map(item => item.published))[0]
+    let lengthWeeks1 = (Number(chosen1.map(item => item.lengthWeeks)))
+    let courseDescription1 = (chosen1.map(item => item.courseDescription))[0]
+    let startDate1 = (chosen1.map(item => item.startDate))[0]
+    let courseName1 = (chosen1.map(item => item.courseName))[0]
+    let teacherAssigned1 = (chosen1.map(item => item.teacherAssigned))[0]
+    let courseID1 = oldID
+
+    let chosenNew = filterNames(courseInputRef.current.value)
+    let newID = Number(chosenNew.map(item => item.courseID))
+    let courseID2 = newID
+    let published2 = (chosen1.map(item => item.published))[0]
+    let lengthWeeks2 = (Number(chosen1.map(item => item.lengthWeeks)))
+    let courseDescription2 = (chosen1.map(item => item.courseDescription))[0]
+    let startDate2 = (chosen1.map(item => item.startDate))[0]
+    let courseName2 = (chosen1.map(item => item.courseName))[0]
+    let teacherAssigned2 = (chosen1.map(item => item.teacherAssigned))[0]
+    
+    let referenceURLCourseOLD = "/test/" + oldID
+    let referenceURLCourseNEW = "/test/" + newID
+  
+  
+  
+    sendCourseToStudentAndUpdate(
+      referenceURLCourseNEW,
+      courseID2, 
+      published2,
+      lengthWeeks2,
+      courseDescription2,
+      courseName2,
+      startDate2,
+      teacherAssigned2,
+    )
+
+    updateCourses(
+      courseID1, 
+      published1,
+      lengthWeeks1,
+      courseDescription1,
+      courseName1,
+      startDate1,
+      teacherAssigned1,
+      referenceURLCourseOLD,
+    )
+
+    
+      // sendStudentEditToFb(
+      //   courses,
+      //   newEmail,
+      //   studentID,
+      //   newName,
+      //   newPassword,
+      //   referenceURL
+      // )
+      // let studentCourseFirstChoice = courseInputRef.current.value
+      //   contextFunction(
+      //     studentID, 
+      //     studentName,
+      //     studentLoggedIn,
+      //     studentEmail,
+      //     studentCourseFirstChoice
+      //   )
+  
+  
+  
+  
+  }
+  
+  //  navigate("/student")
 }
  
 const onSubmit = (e) => {
   e.preventDefault()
-
-
-    prepareData()
-
+  const newName = context.studentName
+  let studentName = newName
+    let newEmail = studentEmail
+    let newPassword = studentPassword
+    let courses = {courseName : courseInputRef.current.value, courseName2nd:  ""}
+    const studentID = studentid
+    let studentLoggedIn = true
+    let referenceURL = "/students/" + studentid
+    
+    prepareData(newName, studentName, newEmail, newPassword, courses, studentID, studentLoggedIn, referenceURL)
 }
 
 
@@ -202,25 +296,11 @@ const checkInputsFirstChoice = (e) => {
   if(e.target.value !== "Välj:"){
     setValidInputs(true)
     setShowCourseInfo(true)
-    setOption(e.target.value)
+    
 }}
 
 // 
-useEffect(() => {
-  if(item){
-    setStudentPassword(item.map(i=> i.studentPassword)[0])
-    if(context){
-      setStudentEmail(context.studentEmail)
-    }
-    else{
-      setStudentEmail(item.map(i => i.studentEmail)[0])
-    }
-    
-  }
-  if(course1){
-    setFirst(course1[0])
-  }
-}, [item,context, course1])
+
 
 
   return ( 
@@ -241,18 +321,18 @@ useEffect(() => {
     <FormInstructions
     onSubmit={onSubmit}>
     <h1 data-testid ="welcome">{context.studentName}</h1>
-    <h2>Du är anmäld till :</h2>
+    {noFirst && <h2>Du är inte anmäld till någon kurs!</h2>}
     {loading && <h2> Laddar... </h2>}
     {!data && <h2>Laddar...</h2>}
     {error && <h2> Något är fel på databasen</h2>}
-    
+     
     <TwoColumns
     largergap>
     {data && <div>
-      {!item && <p>Laddar profil...</p>}
-      {firstChoice && 
+      
+      {!noFirst && 
       <IfAlreadyExists>
-        <h3>Tidigare:</h3>
+        <h3>Du är anmäld till:</h3>
         {data && data.filter(function (i){
             return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === firstChoice}).map((item, indx) => (
         <ShowInfo 
@@ -260,19 +340,17 @@ useEffect(() => {
         courses = {item}
         />))}
       </IfAlreadyExists>
-}
+    }
         </div>} 
         <div>
-   
       {showCourseInfo && <div>
       <h3>Nytt val:</h3>
       {data && data.filter(function (i){
         return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === courseInputRef.current.value}).map((item, indx) => (
-    <ShowInfo 
-    key={`${indx}-3333-${indx}${indx}-${indx}`}
-    courses = {item}
-    />))}
-
+        <ShowInfo 
+        key={`${indx}-3333-${indx}${indx}-${indx}`}
+        courses = {item}
+        />))}
     </div>}
     
       </div>

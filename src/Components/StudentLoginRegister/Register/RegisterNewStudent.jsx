@@ -8,6 +8,7 @@ import Button from "../../StylingElements/Buttons/FormButton";
 import { useFirebase } from "../../utils/useFirebase";
 import { getDatabase, ref, set} from "firebase/database";
 import { useDates } from "../../utils/useDates";
+import sendStudentEditToFb from "../../../firebase/useSendToFb";
 
 
 const Container = styled.div`
@@ -89,40 +90,22 @@ const RegisterStudent = () => {
 
 
 
-  const sendEditToFirebase = (
-   studentName,
-   studentEmail,
-   studentID,
-   studentPassword,
-   firstChoice,
-   secondChoice
-    ) => {
-    const db = getDatabase()
-    set(ref(db, "/students/"+ studentID),{
-      studentID : studentID,
-      studentName : studentName,
-      studentEmail : studentEmail,
-      studentPassword: studentPassword,
-      studentCourseFirstChoice : firstChoice,
-      studentCourseSecondChoice : secondChoice,
-    })
-  }
+
 
   const login = (
     studentName,
     studentEmail,
     studentID,
+    studentLoggedIn,
+    studentCourseFirstChoice,
     ) => {
-      let studentCourseFirstChoice = ""
-      let studentCourseSecondChoice = ""
-    let studentLoggedIn = true
+    
     context.onLogin({
       studentName,
       studentEmail,
-      studentLoggedIn,
       studentID,
+      studentLoggedIn,
       studentCourseFirstChoice,
-      studentCourseSecondChoice,
     })
     
   }
@@ -133,9 +116,12 @@ const RegisterStudent = () => {
     const studentEmail = emailInputRef.current.value
     const studentID = id
     const studentPassword = passwordInputRef.current.value
-    const firstChoice = ""
-    const secondChoice =""
-    
+    let courses = {courseName : "",
+          courseName2nd:  ""}
+    let referenceURL = "/students/" + studentID
+    let studentCourseFirstChoice = ""
+    let studentLoggedIn = true
+
     let checkForStudent = allstudents.filter(function (student){
       return student.studentEmail === studentEmail}).map(item => item)
       
@@ -145,24 +131,22 @@ const RegisterStudent = () => {
         setMsg("Användaren är redan registrerad")
       }
       else{
-        sendEditToFirebase(
-          studentName,
+        sendStudentEditToFb(
+          courses,
           studentEmail,
           studentID,
+          studentName,
           studentPassword,
-          firstChoice,
-          secondChoice,
+          referenceURL,
         )
-        let studentCourseFirstChoice = ""
-        let studentCourseSecondChoice = ""
-        let studentLoggedIn = true
+  
         login( 
             studentName,
             studentEmail,
             studentID,
             studentLoggedIn,
             studentCourseFirstChoice,
-            studentCourseSecondChoice,)
+            )
         
         navigate("/student")
       }

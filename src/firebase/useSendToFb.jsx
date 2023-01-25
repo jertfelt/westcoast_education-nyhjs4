@@ -24,6 +24,7 @@ const sendStudentEditToFb = (
  
 export default sendStudentEditToFb;
 
+
 export const sendCourseToStudentAndUpdate = (courseID, 
   published,
   lengthWeeks,
@@ -47,3 +48,50 @@ export const sendCourseToStudentAndUpdate = (courseID,
 
 }
 
+export const updateCourses = (     courseID1, 
+  published1,
+  lengthWeeks1,
+  courseDescription1,
+  courseName1,
+  startDate1,
+  teacherAssigned1,
+  referenceURLCourseOLD,) => {
+  const db = getDatabase()
+  const refDb = ref(db, referenceURLCourseOLD)
+  set(refDb, {
+    courseID: courseID1,
+    published: published1,
+    lengthWeeks: lengthWeeks1,
+    courseDescription : courseDescription1,
+    courseName: courseName1,
+    startDate: startDate1,
+    studentsAssigned: increment(-1),
+    teacherAssigned: teacherAssigned1,
+  })
+
+}
+
+export const sendCoursesToStudentAndUpdate =    (     
+  referenceURLCourseNEW,
+  courseID2, 
+  published2,
+  lengthWeeks2,
+  courseDescription2,
+  courseName2,
+  startDate2,
+  teacherAssigned2,) => {
+  const db = getDatabase()
+  const refDb = ref(db, referenceURLCourseNEW)
+  set(refDb, {
+    courseID: courseID2,
+    published: published2,
+    lengthWeeks: lengthWeeks2,
+    courseDescription : courseDescription2,
+    courseName: courseName2,
+    startDate: startDate2,
+    studentsAssigned: increment(1),
+    teacherAssigned: teacherAssigned2,
+  })
+  
+
+}

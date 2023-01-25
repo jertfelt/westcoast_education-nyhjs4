@@ -15,7 +15,9 @@ const [errMsg, setErrMsg] = useState("")
 const [id, setID] = useState([])
 const [error, setError] =useState(false)
 const [course1, setCourse1] = useState("default")
-const [course2, setCourse2] = useState("default")
+
+
+
 
 console.log("checking if props:", props.name)
 useEffect(() =>{
@@ -29,7 +31,7 @@ useEffect(() =>{
           let iddb = check.map(item => item.studentID)
           setID(iddb[0])
           setCourse1(check.map(item => item.studentCourseFirstChoice))
-          setCourse2(check.map(item => item.studentCourseSecondChoice))
+         
       }
       else if(check.length === 0){
         setError(true)
@@ -43,7 +45,7 @@ useEffect(() =>{
           let iddb = checkName.map(item => item.studentID)
           setID(iddb[0])
           setCourse1(checkName.map(item => item.studentCourseFirstChoice))
-          setCourse2(checkName.map(item => item.studentCourseSecondChoice))
+         
       }
         
     }
@@ -52,9 +54,7 @@ useEffect(() =>{
       setThisStudent(studentsMatching)
       let idContext = Number(context.studentID)
       setID(idContext)
-      setCourse1(studentsMatching.map(item => item.studentCourseFirstChoice))
-      setCourse2(studentsMatching.map(item => item.studentCourseSecondChoice))
- 
+      setCourse1(studentsMatching.map(item => item.courses))
     }
   }
 }, [data, id, context.studentID, context.studentEmail, context.studentName])
@@ -70,7 +70,7 @@ useEffect(() =>{
   studentid = {id}
   item = {thisStudent}
   course1 = {course1}
-  course2 = {course2}
+ 
   />}
     
   </Studentsections> );

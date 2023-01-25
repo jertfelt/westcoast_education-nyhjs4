@@ -125,9 +125,8 @@ const checkForChangesAndSave = (e) => {
   let courses = {courseName : firstC,
     courseName2nd:  ""}
 
-let referenceURL = "/studentstest/" + studentID
+let referenceURL = "/students/" + studentID
 console.log("reference:", referenceURL)
-let studentPassword = newPassword
 let studentLoggedIn = true
 let studentCourseFirstChoice = firstC
 

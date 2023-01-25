@@ -4,9 +4,11 @@ OM JAG HINNER:
 
 
 STUDENT-----------
-1) -> om tidigare kurs: increment -1 funktion
+1) -> om tidigare kurs: increment -1 funktion 
+nu funkar det men inte + (se test och se med Karl Mikaelsson)
 
 2) Lägg in showModal och se över felet i studentportal 
+3) bugg i studentportal: lösenord och email blir tomt
 
 ADMIN--------------
 
