@@ -111,7 +111,6 @@ const checkForChangesAndSave = (e) => {
   // )
   if(!newEmail){
     console.log("no new email")
-
     setNewEmail(studentEmail)
   }
   else if(!newName){
@@ -123,37 +122,35 @@ const checkForChangesAndSave = (e) => {
     console.log("no new pass")
     setNewPassword(password)
   }
-  else{
-    let courses = [{courseName : firstC,
-                    courseName2nd:  ""}]
-    
-    let referenceURL = "/studentstest/" + studentID
-    let studentPassword = newPassword
-    let studentLoggedIn = true
-    let studentCourseFirstChoice = firstC
+  let courses = {courseName : firstC,
+    courseName2nd:  ""}
 
-  sendStudentEditToFb(
-  courses,
-  studentEmail,
-  studentID,
-  studentName,
-  studentPassword,
-  referenceURL
-  ).then(
-    
-    contextFunction(
-      studentID, 
-      studentName,
-      studentLoggedIn,
-      studentEmail,
-      studentCourseFirstChoice
-    )
-  )
-  setShowModal(true)
-  navigate("/")
-  
-  
-  }
+let referenceURL = "/studentstest/" + studentID
+console.log("reference:", referenceURL)
+let studentPassword = newPassword
+let studentLoggedIn = true
+let studentCourseFirstChoice = firstC
+
+sendStudentEditToFb(
+courses,
+newEmail,
+studentID,
+newName,
+newPassword,
+referenceURL
+)
+
+contextFunction(
+studentID, 
+studentName,
+studentLoggedIn,
+studentEmail,
+studentCourseFirstChoice
+)
+navigate("/student")
+setShowModal(true)
+
+
 }
   
   return ( 

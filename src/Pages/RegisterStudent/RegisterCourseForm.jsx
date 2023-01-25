@@ -3,10 +3,11 @@ import StudentContext from "../../Context/StudentContext";
 import { FormInstructions } from "../../Components/StylingElements/Form/Form";
 import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { useFirebase } from "../../Components/utils/useFirebase";
-import { getDatabase,  increment,  ref, set, } from "firebase/database";
 import { useNavigate } from "react-router-dom";
 import ValidationModal from "../../Components/ui/Modal/ValidationModal";
 import sendStudentEditToFb, { sendCourseToStudentAndUpdate } from "../../firebase/useSendToFb";
+import ShowInfo from "./ShowInfo";
+
 
 
 const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) => {
@@ -19,26 +20,43 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, course2}) =>
   const [studentPassword, setStudentPassword] = useState("")
   const {data, error, loading} = useFirebase("/courses")
   const [firstChoice, setFirst] = useState("")
-  const [newSecondChoice, setNewSecond] = useState("Ingen")
-  const [secondChoice, setSecond] = useState("")
   const [warning, setWarning] = useState(false)
   const [idToDB, setIDToDB] = useState("")
   const [showModal, setShowModal] = useState(false)
   const [showModal2, setShowModal2] = useState(false)
   const [courseID1, setCourseID1] = useState("")
+  const [titleModal, setTitle] = useState("")
+  const [messageModal, setMessage] = useState("")
+  const [showCourseInfo, setShowCourseInfo ]= useState(false)
+  const [option, setOption] = useState("")
   
- 
-// console.log(studentid, "original", "idToDB:", idToDB, item.map(i => i.studentID)[0])
+useEffect(() =>{
+  if(ifDirected){
+    setOption(ifDirected)
+    setShowCourseInfo(true)
+  }
+})
+
+
 useEffect(() => {
   if(data){
-    if(!studentid){
-      setIDToDB(item.map(i => i.studentID)[0])
+    if(item){
+      const courses = item.map(i => i.courses)
+      setFirst(courses.map(item => item.courseName)[0])
+      
+      if(!studentid){
+        setIDToDB(item.map(i => i.studentID)[0])
+      }
+      else{
+        setIDToDB(studentid)
+      }
     }
     else{
-      setIDToDB(studentid)
+      if(context.studentCourseFirstChoice !== "")
+      setFirst(context.studentCourseFirstChoice)
     }
   }
-},[data, item, studentid])
+},[data, item, context.studentCourseFirstChoice, studentid])
 
 
 
@@ -46,7 +64,7 @@ useEffect(() => {
 const confirmingChange = (e) => {
   e.preventDefault()
   prepareData()
-  setShowModal2(false)
+  setShowModal(false)
 }
 
 const contextFunction = (
@@ -75,28 +93,30 @@ const prepareData = () => {
     setCourseID1(Number(chosen1.map(item => item.courseID)))
 
     const studentName = context.studentName
+    let newName = studentName
+    let newEmail = studentEmail
+    let newPassword = studentPassword
     let courseID = courseID1
     const studentID = idToDB;
     let studentLoggedIn = true
     let studentCourseFirstChoice = firstChoiceNew
     let referenceURL = "/students/" + idToDB
     let referenceURLCourse = "/test/" + courseID
-    let courses = [{courseName : firstChoiceNew,
-      courseName2nd:  ""}]
-
+    let courses = {courseName : firstChoiceNew,
+      courseName2nd:  ""}
+    
     sendCourseToStudentAndUpdate(
       courseID,
       referenceURLCourse
     )
       sendStudentEditToFb(
         courses,
-        studentEmail,
+        newEmail,
         studentID,
-        studentName,
-        studentPassword,
+        newName,
+        newPassword,
         referenceURL
       ).then(
-        
         contextFunction(
           studentID, 
           studentName,
@@ -105,22 +125,28 @@ const prepareData = () => {
           studentCourseFirstChoice
         )
       )
-      setShowModal(true)
-      navigate("/")
     
-
+      navigate("/student")
 }
  
 const onSubmit = (e) => {
   e.preventDefault()
 
   if(courseInputRef.current.value === ifDirected){
+    setShowModal(true)
+    setTitle(`Du har valt: ${ifDirected}`)
+    setMessage("Stämmer det?")
+    
+  }
+  if(firstChoice){
     setShowModal2(true)
+    setTitle(`Du har ändrat kurs`)
+    setMessage(`Från ${firstChoice} till ${courseInputRef.current.value}. Stämmer detta?`)
+  
   }
   else{
     prepareData()
   }
- 
 }
 
 
@@ -171,13 +197,11 @@ const notConfirming = (e) => {
 const checkInputsFirstChoice = (e) => {
   e.preventDefault()
   checkIfNotPublished(e.target.value)
-  
-  if(e.target.value === ifDirected){
-    setShowModal(true)
-  }
+ 
   if(e.target.value !== "Välj:"){
     setValidInputs(true)
-
+    setShowCourseInfo(true)
+    setOption(e.target.value)
 }}
 
 // 
@@ -195,61 +219,68 @@ useEffect(() => {
   if(course1){
     setFirst(course1[0])
   }
-
-  
 }, [item,context, course1])
 
 
   return ( 
   <StudentContainer>
     {showModal && <ValidationModal
-    title={`Du har valt: ${ifDirected}`}
-    message="Stämmer det?"
+    title={titleModal}
+    message={messageModal}
     onClickYes = {(e) => confirming(e)}
     onClick = {(e) => notConfirming(e)}
     />}
      {showModal2 && <ValidationModal
-    title={`Du har ändrat kurs`}
-    message={`Från ${firstChoice} till ${courseInputRef.current.value}. Stämmer detta?`}
+    title={titleModal}
+    message={messageModal}
     onClickYes = {(e) => confirmingChange(e)}
     onClick = {() => setShowModal2(false)}
     />}
 
     <FormInstructions
     onSubmit={onSubmit}>
-    <h1 data-testid ="welcome">Hej igen {context.studentName}</h1>
-    {loading ? <h2> Laddar... </h2> : <>
-    {error && <h2> Något är fel på databasen</h2>}
-    {firstChoice && <> 
-    <IfAlreadyExists>
+    <h1 data-testid ="welcome">{context.studentName}</h1>
     <h2>Du är anmäld till :</h2>
-    <div>
-    <div>
-    <h3>{firstChoice} </h3>
-    {data && data.filter(function (i){
-            return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === firstChoice}).map((item, indx) => (
-              <div key={`${indx}-${item}-${firstChoice}`}>
-                {item.published && 
-                <p>Start: {item.startDate}</p>}
-                {!item.published && item.studentsAssigned <5 && <>
-                <p>Kursen är ännu inte helt bokad! Det måste vara minst fem studenter anmälda. Vi hör av oss via mail.</p>
-                <p>Just nu: {item.studentsAssigned}/5 studenter</p>
-                </>}
-                <p>Längd i veckor: {item.lengthWeeks} </p>
-                <p>Lärare: {item.teacherAssigned}</p>
-                {/* <button onClick={(e) => newPrio("2",e)}>Byt till prio #2</button> */}
-                </div>
-                ))}
-    </div>
+    {loading && <h2> Laddar... </h2>}
+    {!data && <h2>Laddar...</h2>}
+    {error && <h2> Något är fel på databasen</h2>}
     
-    </div>
-    </IfAlreadyExists>
-    </>}
-    <div>
-    <div className="Row">
+    <TwoColumns
+    largergap>
+    {data && <div>
+      {!item && <p>Laddar profil...</p>}
+      {firstChoice && 
+      <IfAlreadyExists>
+        <h3>Tidigare:</h3>
+        {data && data.filter(function (i){
+            return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === firstChoice}).map((item, indx) => (
+        <ShowInfo 
+        key={`${indx}-${item.courseID}-${indx}${indx}-${indx}`}
+        courses = {item}
+        />))}
+      </IfAlreadyExists>
+}
+        </div>} 
+        <div>
+   
+      {showCourseInfo && <div>
+      <h3>Nytt val:</h3>
+      {data && data.filter(function (i){
+        return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === courseInputRef.current.value}).map((item, indx) => (
+    <ShowInfo 
+    key={`${indx}-3333-${indx}${indx}-${indx}`}
+    courses = {item}
+    />))}
+
+    </div>}
+    
+      </div>
+        
+        </TwoColumns>
+        <div className="Row">
       
       <label htmlFor="firstChoice">
-        Kursval:</label>
+        Välj ny kurs här:</label>
       <select 
       id="firstChoice"
       data-testid="studentcours1"
@@ -295,26 +326,21 @@ useEffect(() => {
         )}
         </>}
       </select>
-     
       </div> 
-     
-      
-      </div>
-   
         {warning && !item.published && <div><h3>OBS! </h3>
         <p className="instructions">
         Kursen du valt är inte publicerad ännu, det behövs vara minst fem studenter anmälda. <br/>
         Vi hör av oss i god tid till din mail innan om ditt val inte startar.</p>
         </div>
         }
-      <input
+
+        <input
       className={validInputs ? "enabled" :"disabled"}
       type="submit"
       value="Skicka"
       />
       
-      </>} 
-
+      
     </FormInstructions>
   </StudentContainer> );
 }

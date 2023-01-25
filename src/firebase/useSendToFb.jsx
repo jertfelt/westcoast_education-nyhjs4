@@ -1,21 +1,21 @@
 import { getDatabase, increment, ref, set } from "firebase/database";
 
-const sendStudentEditToFb = async (
+const sendStudentEditToFb = (
   courses,
-  studentEmail,
+  newEmail,
   studentID,
-  studentName,
-  studentPassword,
+  newName,
+  newPassword,
   referenceURL
 ) => {
   
     const db = getDatabase()
     const itemToDb = {
       courses : courses,
-      studentEmail : studentEmail,
+      studentEmail : newEmail,
       studentID: studentID,
-      studentName : studentName, 
-      studentPassword : studentPassword
+      studentName : newName, 
+      studentPassword : newPassword
     }
 
     const refDb = ref(db, referenceURL)

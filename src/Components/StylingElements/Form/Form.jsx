@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
  const Form = styled.form`
 padding:2rem;
@@ -124,8 +124,17 @@ button{
   .centered{
     align-self:center;
   }
-  
+  ${props => 
+    props.twoColumns && 
+    css`
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    text-align:end;
+    p{font-size:1rem;}
+     `}
 `
+
 
 export const ButtonContainerOutsideForm = styled.div`
 width:100%;

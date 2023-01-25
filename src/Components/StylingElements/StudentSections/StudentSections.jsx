@@ -50,6 +50,7 @@ ${props =>
   props.largergap && 
   css`
   justify-content:space-around;
+  gap:3rem;
   text-align:end;
   p{font-size:1rem;}
    `}
@@ -298,9 +299,7 @@ input[type=submit], button{
 `
 
 export const IfAlreadyExists = styled.div`
-h2{
-  text-align:center;
-}
+text-align:left;
 padding-bottom:2rem;
 `
 
