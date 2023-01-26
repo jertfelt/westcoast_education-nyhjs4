@@ -280,8 +280,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
   </FormInstructions>
   
   <ButtonContainerOutsideForm>
-    <div><h3>Lista på tillgängliga kompetenser:</h3>
-  
+    <div><h3>Tillgängliga kompetenser:</h3>
       <TwoColumns>
       <ul>
       {competencesTeachers.map((item, indx) => {

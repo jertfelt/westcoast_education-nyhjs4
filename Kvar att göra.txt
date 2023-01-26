@@ -6,7 +6,8 @@ ADMIN--------------
  - DUBBELKOLLA ATT DETTA FUNGERAR ÖVERALLT! 
 
 
-5)Kursformulär:  Lärare i select option, utifrån kompetenser! 
+5)Kursformulär:  
+Lärare i select option, utifrån kompetenser! 
 Ämnesområden som lista:
 <--- Finns, men koden buggar
 
