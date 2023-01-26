@@ -204,7 +204,7 @@ select{
   appearance: none;
   -mox-appearance: none;
   -webkit-appearance: none;
-  background-color: white;
+  background-color: ${({ theme }) => theme.body};
   border: thin solid blue;
   border-radius: 4px;
   display: inline-block;
@@ -297,10 +297,12 @@ opacity:0.8;
 p{
   font-size:1rem;
   line-height:1.2rem;
+  text-align:left;
 }
 h3{
   font-size:1.2rem;
   line-height:1.2rem;
+  text-align:left;
 }
 a{
   &:hover{
@@ -312,6 +314,9 @@ a{
 ${props => 
   props.notPublished && 
   css`
+  display:flex; 
+  align-items:flex-start;
+  justify-content:flex-start;
   background: ${({ theme }) => theme.accent};
   `}
 

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Content, Courses, Filter, GridKurser, HeadingWithFilterAdmin } from "../../StylingElements/SectionsAdmin/AdminComponents";
 import { useEffect } from "react";
+import KursInList, { KursNotPublishedOnly, KursPublishedOnly } from "./KursInList";
 
 
 const AllaKurser = ({courses}) => {
@@ -67,49 +68,21 @@ const AllaKurser = ({courses}) => {
     {defaultView && courses.filter(function (course){
       return course.courseName !== "DELETED"
     }).map(courses => (
-      <Courses 
-      key={courses.courseID}>
-        <Link 
-        to={`/kurser/${courses.courseID}`}>
-        <h3 
-        data-testid="kurstest">
-        {courses.courseName}</h3>
-        {courses.published ? (<>
-        <p><strong>Publicerad</strong></p>
-        <p>Start: {courses.startDate}</p>
-        <p>Antal studenter: {courses.studentsAssigned}</p>
-        </>
-        ):(<>
-        <p><strong>Ej publicerad</strong></p>
-        </>)}
-        </Link>
-      </Courses>
+      <KursInList
+      key={courses.courseID}
+      courses={courses}
+      />
     ))}
     {!defaultView && published && publishedFilter.map(courses => (
-        <Courses 
-        key={`${courses.courseID}${courses.courseID}`}>
-        <Link 
-        to={`/kurser/${courses.courseID}`}>
-        <h3 
-        data-testid="kurstest">
-          {courses.courseName}</h3>
-        <p>Start: {courses.startDate}</p>
-        <p>Anmälda: {courses.studentsAssigned}</p>
-        </Link>
-      </Courses>
+      <KursPublishedOnly 
+      key={`${courses.courseID}${courses.courseID}`}
+      courses={courses}/>
       ))}
     {!defaultView && notpublished && filteredUnPublish.map(courses => (
-          <Courses 
-          key={`${courses.courseID}${courses.courseID}`}>
-          <Link 
-          to={`/kurser/${courses.courseID}`}>
-     
-          <h3 data-testid="kurstest">
-            {courses.courseName}</h3>
-            <p><strong>Ej publicerad</strong></p>
-          <p>Anmälda: {courses.studentsAssigned}</p>
-          </Link>
-        </Courses>
+    <KursNotPublishedOnly
+    key={`${courses.courseID}${courses.courseID}`}
+    courses={courses}/>
+         
         )) }      
     </GridKurser>
     </>}
