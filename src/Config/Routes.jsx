@@ -42,29 +42,66 @@ const Routing = ({courses, students, teachers, competences}) => {
     element={<Login/>}/>
 
     <Route path="/admin" 
-    element={isAdminLoggedIn ? <Admin />:<Navigate to="/admin/login"/>}/>
+    element={isAdminLoggedIn ? 
+    <Admin
+    courses = {courses} 
+    teachers = {teachers}
+    />:<Navigate to="/admin/login"/>}/>
 
     <Route path="/student/login" 
-    element={<LoginStudent/>}/> 
+    element={<LoginStudent
+    students= {students}/>}/> 
 
     <Route path="/student" 
     element={isStudentLoggedIn ? <StudentPortal/>: <Navigate to="/student/login"/>}/>
 
     <Route path="/student/student-kurser/register">
-      <Route index element={isStudentLoggedIn ? <RegistreringKurs/>: <Navigate to="/student/login"/>}/> 
-      <Route path=":id" element={isStudentLoggedIn ? <RegisterKurs/>: <Navigate to="/student/login"/>}/>
+      <Route index element={isStudentLoggedIn ? 
+      <RegistreringKurs
+      studentsDb = {students}
+      coures = {courses}
+      />: 
+      <Navigate to="/student/login"/>}/> 
+      <Route path=":id" 
+      element={isStudentLoggedIn ? <RegisterKurs/>: 
+      <Navigate to="/student/login"/>}/>
     </Route> 
 
     <Route path="/kurser">
-      <Route index element={isAdminLoggedIn ?<Admin/>:<Navigate to="/admin/login"/>}/>
-      <Route path=":id" element={isAdminLoggedIn ?<Kurs/>:<Navigate to="/admin/login"/>}/>
-      <Route path="/kurser/new" element={isAdminLoggedIn ?<AddKurs/>:<Navigate to="/admin/login"/>}/>
+      <Route index element={isAdminLoggedIn ?<Admin/>:
+      <Navigate to="/admin/login"/>}/>
+      <Route path=":id" 
+      element={isAdminLoggedIn ?
+      <Kurs
+      coursesDB={courses}
+      studentsDB={students}
+      teachersDB={teachers}/>:
+      <Navigate to="/admin/login"/>}/>
+      <Route path="/kurser/new" element={isAdminLoggedIn ?
+      <AddKurs
+      coursesDB={courses}
+      studentsDB={students}
+      teachersDB={teachers}/>
+      :<Navigate to="/admin/login"/>}/>
     </Route>
 
     <Route path="/larare">
-      <Route index element={isAdminLoggedIn ?<Admin/>:<Navigate to="/admin/login"/>}/>
-      <Route path=":id" element={isAdminLoggedIn ?<Teacher/>:<Navigate to="/admin/login"/>}/>
-      <Route path="/larare/new" element={isAdminLoggedIn ?<AddNewTeacher/>:<Navigate to="/admin/login"/>}  />
+      <Route index element={isAdminLoggedIn ?<Admin/>:
+      <Navigate to="/admin/login"/>}/>
+      <Route path=":id" element={isAdminLoggedIn ?
+      <Teacher
+      teachersDB={teachers}
+      coursesDB={courses}
+      competencesDB = {competences}
+      />:
+      <Navigate to="/admin/login"/>}/>
+      <Route path="/larare/new" 
+      element={isAdminLoggedIn ?
+      <AddNewTeacher
+      teachersDB={teachers}
+      coursesDB={courses}
+      competencesDB = {competences}/>:
+      <Navigate to="/admin/login"/>}  />
     </Route>
 
     <Route path="*" element={<NoMatch/>}/>

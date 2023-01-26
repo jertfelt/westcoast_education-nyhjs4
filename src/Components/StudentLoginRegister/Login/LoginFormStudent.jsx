@@ -6,7 +6,7 @@ import Modal from "../../ui/Modal/Modal";
 import { FormInstructions as Form } from "../../StylingElements/Form/Form";
 import { useFirebase } from "../../utils/useFirebase";
 
-const LoginFormStudent = () => {
+const LoginFormStudent = ({studentsDB}) => {
   const context = useContext(StudentContext);
   const navigate = useNavigate()
   const userRef = useRef()
@@ -15,15 +15,15 @@ const LoginFormStudent = () => {
   const [errMsg, setErrMsg] = useState("")
   const [showModal, setShowModal] = useState(false)
 
-  const {data, error, loading} = useFirebase("/students")
+  
   const [students, setStudents] = useState([])
 
   useEffect(() => {
-    if(data){
-      setStudents(data.map(item => item))
-      console.log(data)
+    if(studentsDB){
+      setStudents(studentsDB.map(item => item))
+      console.log(studentsDB)
     }
-  }, [data])
+  }, [studentsDB])
 
   useEffect(() => {
     userRef.current.focus()
@@ -106,12 +106,9 @@ const LoginFormStudent = () => {
     message= {errMsg}
     onClick={() => setShowModal(false)}/>}
 
-    {loading ? <p>Laddar...</p> : <>
+    {!studentsDB ? <p>Laddar...</p> : <>
 
-    {error && <Modal 
-    title="Något gick fel!"
-    message= "Prova att refresha sidan eller återkom om ett tag. Om problemet kvarstår, kontakta administratören."
-    onClick={() => setShowModal(false)}/>}
+    
 
     <Form onSubmit={handleSubmit}>
       <h1>Välkommen</h1>

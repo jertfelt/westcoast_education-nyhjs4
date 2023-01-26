@@ -2,23 +2,22 @@ import { useState, useRef, useContext, useEffect} from "react";
 import StudentContext from "../../Context/StudentContext";
 import { FormInstructions } from "../../Components/StylingElements/Form/Form";
 import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
-import { useFirebase } from "../../Components/utils/useFirebase";
 import { useNavigate } from "react-router-dom";
-
 import sendStudentEditToFb, { decrementCoursesByStudent, incrementCoursesByStudent } from "../../firebase/useSendToFb";
 import ShowInfo from "./ShowInfo";
 import Modal from "../../Components/ui/Modal/Modal";
 
 
 
-const RegisterCourseForm = ({ ifDirected, studentid, item, course1}) => {
+const RegisterCourseForm = ({ ifDirected, studentid, item, course1, allCourses}) => {
   const navigate = useNavigate()
   const context = useContext(StudentContext);
   const [validInputs, setValidInputs] = useState(false)
   const courseInputRef = useRef()
   const [studentEmail, setStudentEmail] = useState("")
   const [studentPassword, setStudentPassword] = useState("")
-  const {data, error, loading} = useFirebase("/courses")
+  const data = allCourses;
+ 
   const [firstChoice, setFirst] = useState("")
   const [warning, setWarning] = useState(false)
 
@@ -220,9 +219,8 @@ const checkInputsFirstChoice = (e) => {
     onSubmit={onSubmit}>
     <h1 data-testid ="welcome">{context.studentName}</h1>
     {noFirst && <h2>Du är inte anmäld till någon kurs!</h2>}
-    {loading && <h2> Laddar... </h2>}
     {!data && <h2>Laddar...</h2>}
-    {error && <h2> Något är fel på databasen</h2>}
+    
      
     <TwoColumns
     largergap>

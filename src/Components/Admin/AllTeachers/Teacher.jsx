@@ -6,30 +6,32 @@ import TeacherAddOrChange from "../Forms/TeacherAddOrChange";
 import { Line } from "../../StylingElements/Line/Line";
 
 
-const Teacher = () => {
+const Teacher = ({teachersDB, coursesDB, competencesDB}) => {
   const navigate = useNavigate()
   const {id} = useParams()
-  const {data,error, loading} = useFirebase("/teachers")
   let noId = Number(id)
   const [changeForm, setChangeForm] = useState(false);
  
   return ( 
   <Section data-testid="teacherItem">    
-    {error && <p>Något har blivit fel med servern</p>}
-    {loading ? (<h2>Laddar..</h2>):(
+  
+    {!teachersDB ? (<h2>Laddar..</h2>):(
     <InfoRuta>
       {changeForm ? (<>
-      {data && data.filter(item => item.id === noId).map(item => (
+      {teachersDB.filter(item => item.id === noId).map(item => (
         <TeacherAddOrChange
         key={`${item.firstName}-${item.id}$`}
         typeOfForm ={"changeTeacher"}
         item={item}
         title = {"Ändra:"}
+        teachersDB = {teachersDB}
+        coursesDB= {coursesDB}
+        competencesDB = {competencesDB}
         onClick = {() => setChangeForm(false)}
         />
       ))}
       </>):(<>
-    {data && data.filter(item => item.id === noId).map(item => (
+    {teachersDB.filter(item => item.id === noId).map(item => (
       <TeacherExists 
       key= {noId}>
         

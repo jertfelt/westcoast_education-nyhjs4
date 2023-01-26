@@ -6,20 +6,19 @@ import { useEffect } from "react";
 import { AllTeachersContent, HeadingWFilter, Filter, Grid, GridTeacher, List } from "../../StylingElements/SectionsAdmin/AdminComponents";
 
 
-const AllTeachers = () => {
-  const {data,error,loading} = useFirebase("/teachers")
-  const [competences, setCompetences] = useState([])
+const AllTeachers = ({teachers}) => {
+  const [competencesTeachers, setCompetences] = useState([])
   const [defaultView, setDefault] =useState(true)
   const [filterValue, setFilterValue] = useState("")
 
   useEffect(() => {
-    if(data){
-      let comp = data.filter(function (teacher){
+    if(teachers){
+      let comp = teachers.filter(function (teacher){
         return teacher.status !== "DELETED"}).map(item => item.competences)
       const flatten = [].concat(...comp)
       setCompetences(flatten)
     }
-  },[data])
+  },[teachers])
 
   const filterTeacher = (e) => {
     if(e.target.value ==="default"){
@@ -34,15 +33,17 @@ const AllTeachers = () => {
   return (
   <AllTeachersContent 
   data-testid="allTeachers">
+    {!teachers ? <p>Laddar...</p>: <>
     <HeadingWFilter>
     <h2>Alla lärare</h2>
+   
     <Filter>
       <label htmlFor="filterTeachers">Filtrera:</label>
       <select id ="chooseTeachers"
       aria-labelledby ="Filtrera"
       onChange={filterTeacher}>
           <option value="default">Välj:</option>
-          {data && competences.map((item,indx) => (
+          {teachers && competencesTeachers.map((item,indx) => (
           <option 
           key={`${item}--${item}--${indx}1`}
           value={item} 
@@ -53,10 +54,8 @@ const AllTeachers = () => {
     </HeadingWFilter>
 
       <Grid>
-        {error && <p>Något är fel på servern.</p>}
-        {loading && <p>Laddar..</p>}
         {defaultView ? (<>
-        {data && data.filter(function (item){
+        {teachers && teachers.filter(function (item){
           return item.status !== "DELETED"}).map(((teacher) => (
           <GridTeacher 
           key={teacher.personalID}>
@@ -68,8 +67,8 @@ const AllTeachers = () => {
           </div>
           </GridTeacher>
         )))}    
-        </>):(<>{data && 
-          data.filter(item => item.competences.includes(filterValue)).map(teacher => (
+        </>):(<>{teachers && 
+          teachers.filter(item => item.competences.includes(filterValue)).map(teacher => (
             <GridTeacher 
             competences
             key={teacher.personalID}>
@@ -96,6 +95,7 @@ const AllTeachers = () => {
           </>
         )}
       </Grid>
+      </>}
   </AllTeachersContent> );
 }
  

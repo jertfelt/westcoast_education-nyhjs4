@@ -4,7 +4,7 @@ import LoginFormStudent from "../../Components/StudentLoginRegister/Login/LoginF
 import Studentsections, {QuestionDiv, ContentLoginRegister} from "../../Components/StylingElements/StudentSections/StudentSections";
 
 
-const LoginStudent = () => {
+const LoginStudent = ({students}) => {
   const [notMemberYet, setMember] = useState(false)
  
 const determineMember = () => {
@@ -19,8 +19,10 @@ const determineMember = () => {
   return (
   <Studentsections>
   <ContentLoginRegister>
-    {!notMemberYet && <RegisterStudent/>}
-    {notMemberYet && <LoginFormStudent/>}
+    {!notMemberYet && <RegisterStudent
+    studentsDB = {students}/>}
+    {notMemberYet && <LoginFormStudent
+    studentsDB = {students}/>}
     <QuestionDiv>
       {!notMemberYet && <p data-testid="initialQuestion">
         Är du redan registrerad?</p>}

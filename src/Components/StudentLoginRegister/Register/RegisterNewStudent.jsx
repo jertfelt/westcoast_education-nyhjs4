@@ -6,7 +6,6 @@ import { FormInstructions as Form } from "../../StylingElements/Form/Form";
 import Modal from "../../ui/Modal/Modal";
 import Button from "../../StylingElements/Buttons/FormButton";
 import { useFirebase } from "../../utils/useFirebase";
-import { getDatabase, ref, set} from "firebase/database";
 import { useDates } from "../../utils/useDates";
 import sendStudentEditToFb from "../../../firebase/useSendToFb";
 
@@ -31,7 +30,7 @@ width:100%;
 `
 
 
-const RegisterStudent = () => {
+const RegisterStudent = ({studentsDB}) => {
   const context = useContext(StudentContext);
   const navigate = useNavigate()
   const nameInputRef = useRef()
@@ -49,7 +48,6 @@ const RegisterStudent = () => {
   const [matchFocus, setMatchFocus] = useState(false);
   const [pwdFocus, setPwdFocus] = useState(false);
   const [userFocus, setUserFocus] = useState(false);
-  const {data} = useFirebase("/students")
   const [allstudents, setAllstudents] = useState("")
   const [id, setID] = useState(nextYear)
   const [showModal2, setShowModal2] = useState(false)
@@ -57,18 +55,18 @@ const RegisterStudent = () => {
   const [modalMsg, setMsg] = useState("")
 
   useEffect(() => {
-    if(data){
-      setAllstudents(data.map(item =>item))
-      if(data.filter(function (student){ 
-        return student.studentID === data.length}) !== 0){
-          setID(data.length)
+    if(studentsDB){
+      setAllstudents(studentsDB.map(item =>item))
+      if(studentsDB.filter(function (student){ 
+        return student.studentID === studentsDB.length}) !== 0){
+          setID(studentsDB.length)
         }
         else{
-          setID(data.length+2)
+          setID(studentsDB.length+2)
         }
     }
     
-  },[setID, data])
+  },[setID, studentsDB])
 
   
  

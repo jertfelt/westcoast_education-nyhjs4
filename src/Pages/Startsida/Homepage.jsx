@@ -5,7 +5,6 @@ import {Intro, TwoColumns, Column, About, Grid, GoodToKnow} from "./HomepageStyl
 
 const HomePage = ({courses}) => {
   const year = new Date().getFullYear();
-  const {data,loading} = useFirebase("/courses");
   console.log("testing route:", courses)
   const courseList = courses;
   

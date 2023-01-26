@@ -5,8 +5,8 @@ import { Content, Courses, Filter, GridKurser } from "../../StylingElements/Sect
 import { useEffect } from "react";
 
 
-const AllaKurser = () => {
-  const {data,error,loading} = useFirebase("/courses")
+const AllaKurser = ({courses}) => {
+  
   const [defaultView, setDefault] =useState(true)
   const [notpublished, setCheckNotpublished] = useState(true)
   const [published, setCheckPublished] = useState(true)
@@ -15,15 +15,15 @@ const AllaKurser = () => {
 
 
   useEffect(() => {
-    if(data){
-      let filter = data.filter(item => {return item.status!== "DELETED"})
+    if(courses){
+      let filter = courses.filter(item => {return item.status!== "DELETED"})
       let notPublished = filter.filter(course => {return course.published === false}).map(item => item)
 
       setShowFiltered(notPublished)
 
-      setFilteredPublished(data.filter(item => {return item.status!== "DELETED"}).filter(course => {return course.published === true}).map(filtered => filtered))
+      setFilteredPublished(courses.filter(item => {return item.status!== "DELETED"}).filter(course => {return course.published === true}).map(filtered => filtered))
   }
-},[data])
+},[courses])
   
   const filterCourses = (e) => {
     switch(e.target.value){
@@ -46,10 +46,9 @@ const AllaKurser = () => {
 
   return (
   <Content data-testid="allakurser">
-    <h2>Alla kurser</h2>
-    {error && <p>Något har blivit fel med servern</p>}
-    {loading && <p>Laddar..</p>}
-    {data && <>
+    {!courses ? <p>Laddar..</p> : <> 
+    {courses && <>
+      <h2>Alla kurser</h2>
     <Filter>
     <label htmlFor="filterCourses">Filtrera:</label>
       <select id ="chooseCourses"
@@ -65,7 +64,7 @@ const AllaKurser = () => {
       </select>
     </Filter>
     <GridKurser>
-    {defaultView && data.filter(function (course){
+    {defaultView && courses.filter(function (course){
       return course.courseName !== "DELETED"
     }).map(courses => (
       
@@ -116,7 +115,7 @@ const AllaKurser = () => {
         )) }      
     </GridKurser>
     </>}
-   
+    </>}
     </Content>  );
 }
  

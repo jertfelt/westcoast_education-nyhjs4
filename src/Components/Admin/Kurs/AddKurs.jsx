@@ -4,35 +4,33 @@ import KursAddOrChange from "../Forms/KursAddOrChange"
 import { useSeveralRoutesFirebase } from "../../utils/useSeveralRoutesFirebase";
 
 
-const AddKurs = () => {
+const AddKurs = ({coursesDB, studentsDB, teachersDB}) => {
 
   const [teachers, setTeachers] = useState([])
   const [students,setStudents] = useState([])
   const [courses, setCourses] = useState([])
-  const {data1, data2, data3, error, loading} = useSeveralRoutesFirebase("/teachers", "/students", "/courses")
 
   
   useEffect(() => {
-    if(data1){
-      setTeachers(data1.map(item =>item))
+    if(teachersDB){
+      setTeachers(teachersDB.map(item =>item))
      
     }
-    if(data2){
-      setStudents(data2.map(item => item))
+    if(studentsDB){
+      setStudents(studentsDB.map(item => item))
       
     }
-    if(data3){
-      setCourses(data3.map(item => item))
+    if(coursesDB){
+      setCourses(coursesDB.map(item => item))
     }
     
-  }, [data1, data2, data3])
+  }, [teachersDB, studentsDB, coursesDB])
   
   return ( 
   <Section 
   data-testid="addkurswrapper">
     <InfoRuta>
-      {loading && <p>Laddar...</p>}
-      {data2 && data2 && data3 &&  
+      {!teachersDB && !studentsDB && !coursesDB ? <h1>Laddar...</h1>:
       <KursAddOrChange
       data-testid="formKurs"
       typeOfForm = {"registerNew"}
@@ -44,7 +42,8 @@ const AddKurs = () => {
       onChangeForm = {""}
       courseExists = {""}
       />}
-      {error && <h1>Något är fel på sidan.</h1>} 
+      
+     
     </InfoRuta>
   </Section> );
 }

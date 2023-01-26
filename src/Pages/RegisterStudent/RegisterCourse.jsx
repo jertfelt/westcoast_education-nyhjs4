@@ -2,24 +2,19 @@ import { useState, useEffect, useContext} from "react";
 import StudentContext from "../../Context/StudentContext";
 
 import Studentsections from "../../Components/StylingElements/StudentSections/StudentSections";
-import { useFirebase } from "../../Components/utils/useFirebase";
+
 import RegisterCourseForm from "./RegisterCourseForm";
 
 
-const RegistreringKurs = (props) => {
+const RegistreringKurs = (props, {studentsDb, courses}) => {
 const [thisStudent, setThisStudent] = useState("")
 const context = useContext(StudentContext);
-const {data} = useFirebase("/students")
-
+const data = studentsDb;
 const [errMsg, setErrMsg] = useState("")
 const [id, setID] = useState([])
 const [error, setError] =useState(false)
 const [course1, setCourse1] = useState("default")
 
-
-
-
-console.log("checking if props:", props.name)
 useEffect(() =>{
   if(data){
     if(context.studentID === "" || !context.studentID || context.studentID === []){
@@ -70,7 +65,7 @@ useEffect(() =>{
   studentid = {id}
   item = {thisStudent}
   course1 = {course1}
- 
+  allCourses = {courses}
   />}
     
   </Studentsections> );

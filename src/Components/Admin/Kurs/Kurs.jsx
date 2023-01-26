@@ -2,9 +2,9 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Section, InfoRuta, ButtonContainer, KursDetails } from "../../StylingElements/SectionsAdmin/AdminComponents";
 import KursAddOrChange from "../Forms/KursAddOrChange";
-import { useSeveralRoutesFirebase } from "../../utils/useSeveralRoutesFirebase";
 
-const Kurs = () => {
+
+const Kurs = ({coursesDB, studentsDB,teachersDB}) => {
   const {id} = useParams()
   let noId = Number(id)
   const navigate = useNavigate()
@@ -13,25 +13,24 @@ const Kurs = () => {
   const [teachers, setTeachers] = useState([])
   const [students,setStudents] = useState([])
   const [courses, setCourses] = useState([])
-  const {data1, data2, data3, error, loading} = useSeveralRoutesFirebase("/teachers", "/students", "/courses")
+
+
   useEffect(() => {
-    if(data1){
-      setTeachers(data1.map(item =>item))
+    if(teachersDB){
+      setTeachers(teachersDB.map(item =>item))
     }
-    if(data2){
-      setStudents(data2.map(item => item))
+    if(studentsDB){
+      setStudents(studentsDB.map(item => item))
     }
-    if(data3){
-      setCourses(data3.map(item => item))
+    if(coursesDB){
+      setCourses(coursesDB.map(item => item))
     }
-  }, [data1, data2, data3])
+  }, [teachersDB, studentsDB, coursesDB])
 
   return ( 
   <Section>
- 
-    {error && <p>Något är fel på servern..</p>}
-    {loading && <p>Laddar..</p>}
-    {courses && courses.filter(item => item.courseID === noId).map(item => ( 
+    {!teachersDB && !studentsDB && !coursesDB ? <p>Laddar..</p>: <>
+    {courses.filter(item => item.courseID === noId).map(item => ( 
       
     <InfoRuta key={noId}>
       {changeForm ? (
@@ -79,7 +78,7 @@ const Kurs = () => {
       </KursDetails>
     )}
     </InfoRuta>
-    ))}
+    ))}</>}
   </Section> );
 }
 export default Kurs;

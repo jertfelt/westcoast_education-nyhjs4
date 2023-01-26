@@ -40,7 +40,8 @@ const StudentPortal = () => {
   const [errmsg, setErrmsg] = useState("")
   const [showModal, setShowModal] = useState(false)
 
-  const {data,error, loading} = useFirebase(`/students/${context.studentID}/studentPassword`)
+  const {data, error} = useFirebase(`/students/${context.studentID}/studentPassword`)
+
   
   useEffect(() => {
     setName(context.studentName)
@@ -62,7 +63,7 @@ const StudentPortal = () => {
       setError(true)
       setErrmsg("Något är fel och vi kan inte nå dina uppgifter via databasen. Prova igen snart!")
     }
-  },[data,error])
+  },[data])
 
 const handleNameSubmit = (e) => {
   e.preventDefault()
@@ -103,12 +104,6 @@ const contextFunction = (
 
 const checkForChangesAndSave = (e) => {
   e.preventDefault()
-  // console.log(
-  //   "email:", newEmail,
-  //   "name:", newName,
-  //   "newpassword:" , newPassword,
-  //   "oldpassword:", password
-  // )
   if(!newEmail){
     console.log("no new email")
     setNewEmail(studentEmail)
@@ -156,7 +151,6 @@ setShowModal(true)
   <Section 
   data-testid="studentportal">
     {error2 && <h2>{errmsg}</h2>}
-    {loading && <h2>Laddar...</h2>}
     {showModal && <Modal
     title="Klart!"
     message="Ändringar sparade"
@@ -234,11 +228,8 @@ setShowModal(true)
     <Line/>
     <button className="logoutBtn" 
     onClick={context.onLogout}>Logga ut</button>
-   
     </div>
     </div>
-
-   
   </Section> );
 }
  
