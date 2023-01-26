@@ -1,16 +1,13 @@
 
-
-OM JAG HINNER:
-
-
-
 ADMIN--------------
 
 1) städa funktioner och fetch Firebase kanske bara en gång skicka som props
--- gör till context api
+
+ - DUBBELKOLLA ATT DETTA FUNGERAR ÖVERALLT! 
 
 
 5)Kursformulär:  Lärare i select option, utifrån kompetenser! 
+Ämnesområden som lista:
 <--- Finns, men koden buggar
 
 
@@ -19,12 +16,13 @@ ADMIN--------------
 
 
 Studentportal:
-3) bugg i studentportal: lösenord och email blir tomt ? 
+3) bugg i studentportal: lösenord och email blir tomt ?  <--- minns ej denna
 
 4) Laga pomofocus i studentportal
 
-
 6) filtrera asc och desc studenter på admin allKurser 
+
+
 se kod nedan:
 
 

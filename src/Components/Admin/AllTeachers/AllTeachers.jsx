@@ -15,8 +15,12 @@ const AllTeachers = ({teachers}) => {
     if(teachers){
       let comp = teachers.filter(function (teacher){
         return teacher.status !== "DELETED"}).map(item => item.competences)
-      const flatten = [].concat(...comp)
-      setCompetences(flatten)
+      
+        let flattened = comp.flat(1)
+        const noDuplicates = [...new Set(flattened)]
+        const sortedAz = noDuplicates.sort()
+  
+      setCompetences(sortedAz)
     }
   },[teachers])
 

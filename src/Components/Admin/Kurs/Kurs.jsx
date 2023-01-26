@@ -4,40 +4,36 @@ import { Section, InfoRuta, ButtonContainer, KursDetails } from "../../StylingEl
 import KursAddOrChange from "../Forms/KursAddOrChange";
 
 
-const Kurs = ({coursesDB, studentsDB,teachersDB}) => {
+const Kurs = ({coursesDB, teachersDB, competencesDB}) => {
   const {id} = useParams()
   let noId = Number(id)
   const navigate = useNavigate()
 
   const [changeForm, setChangeForm] = useState(false);
   const [teachers, setTeachers] = useState([])
-  const [students,setStudents] = useState([])
   const [courses, setCourses] = useState([])
-
 
   useEffect(() => {
     if(teachersDB){
       setTeachers(teachersDB.map(item =>item))
     }
-    if(studentsDB){
-      setStudents(studentsDB.map(item => item))
-    }
+   
     if(coursesDB){
       setCourses(coursesDB.map(item => item))
     }
-  }, [teachersDB, studentsDB, coursesDB])
+  }, [teachersDB, coursesDB])
 
   return ( 
   <Section>
-    {!teachersDB && !studentsDB && !coursesDB ? <p>Laddar..</p>: <>
+    {!teachersDB && !coursesDB ? <p>Laddar..</p>: <>
     {courses.filter(item => item.courseID === noId).map(item => ( 
       
     <InfoRuta key={noId}>
       {changeForm ? (
       <KursAddOrChange 
       typeOfForm={"changeCourse"}
-      students = {students}
       teachers = {teachers}
+      
       courses = {courses}
       title = {"Ändra:"}
       ID={noId}

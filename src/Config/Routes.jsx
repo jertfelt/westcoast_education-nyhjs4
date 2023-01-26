@@ -74,13 +74,13 @@ const Routing = ({courses, students, teachers, competences}) => {
       element={isAdminLoggedIn ?
       <Kurs
       coursesDB={courses}
-      studentsDB={students}
+      competencesDB = {competences}
       teachersDB={teachers}/>:
       <Navigate to="/admin/login"/>}/>
       <Route path="/kurser/new" element={isAdminLoggedIn ?
       <AddKurs
+      competencesDB = {competences}
       coursesDB={courses}
-      studentsDB={students}
       teachersDB={teachers}/>
       :<Navigate to="/admin/login"/>}/>
     </Route>

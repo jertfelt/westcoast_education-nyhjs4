@@ -7,12 +7,14 @@ import { getDatabase, ref, set} from "firebase/database";
 import { ButtonContainerOutsideForm } from "../../StylingElements/Form/Form";
 import { useDates } from "../../utils/useDates";
 import { ButtonContainer, PublishBtn } from "../../StylingElements/SectionsAdmin/AdminComponents";
+import { TwoColumns } from "../../StylingElements/SectionsAdmin/AdminSite";
 
-const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, onChangeForm, courseExists}) => {
+const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm, courseExists}) => {
   const navigate = useNavigate()
   const {year, nextYear} = useDates()
   const [courseID, setCourseID] = useState(ID)
   const [publishedStatus, setPublishedStatus] = useState(false)
+  const [competencesTeachers, setCompetences] = useState([])
   const [assignedStudents1, setAssignedStudents1] = useState(0)
   const [loading, setLoading] = useState(false)
   const [modalTitle, setTitle] = useState("")
@@ -23,15 +25,7 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
     if(typeOfForm === "registerNew"){
       setLoading(true)
       if(courses){
-
         setCourseID(courses.length)
-        setLoading(false)
-      }
-      if(teachers){
-
-      setLoading(false)
-      }
-      if(students){
         setLoading(false)
       }
     }
@@ -41,7 +35,18 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
         setAssignedStudents1(Number(courseExists.studentsAssigned))
       }
     }
-  },[courseExists, students,teachers, courses, typeOfForm])
+  },[courseExists, courses, typeOfForm])
+
+  useEffect(() => {
+    if(teachers){
+      let comp = teachers.filter(function (teacher){
+        return teacher.status !== "DELETED"}).map(item => item.competences)
+        let flattened = comp.flat(1)
+        const noDuplicates = [...new Set(flattened)]
+        const sortedAz = noDuplicates.sort()
+      setCompetences(sortedAz)
+    }
+  },[teachers])
 
   const courseNameRef = useRef()
   const courseDescriptionRef = useRef()
@@ -246,8 +251,8 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
           type="text"
           defaultValue={courseExists ? courseExists.lengthWeeks : "2"}
           pattern= "[0-9]+"
-          minValue="2"
-          maxValue="15"
+          minvalue="2"
+          maxvalue="15"
           ref={lengthWeeksRef}
     />
     </div>
@@ -275,6 +280,30 @@ const KursAddOrChange = ({typeOfForm, students, teachers, courses, title, ID, on
   </FormInstructions>
   
   <ButtonContainerOutsideForm>
+    <div><h3>Lista på tillgängliga kompetenser:</h3>
+  
+      <TwoColumns>
+      <ul>
+      {competencesTeachers.map((item, indx) => {
+      if(indx < competencesTeachers.length/2) return (
+        <li key={`${item}-${indx}`}>
+        {item}
+      </li>
+      )})}
+      </ul>
+      
+      <ul>
+      {competencesTeachers.map((item, indx) => {
+      if(indx >= competencesTeachers.length/2) return (
+        <li key={`${item}-${indx}`}>
+        {item}
+      </li>
+      )})}
+      </ul>
+      </TwoColumns>
+    
+    
+    </div>
 
   <ButtonContainer>
     {typeOfForm==="changeCourse" &&
