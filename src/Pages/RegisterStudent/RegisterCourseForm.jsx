@@ -5,8 +5,9 @@ import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/St
 import { useFirebase } from "../../Components/utils/useFirebase";
 import { useNavigate } from "react-router-dom";
 import ValidationModal from "../../Components/ui/Modal/ValidationModal";
-import sendStudentEditToFb, { decrementCoursesByStudent, incrementCoursesByStudent, sendCourseToStudentAndUpdate, updateCourses } from "../../firebase/useSendToFb";
+import sendStudentEditToFb, { decrementCoursesByStudent, incrementCoursesByStudent } from "../../firebase/useSendToFb";
 import ShowInfo from "./ShowInfo";
+import Modal from "../../Components/ui/Modal/Modal";
 
 
 
@@ -15,7 +16,6 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1}) => {
   const context = useContext(StudentContext);
   const [validInputs, setValidInputs] = useState(false)
   const courseInputRef = useRef()
-  
   const [studentEmail, setStudentEmail] = useState("")
   const [studentPassword, setStudentPassword] = useState("")
   const {data, error, loading} = useFirebase("/courses")
@@ -23,7 +23,7 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1}) => {
   const [warning, setWarning] = useState(false)
   const [showModal, setShowModal] = useState(false)
   const [showModal2, setShowModal2] = useState(false)
-  const [courseID1, setCourseID1] = useState("")
+  const [showModal3, setShowModal3] = useState(false)
   const [titleModal, setTitle] = useState("")
   const [messageModal, setMessage] = useState("")
   const [showCourseInfo, setShowCourseInfo ]= useState(false)
@@ -97,142 +97,60 @@ const filterNames = (name) => {
   }).map(item => item)
   return test
 }
-
-
-console.log(firstChoice)
 const prepareData = (newName, studentName, newEmail, newPassword, courses, studentID, studentLoggedIn, referenceURL) => {
  
-
   if(!firstChoice){
 
-  
-   
     console.log("null")
-    let firstChoiceNew = courseInputRef.current.value
     let chosen1 = data.filter(function (i){
       return i.courseName !== "DELETED"}).filter(function (course){
-        return course.courseName === firstChoiceNew
+        return course.courseName === courseInputRef.current.value
     }).map(item => item)
 
     let newID= Number(chosen1.map(item => item.courseID))
-
-    let courseID = newID
-    let published = (chosen1.map(item => item.published))[0]
-    let courseName = (chosen1.map(item => item.courseName))[0]
-    let lengthWeeks = (Number(chosen1.map(item => item.lengthWeeks)))
-    let courseDescription = (chosen1.map(item => item.courseDescription))[0]
-    let startDate = (chosen1.map(item => item.startDate))[0]
-    let teacherAssigned = (chosen1.map(item => item.teacherAssigned))[0]
-
-    
-    let referenceURLCourse = "/courses/" + newID
+    let courseID2 = newID
   
     incrementCoursesByStudent(
-      courseID, 
-      published,
-      lengthWeeks,
-      courseDescription,
-      courseName,
-      startDate,
-      teacherAssigned,
-      referenceURLCourse
+      courseID2, 
     )
-    
-      sendStudentEditToFb(
-        courses,
-        newEmail,
-        studentID,
-        newName,
-        newPassword,
-        referenceURL
-      )
-      let studentCourseFirstChoice = firstChoiceNew
-        contextFunction(
-          studentID, 
-          studentName,
-          studentLoggedIn,
-          studentEmail,
-          studentCourseFirstChoice
-        )
   }
   else{
-    
-    console.log(firstChoice, "chosen:", courseInputRef.current.value)
+  
     let chosen1 = filterNames(firstChoice)
     let oldID = Number(chosen1.map(item => item.courseID))
-    
-    let published1 = (chosen1.map(item => item.published))[0]
-    let lengthWeeks1 = (Number(chosen1.map(item => item.lengthWeeks)))
-    let courseDescription1 = (chosen1.map(item => item.courseDescription))[0]
-    let startDate1 = (chosen1.map(item => item.startDate))[0]
-    let courseName1 = (chosen1.map(item => item.courseName))[0]
-    let teacherAssigned1 = (chosen1.map(item => item.teacherAssigned))[0]
     let courseID1 = oldID
 
     let chosenNew = filterNames(courseInputRef.current.value)
     let newID = Number(chosenNew.map(item => item.courseID))
     let courseID2 = newID
-    let published2 = (chosen1.map(item => item.published))[0]
-    let lengthWeeks2 = (Number(chosen1.map(item => item.lengthWeeks)))
-    let courseDescription2 = (chosen1.map(item => item.courseDescription))[0]
-    let startDate2 = (chosen1.map(item => item.startDate))[0]
-    let courseName2 = (chosen1.map(item => item.courseName))[0]
-    let teacherAssigned2 = (chosen1.map(item => item.teacherAssigned))[0]
-    
-    let referenceURLCourseOLD = "/courses/" + oldID
-    let referenceURLCourseNEW = "/courses/" + newID
-  
-
-    console.log(
-      "skickas till updateCourses:", "gamla id:",
-      courseID1, 
-      published1,
-      lengthWeeks1,
-      courseDescription1,
-      courseName1,
-      startDate1,
-      teacherAssigned1,
-      referenceURLCourseOLD,
-    )
-
-    console.log(
-      "skickas till incrementCoursesByStudent",
-      referenceURLCourseNEW,
-      courseID2, 
-      published2,
-      lengthWeeks2,
-      courseDescription2,
-      courseName2,
-      startDate2,
-      teacherAssigned2,
-    )
-      
   
     incrementCoursesByStudent(
-      referenceURLCourseNEW,
       courseID2, 
-      published2,
-      lengthWeeks2,
-      courseDescription2,
-      courseName2,
-      startDate2,
-      teacherAssigned2,
     )
-
-    // decrementCoursesByStudent(
-    //   courseID1, 
-    //   published1,
-    //   lengthWeeks1,
-    //   courseDescription1,
-    //   courseName1,
-    //   startDate1,
-    //   teacherAssigned1,
-    //   referenceURLCourseOLD,
-    // )
-  
+    decrementCoursesByStudent(
+      courseID1
+    )
   }
-  
-  
+  sendStudentEditToFb(
+    courses,
+    newEmail,
+    studentID,
+    newName,
+    newPassword,
+    referenceURL
+  )
+  let studentCourseFirstChoice = courseInputRef.current.value
+  contextFunction(
+      studentID, 
+      studentName,
+      studentLoggedIn,
+      studentEmail,
+      studentCourseFirstChoice
+  )
+  setShowModal3(true)
+    setTitle("Uppdaterat")
+    setMessage("Nu är ditt val av kurs ändrat.")
+    navigate("/student")
 }
  
 const onSubmit = (e) => {
@@ -321,6 +239,11 @@ const checkInputsFirstChoice = (e) => {
     message={messageModal}
     onClickYes = {(e) => confirmingChange(e)}
     onClick = {() => setShowModal2(false)}
+    />}
+    {showModal3 && <Modal
+    title={titleModal}
+    message={messageModal}
+    onClick = {() => setShowModal3(false)}
     />}
 
     <FormInstructions
