@@ -190,22 +190,99 @@ margin-left:-5px;
 export const Filter= styled.div`
 display:flex;
 align-items: center;
+flex-direction:row;
 gap: 8px;
 label{
   color:${({ theme }) => theme.highlight};
 }
 margin-top:-1rem;
-list-style:none;
-@media (max-width: 700px){
-  flex-direction:column;
+label{
+  font-size:1rem;
 }
+select{
+  font-size:1rem;
+  appearance: none;
+  -mox-appearance: none;
+  -webkit-appearance: none;
+  background-color: white;
+  border: thin solid blue;
+  border-radius: 4px;
+  display: inline-block;
 
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+  
+  &:hover{
+    background-color: ${({ theme }) => theme.highlight};
+    border-color: ${({ theme }) => theme.highlight};
+  }
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, ${({ theme }) => theme.background} 50%),
+    linear-gradient(135deg, ${({ theme }) => theme.background} 50%, transparent 50%),
+    radial-gradient(${({ theme }) => theme.highlight} 70%, transparent 72%);
+  background-position:
+  
+    calc(100% - 20px) calc(1rem + 2px),
+    calc(100% - 15px) calc(1rem + 2px),
+    calc(100% - .5em) .5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+
+:focus{
+    background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    radial-gradient(gray 70%, transparent 72%);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    calc(100% - .5em) .5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+  border-color: green;
+  outline: 0;
+}
+}
+`
+
+export const HeadingWithFilterAdmin = styled.div`
+display:flex;
+flex-direction:column;
+align-items: center;
+@media (max-width:420px){
+align-items:flex-start;
+padding-left:2rem;
+}
 `
 
 
 // all courses:
 
 export const GridKurser = styled.div`
+padding:1rem;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+@media (max-width: 800px){
+  padding:2rem;
+  display:grid;
+  gap:2rem;
+  grid-template-columns: repeat(2, 1fr);
+}
+@media(max-width: 420px){
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:1rem;
+}
 `
 
 export const Courses = styled.div`
@@ -245,6 +322,8 @@ h2{
 text-align: flex-start;
 line-height:2rem;
 }
+
+
 `
 
 export const KursDetails = styled.div`

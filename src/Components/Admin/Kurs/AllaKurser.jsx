@@ -1,7 +1,6 @@
 import { useState } from "react";
-import { useFirebase } from "../../utils/useFirebase";
 import { Link } from "react-router-dom";
-import { Content, Courses, Filter, GridKurser } from "../../StylingElements/SectionsAdmin/AdminComponents";
+import { Content, Courses, Filter, GridKurser, HeadingWithFilterAdmin } from "../../StylingElements/SectionsAdmin/AdminComponents";
 import { useEffect } from "react";
 
 
@@ -48,6 +47,7 @@ const AllaKurser = ({courses}) => {
   <Content data-testid="allakurser">
     {!courses ? <p>Laddar..</p> : <> 
     {courses && <>
+    <HeadingWithFilterAdmin>
       <h2>Alla kurser</h2>
     <Filter>
     <label htmlFor="filterCourses">Filtrera:</label>
@@ -60,30 +60,28 @@ const AllaKurser = ({courses}) => {
             Publicerade</option>
           <option value="notpublished">
             Ej publicerade</option>
-        
       </select>
     </Filter>
+    </HeadingWithFilterAdmin>
     <GridKurser>
     {defaultView && courses.filter(function (course){
       return course.courseName !== "DELETED"
     }).map(courses => (
-      
       <Courses 
-      
       key={courses.courseID}>
         <Link 
         to={`/kurser/${courses.courseID}`}>
         <h3 
         data-testid="kurstest">
         {courses.courseName}</h3>
-        
         {courses.published ? (<>
         <p><strong>Publicerad</strong></p>
         <p>Start: {courses.startDate}</p>
         <p>Antal studenter: {courses.studentsAssigned}</p>
         </>
-        ):(<><p><strong>Ej publicerad</strong></p></>)}
-      
+        ):(<>
+        <p><strong>Ej publicerad</strong></p>
+        </>)}
         </Link>
       </Courses>
     ))}
