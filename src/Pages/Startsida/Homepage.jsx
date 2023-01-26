@@ -38,9 +38,7 @@ const HomePage = ({courses}) => {
   <Line/>
   <About >
   <h2>Våra kurser {year}</h2>
-  <GoodToKnow>
-  <p>Dessa kurser är publicerade och kommer bli av: </p></GoodToKnow>
-  {!courses && <div>Laddar..</div>}
+  {!courses && <h3>Laddar..</h3>}
     {courses &&  <>
   <Grid id="kurser">
     {courseList.filter(function (course){ 
@@ -49,18 +47,15 @@ const HomePage = ({courses}) => {
       <div
       key={course.courseID}>
         <h3>{course.courseName}</h3>
-        
         <p>{course.courseDescription}</p>
         <p>Startdatum: {course.startDate}</p>
         <Link
         to={`/student/student-kurser/register/${course.courseName}`}><button >Anmäl dig till kursen här</button></Link>
       </div>
-    )
-  })}
-
-
+    )})}
   </Grid>
-  <GoodToKnow><p>Dessa kurser är ännu inte publicerade:</p></GoodToKnow>
+  <GoodToKnow>
+    <h3>Dessa kurser är ännu inte publicerade:</h3></GoodToKnow>
   <Grid id="opublicerade">
    
    {courseList.filter(function (course){ 

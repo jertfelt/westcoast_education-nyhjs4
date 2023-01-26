@@ -10,7 +10,6 @@ const Admin = ({courses, teachers, competences}) => {
   return (
   <AdminSite
   data-testid="Admin">
- 
     <MainContent>
     <FormContainer>
       <h1>Välkommen, {context.userName}</h1>
