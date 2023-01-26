@@ -3,14 +3,11 @@
 OM JAG HINNER:
 
 
-STUDENT-----------
-
-2) Lägg in showModal och se över felet i studentportal 
-
 
 ADMIN--------------
 
 1) städa funktioner och fetch Firebase kanske bara en gång skicka som props
+-- gör till context api
 
 
 5)Kursformulär:  Lärare i select option, utifrån kompetenser! 

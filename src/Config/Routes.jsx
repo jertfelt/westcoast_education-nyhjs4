@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import AuthContext from "../Context/Auth.Context";
 import StudentContext from "../Context/StudentContext";
 
@@ -22,17 +22,21 @@ import RegisterKurs from "../Components/RegisterKursParam/RegisterKursParam";
 import RegistreringKurs from "../Pages/RegisterStudent/RegisterCourse";
 import StudentPortal from "../Pages/StudentPortal/StudentPortal"
 import LoginStudent from "../Pages/LoginStudent/LoginStudent";
+import { useState } from "react";
 
-const Routing = () => {
+const Routing = ({courses, students, teachers, competences}) => {
   const contextAdmin = useContext(AuthContext)
   const contextStudent = useContext(StudentContext)
   const isAdminLoggedIn = contextAdmin.loggedIn
   const isStudentLoggedIn = contextStudent.studentLoggedIn
 
+
   return (   
   <Routes>
     <Route path="/" 
-    element={<HomePage/>}/>
+    element={<HomePage 
+    courses = {courses}/>}
+    />
 
     <Route path="/admin/login"
     element={<Login/>}/>

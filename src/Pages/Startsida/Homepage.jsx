@@ -3,9 +3,11 @@ import { Link } from "react-router-dom";
 import { useFirebase } from "../../Components/utils/useFirebase";
 import {Intro, TwoColumns, Column, About, Grid, GoodToKnow} from "./HomepageStyles.jsx"
 
-const HomePage = () => {
+const HomePage = ({courses}) => {
   const year = new Date().getFullYear();
   const {data,loading} = useFirebase("/courses");
+  console.log("testing route:", courses)
+  const courseList = courses;
   
   return ( 
   <section data-testid="homepage">
@@ -37,10 +39,12 @@ const HomePage = () => {
   <Line/>
   <About >
   <h2>Våra kurser {year}</h2>
-  {loading && <div>Laddar..</div>}
-    {data && 
+  <GoodToKnow>
+  <p>Dessa kurser är publicerade och kommer bli av: </p></GoodToKnow>
+  {!courses && <div>Laddar..</div>}
+    {courses &&  <>
   <Grid id="kurser">
-    {data.filter(function (course){ 
+    {courseList.filter(function (course){ 
       return course.published === true}).map(function (course){
     return (
       <div
@@ -55,7 +59,29 @@ const HomePage = () => {
     )
   })}
 
+
   </Grid>
+  <GoodToKnow><p>Dessa kurser är ännu inte publicerade:</p></GoodToKnow>
+  <Grid id="opublicerade">
+   
+   {courseList.filter(function (course){ 
+      return course.published !== true}).map(function (course){
+    return (
+      <div
+      key={course.courseID}>
+        <h3>{course.courseName}</h3>
+        <p>Antal studenter anmälda: {course.studentsAssigned}/5</p>
+        <p>5 studenter behövs för att kursen ska bli publicerad. Anmäl dig idag om du är intresserad!</p>
+        <p>{course.courseDescription}</p>
+        <p>Startdatum: {course.startDate}</p>
+        <Link
+        to={`/student/student-kurser/register/${course.courseName}`}><button >Anmäl dig till kursen här</button></Link>
+      </div>
+    )
+  })}
+
+  </Grid>
+  </>
 }
   <GoodToKnow>
   <h3>Bra att veta:</h3>

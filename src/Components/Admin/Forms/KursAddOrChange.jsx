@@ -3,7 +3,7 @@ import ValidationModal from "../../ui/Modal/ValidationModal";
 import Modal from "../../ui/Modal/Modal";
 import { useNavigate } from "react-router-dom";
 import {useRef,useEffect,useState} from "react"
-import { getDatabase, ref, set, remove, update } from "firebase/database";
+import { getDatabase, ref, set} from "firebase/database";
 import { ButtonContainerOutsideForm } from "../../StylingElements/Form/Form";
 import { useDates } from "../../utils/useDates";
 import { ButtonContainer, PublishBtn } from "../../StylingElements/SectionsAdmin/AdminComponents";

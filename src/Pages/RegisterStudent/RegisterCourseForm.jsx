@@ -4,7 +4,7 @@ import { FormInstructions } from "../../Components/StylingElements/Form/Form";
 import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { useFirebase } from "../../Components/utils/useFirebase";
 import { useNavigate } from "react-router-dom";
-import ValidationModal from "../../Components/ui/Modal/ValidationModal";
+
 import sendStudentEditToFb, { decrementCoursesByStudent, incrementCoursesByStudent } from "../../firebase/useSendToFb";
 import ShowInfo from "./ShowInfo";
 import Modal from "../../Components/ui/Modal/Modal";
@@ -21,8 +21,7 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1}) => {
   const {data, error, loading} = useFirebase("/courses")
   const [firstChoice, setFirst] = useState("")
   const [warning, setWarning] = useState(false)
-  const [showModal, setShowModal] = useState(false)
-  const [showModal2, setShowModal2] = useState(false)
+
   const [showModal3, setShowModal3] = useState(false)
   const [titleModal, setTitle] = useState("")
   const [messageModal, setMessage] = useState("")
@@ -68,11 +67,6 @@ useEffect(() => {
 },[firstChoice])
 
 
-const confirmingChange = (e) => {
-  e.preventDefault()
-  setShowModal(false)
-  prepareData()
-}
 
 const contextFunction = (
   studentID, 
@@ -199,18 +193,6 @@ notPublished.forEach(array => {
 )
 }
 
-const confirming = (e) => {
-  e.preventDefault()
-  setValidInputs(true)
-  setShowModal(false)
-}
-
-const notConfirming = (e) => {
-  e.preventDefault()
-  setValidInputs(false)
-  setShowModal(false)
-}
-
 
 const checkInputsFirstChoice = (e) => {
   e.preventDefault()
@@ -222,24 +204,12 @@ const checkInputsFirstChoice = (e) => {
     
 }}
 
-// 
 
 
 
   return ( 
   <StudentContainer>
-    {showModal && <ValidationModal
-    title={titleModal}
-    message={messageModal}
-    onClickYes = {(e) => confirming(e)}
-    onClick = {(e) => notConfirming(e)}
-    />}
-     {showModal2 && <ValidationModal
-    title={titleModal}
-    message={messageModal}
-    onClickYes = {(e) => confirmingChange(e)}
-    onClick = {() => setShowModal2(false)}
-    />}
+    
     {showModal3 && <Modal
     title={titleModal}
     message={messageModal}

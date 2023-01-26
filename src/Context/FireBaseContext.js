@@ -1,13 +1,10 @@
-import { useContext, createContext } from "react";
+import { createContext } from "react";
 
-export const FirebaseContext = createContext()
+const FirebaseContext = createContext(null);
 
-export const useFirebase = () => {
-  const firebaseContext = useContext(FirebaseContext)
-  if( firebaseContext === undefined){
-    throw new Error(
-      "useFirebase must be used within a FirebaseCotnext.Provider"
-    )
-  }
-  return firebaseContext
-}
+export const withFirebase = Component => props => (
+  <FirebaseContext.Consumer>
+    {firebase => <Component { ...props } firebase={ firebase } />}
+  </FirebaseContext.Consumer>
+);
+export default FirebaseContext;
