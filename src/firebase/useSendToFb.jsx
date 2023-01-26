@@ -48,7 +48,7 @@ export const sendCourseToStudentAndUpdate = (courseID,
 
 }
 
-export const updateCourses = (     courseID1, 
+export const decrementCoursesByStudent = (     courseID1, 
   published1,
   lengthWeeks1,
   courseDescription1,
@@ -71,27 +71,36 @@ export const updateCourses = (     courseID1,
 
 }
 
-export const sendCoursesToStudentAndUpdate =    (     
+export const incrementCoursesByStudent =    (     
   referenceURLCourseNEW,
-  courseID2, 
-  published2,
-  lengthWeeks2,
-  courseDescription2,
-  courseName2,
-  startDate2,
-  teacherAssigned2,) => {
+      courseID2, 
+      published2,
+      lengthWeeks2,
+      courseDescription2,
+      courseName2,
+      startDate2,
+      teacherAssigned2,) => {
   const db = getDatabase()
-  const refDb = ref(db, referenceURLCourseNEW)
-  set(refDb, {
-    courseID: courseID2,
-    published: published2,
-    lengthWeeks: lengthWeeks2,
-    courseDescription : courseDescription2,
-    courseName: courseName2,
-    startDate: startDate2,
-    studentsAssigned: increment(1),
-    teacherAssigned: teacherAssigned2,
-  })
+  console.log(
+    referenceURLCourseNEW,
+    courseID2, 
+    published2,
+    lengthWeeks2,
+    courseDescription2,
+    courseName2,
+    startDate2,
+    teacherAssigned2,
+  )
+  // set(ref(db,"/courses/" + courseID2) , {
+  //   courseID: courseID2,
+  //   published: published2,
+  //   lengthWeeks: lengthWeeks2,
+  //   courseDescription : courseDescription2,
+  //   courseName: courseName2,
+  //   startDate: startDate2,
+  //   studentsAssigned: increment(1),
+  //   teacherAssigned: teacherAssigned2,
+  // })
   
 
 }

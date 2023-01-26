@@ -5,7 +5,7 @@ import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/St
 import { useFirebase } from "../../Components/utils/useFirebase";
 import { useNavigate } from "react-router-dom";
 import ValidationModal from "../../Components/ui/Modal/ValidationModal";
-import sendStudentEditToFb, { sendCourseToStudentAndUpdate, updateCourses } from "../../firebase/useSendToFb";
+import sendStudentEditToFb, { decrementCoursesByStudent, incrementCoursesByStudent, sendCourseToStudentAndUpdate, updateCourses } from "../../firebase/useSendToFb";
 import ShowInfo from "./ShowInfo";
 
 
@@ -99,11 +99,13 @@ const filterNames = (name) => {
 }
 
 
-
+console.log(firstChoice)
 const prepareData = (newName, studentName, newEmail, newPassword, courses, studentID, studentLoggedIn, referenceURL) => {
  
 
   if(!firstChoice){
+
+  
    
     console.log("null")
     let firstChoiceNew = courseInputRef.current.value
@@ -125,7 +127,7 @@ const prepareData = (newName, studentName, newEmail, newPassword, courses, stude
     
     let referenceURLCourse = "/courses/" + newID
   
-    sendCourseToStudentAndUpdate(
+    incrementCoursesByStudent(
       courseID, 
       published,
       lengthWeeks,
@@ -136,22 +138,22 @@ const prepareData = (newName, studentName, newEmail, newPassword, courses, stude
       referenceURLCourse
     )
     
-      // sendStudentEditToFb(
-      //   courses,
-      //   newEmail,
-      //   studentID,
-      //   newName,
-      //   newPassword,
-      //   referenceURL
-      // )
-      // let studentCourseFirstChoice = firstChoiceNew
-      //   contextFunction(
-      //     studentID, 
-      //     studentName,
-      //     studentLoggedIn,
-      //     studentEmail,
-      //     studentCourseFirstChoice
-      //   )
+      sendStudentEditToFb(
+        courses,
+        newEmail,
+        studentID,
+        newName,
+        newPassword,
+        referenceURL
+      )
+      let studentCourseFirstChoice = firstChoiceNew
+        contextFunction(
+          studentID, 
+          studentName,
+          studentLoggedIn,
+          studentEmail,
+          studentCourseFirstChoice
+        )
   }
   else{
     
@@ -177,23 +179,12 @@ const prepareData = (newName, studentName, newEmail, newPassword, courses, stude
     let courseName2 = (chosen1.map(item => item.courseName))[0]
     let teacherAssigned2 = (chosen1.map(item => item.teacherAssigned))[0]
     
-    let referenceURLCourseOLD = "/test/" + oldID
-    let referenceURLCourseNEW = "/test/" + newID
+    let referenceURLCourseOLD = "/courses/" + oldID
+    let referenceURLCourseNEW = "/courses/" + newID
   
-  
-  
-    sendCourseToStudentAndUpdate(
-      referenceURLCourseNEW,
-      courseID2, 
-      published2,
-      lengthWeeks2,
-      courseDescription2,
-      courseName2,
-      startDate2,
-      teacherAssigned2,
-    )
 
-    updateCourses(
+    console.log(
+      "skickas till updateCourses:", "gamla id:",
       courseID1, 
       published1,
       lengthWeeks1,
@@ -204,30 +195,44 @@ const prepareData = (newName, studentName, newEmail, newPassword, courses, stude
       referenceURLCourseOLD,
     )
 
-    
-      // sendStudentEditToFb(
-      //   courses,
-      //   newEmail,
-      //   studentID,
-      //   newName,
-      //   newPassword,
-      //   referenceURL
-      // )
-      // let studentCourseFirstChoice = courseInputRef.current.value
-      //   contextFunction(
-      //     studentID, 
-      //     studentName,
-      //     studentLoggedIn,
-      //     studentEmail,
-      //     studentCourseFirstChoice
-      //   )
+    console.log(
+      "skickas till incrementCoursesByStudent",
+      referenceURLCourseNEW,
+      courseID2, 
+      published2,
+      lengthWeeks2,
+      courseDescription2,
+      courseName2,
+      startDate2,
+      teacherAssigned2,
+    )
+      
   
-  
-  
+    incrementCoursesByStudent(
+      referenceURLCourseNEW,
+      courseID2, 
+      published2,
+      lengthWeeks2,
+      courseDescription2,
+      courseName2,
+      startDate2,
+      teacherAssigned2,
+    )
+
+    // decrementCoursesByStudent(
+    //   courseID1, 
+    //   published1,
+    //   lengthWeeks1,
+    //   courseDescription1,
+    //   courseName1,
+    //   startDate1,
+    //   teacherAssigned1,
+    //   referenceURLCourseOLD,
+    // )
   
   }
   
-  //  navigate("/student")
+  
 }
  
 const onSubmit = (e) => {
