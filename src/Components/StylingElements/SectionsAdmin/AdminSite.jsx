@@ -3,6 +3,9 @@ import styled from "styled-components";
 
 
 const AdminSite = styled.section`
+@media (max-width:600px){
+  padding:0;
+}
 padding:2rem;
 h1{
   font-family: Mukta; 

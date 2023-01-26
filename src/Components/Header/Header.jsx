@@ -22,6 +22,11 @@ nav{
 h1 a{
   color:${({ theme }) => theme.text};
 }
+@media (max-width:600px){
+  display:flex;
+  flex-direction:row;
+  padding:0.5rem;
+}
 
 `
 

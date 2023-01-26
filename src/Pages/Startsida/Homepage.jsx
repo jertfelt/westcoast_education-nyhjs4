@@ -1,6 +1,5 @@
 import {Line} from "../../Components/StylingElements/Line/Line"
 import { Link } from "react-router-dom";
-import { useFirebase } from "../../Components/utils/useFirebase";
 import {Intro, TwoColumns, Column, About, Grid, GoodToKnow} from "./HomepageStyles.jsx"
 
 const HomePage = ({courses}) => {
