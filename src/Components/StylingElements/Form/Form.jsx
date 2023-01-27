@@ -156,20 +156,34 @@ button{
     ${props => 
       props.studentCourses && 
       css`
+      background: ${({ theme }) => theme.toggleBorder};
+      border-radius: 29px;
+      max-width:60%;
       display:flex;
       flex-direction:column;
       align-items:center;
-      padding:0;
+      padding:1rem;
+      padding-bottom:2rem;
       justify-content:center;
+      .disabled{
+        display:none;
+      }
+      .enabled{
+        align-self:center;
+        opacity: 1;
+        cursor:pointer;
+      }
+
       input[type="submit"] {
         padding: 6px 8px;
-        background: ${({ theme }) => theme.highlight};
+        color: ${({ theme }) => theme.link};
+        background: ${({ theme }) => theme.background};
         border:none;
         border-radius:30px;
           &:hover{
             color: ${({ theme }) => theme.background};
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            background: ${({ theme }) => theme.accent};
+            background: ${({ theme }) => theme.highlight};
           }
         cursor: pointer;
         max-width:30%;
@@ -198,9 +212,10 @@ button{
           text-align:center;
         }
       }
-      padding:0;
+      
       @media (max-width: 800px){
         width:100%;
+        background:transparent;
       `}
     }
 `

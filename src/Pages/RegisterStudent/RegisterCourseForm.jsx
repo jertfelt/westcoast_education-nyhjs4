@@ -324,7 +324,7 @@ const checkInputsFirstChoice = (e) => {
   </ColumnTwo>
   </TwoColumns>
     
-   <GobackButton className="centered"
+   <GobackButton 
               onClick={() => navigate(-1)}>Gå tillbaka</GobackButton>
 
       {warning && !item.published && <Modal

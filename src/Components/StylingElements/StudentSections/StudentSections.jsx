@@ -27,29 +27,20 @@ justify-content:space-between;
 export const StudentContainer = styled.div`
 background: ${({ theme }) => theme.buttonText};
 color: ${({ theme }) => theme.background};
-label{
-  color:${({ theme }) => theme.background};
-}
 
-.disabled{
-  display:none;
-}
-.enabled{
-  align-self:center;
-  opacity: 1;
-  cursor:pointer;
-}
+
+
 padding:2rem;
 display:flex;
 flex-direction:column;
 align-items: center;
-
-gap:2rem;
+gap:1rem;
 max-width:800px;
 width:100%;
 border-radius:9px;
 @media (max-width: 800px){
- padding:0rem;
+padding:0rem;
+gap:0;
   padding-bottom:2rem;
   div{
     width:100%;
