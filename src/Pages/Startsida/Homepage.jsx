@@ -2,9 +2,9 @@ import {Line} from "../../Components/StylingElements/Line/Line"
 import { Link } from "react-router-dom";
 import {Intro, TwoColumns, Column, About, Grid, GoodToKnow} from "./HomepageStyles.jsx"
 
-const HomePage = ({courses}) => {
+const HomePage = ({courses, studentsDb}) => {
   const year = new Date().getFullYear();
-  console.log("testing route:", courses)
+ 
   const courseList = courses;
   
   return ( 

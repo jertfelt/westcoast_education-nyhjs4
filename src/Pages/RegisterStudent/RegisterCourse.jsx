@@ -6,22 +6,24 @@ import Studentsections from "../../Components/StylingElements/StudentSections/St
 import RegisterCourseForm from "./RegisterCourseForm";
 
 
-const RegistreringKurs = (props, {studentsDb, courses}) => {
+const RegistreringKurs = ({name, studentsDb, courses}) => {
 const [thisStudent, setThisStudent] = useState("")
 const context = useContext(StudentContext);
-const data = studentsDb;
+
 const [errMsg, setErrMsg] = useState("")
 const [id, setID] = useState([])
 const [error, setError] =useState(false)
 const [course1, setCourse1] = useState("default")
 
+console.log("testing route:", studentsDb)
+
 useEffect(() =>{
-  if(data){
+  if(studentsDb){
     if(context.studentID === "" || !context.studentID || context.studentID === []){
-      let check = data.filter(function (student){
+      let check = studentsDb.filter(function (student){
         return student.studentEmail === context.studentEmail})
       if (check.length === 1){
-        setThisStudent(data.filter(function (student){
+        setThisStudent(studentsDb.filter(function (student){
           return student.studentEmail === context.studentEmail}).map(item => item))
           let iddb = check.map(item => item.studentID)
           setID(iddb[0])
@@ -45,29 +47,26 @@ useEffect(() =>{
         
     }
     else{
-      let studentsMatching = data.filter(function (stud){return stud.studentID === Number(context.studentID)})
+      let studentsMatching = studentsDb.filter(function (stud){return stud.studentID === Number(context.studentID)})
       setThisStudent(studentsMatching)
       let idContext = Number(context.studentID)
       setID(idContext)
       setCourse1(studentsMatching.map(item => item.courses))
     }
   }
-}, [data, id, context.studentID, context.studentEmail, context.studentName])
-
-
+}, [studentsDb, id, context.studentID, context.studentEmail, context.studentName])
 
   return ( 
   <Studentsections 
   data-testid="RegisterStudentKurs">
-  {error ? <p>{errMsg}</p>: 
-  <RegisterCourseForm 
-  ifDirected = {props.name}
-  studentid = {id}
-  item = {thisStudent}
-  course1 = {course1}
-  allCourses = {courses}
-  />}
-    
+    {error ? <p>{errMsg}</p>: 
+    <RegisterCourseForm 
+    ifDirected = {name}
+    studentid = {id}
+    item = {thisStudent}
+    course1 = {course1}
+    allCourses = {courses}
+    />}
   </Studentsections> );
 }
  

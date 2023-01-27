@@ -30,11 +30,11 @@ const Routing = ({courses, students, teachers, competences}) => {
   const isAdminLoggedIn = contextAdmin.loggedIn
   const isStudentLoggedIn = contextStudent.studentLoggedIn
 
-
   return (   
   <Routes>
     <Route path="/" 
     element={<HomePage 
+      studentsDb = {students}
     courses = {courses}/>}
     />
 
@@ -53,17 +53,22 @@ const Routing = ({courses, students, teachers, competences}) => {
     students= {students}/>}/> 
 
     <Route path="/student" 
-    element={isStudentLoggedIn ? <StudentPortal/>: <Navigate to="/student/login"/>}/>
+    element={isStudentLoggedIn ? <StudentPortal 
+      studentsDb = {students}
+      coures = {courses}/>: <Navigate to="/student/login"/>}/>
 
     <Route path="/student/student-kurser/register">
       <Route index element={isStudentLoggedIn ? 
       <RegistreringKurs
       studentsDb = {students}
-      coures = {courses}
+      courses = {courses}
       />: 
       <Navigate to="/student/login"/>}/> 
       <Route path=":id" 
-      element={isStudentLoggedIn ? <RegisterKurs/>: 
+      element={isStudentLoggedIn ? 
+      <RegisterKurs
+        studentsDb = {students}
+        courses = {courses}/>: 
       <Navigate to="/student/login"/>}/>
     </Route> 
 
@@ -86,7 +91,8 @@ const Routing = ({courses, students, teachers, competences}) => {
     </Route>
 
     <Route path="/larare">
-      <Route index element={isAdminLoggedIn ?<Admin/>:
+      <Route index element={isAdminLoggedIn ?
+      <Admin/>:
       <Navigate to="/admin/login"/>}/>
       <Route path=":id" element={isAdminLoggedIn ?
       <Teacher
