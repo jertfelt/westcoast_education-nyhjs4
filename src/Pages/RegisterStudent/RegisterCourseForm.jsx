@@ -1,11 +1,12 @@
 import { useState, useRef, useContext, useEffect} from "react";
 import StudentContext from "../../Context/StudentContext";
 import { FormInstructions } from "../../Components/StylingElements/Form/Form";
-import {IfAlreadyExists, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
+import {ColumnTwo, IfAlreadyExists, Introduction, Show, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { useNavigate } from "react-router-dom";
 import sendStudentEditToFb, { decrementCoursesByStudent, incrementCoursesByStudent } from "../../firebase/useSendToFb";
 import ShowInfo from "./ShowInfo";
 import Modal from "../../Components/ui/Modal/Modal";
+import { GobackButton } from "../../Components/StylingElements/Buttons/MenuButton";
 
 
 
@@ -208,38 +209,43 @@ const checkInputsFirstChoice = (e) => {
 
   return ( 
   <StudentContainer>
-    
     {showModal3 && <Modal
     title={titleModal}
     message={messageModal}
     onClick = {() => setShowModal3(false)}
     />}
-
-    <FormInstructions
-    onSubmit={onSubmit}>
-    <h1 data-testid ="welcome">{context.studentName}</h1>
-    {noFirst && <h2>Du är inte anmäld till någon kurs!</h2>}
+    <Introduction>
     {!data && <h2>Laddar...</h2>}
-    
-     
-    <TwoColumns
-    largergap>
+   
+    <h1 data-testid ="welcome">Välkommen {context.studentName}</h1>
+   
+    <TwoColumns>
     {data && <div>
-      
       {!noFirst && 
       <IfAlreadyExists>
-        <h3>Du är anmäld till:</h3>
         {data && data.filter(function (i){
             return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === firstChoice}).map((item, indx) => (
-        <ShowInfo 
-        key={`${indx}-${item.courseID}-${indx}${indx}-${indx}`}
-        courses = {item}
-        />))}
+            <div className="exists"
+            key={`${indx}-${item.courseID}-${indx}${indx}-${indx}`}>
+              <h3>Du {!showCourseInfo ? "är": "var"} anmäld till:<br/>{item.courseName}</h3>
+              <ShowInfo 
+                courses = {item}/>
+                </div>
+        ))}
       </IfAlreadyExists>
-    }
-        </div>} 
-        <div>
-      {showCourseInfo && <div>
+    }</div>} 
+    {noFirst && 
+    <IfAlreadyExists >
+        <h3>Anmäl dig till kurser!</h3>
+          <p> Alla våra utbildningar ges på distans i vår digitala kursportal. Du kan befinna dig var som helst, webbutbildning när du har tid. </p>
+      </IfAlreadyExists>}
+    </TwoColumns>
+  </Introduction>
+  <TwoColumns>
+    <FormInstructions
+    studentCourses
+    onSubmit={onSubmit}>
+        {showCourseInfo && <IfAlreadyExists>
       <h3>Nytt val:</h3>
       {data && data.filter(function (i){
         return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === courseInputRef.current.value}).map((item, indx) => (
@@ -247,13 +253,9 @@ const checkInputsFirstChoice = (e) => {
         key={`${indx}-3333-${indx}${indx}-${indx}`}
         courses = {item}
         />))}
-    </div>}
-    
-      </div>
-        
-        </TwoColumns>
-        <div className="Row">
-      
+    </IfAlreadyExists>}
+
+        <div className="selecting">
       <label htmlFor="firstChoice">
         Välj ny kurs här:</label>
       <select 
@@ -263,7 +265,8 @@ const checkInputsFirstChoice = (e) => {
       required
       onChange={(e) => checkInputsFirstChoice(e)}
       >
-        {ifDirected && <><option 
+        {ifDirected && <>
+        <option 
         value={ifDirected} 
         data-testid="optionDefault2"
         label={ifDirected}/>
@@ -302,21 +305,33 @@ const checkInputsFirstChoice = (e) => {
         </>}
       </select>
       </div> 
-        {warning && !item.published && <div><h3>OBS! </h3>
-        <p className="instructions">
-        Kursen du valt är inte publicerad ännu, det behövs vara minst fem studenter anmälda. <br/>
-        Vi hör av oss i god tid till din mail innan om ditt val inte startar.</p>
-        </div>
-        }
-
+     
+    
+    {!warning && 
         <input
       className={validInputs ? "enabled" :"disabled"}
       type="submit"
       value="Skicka"
       />
-      
-      
+    }
     </FormInstructions>
+
+    <ColumnTwo>
+    <div>
+    <h3>Bra att veta:</h3>
+    <p>När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med betalningsuppgifter och ett välkomstmeddelande. Skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste vi tyvärr av ekonomiska skäl boka av kursen. </p>
+    </div>
+  </ColumnTwo>
+  </TwoColumns>
+    
+   <GobackButton className="centered"
+              onClick={() => navigate(-1)}>Gå tillbaka</GobackButton>
+
+      {warning && !item.published && <Modal
+      title="OBS"
+      message="Kursen du valt är inte publicerad ännu, det behöver vara minst fem studenter anmälda. Du får fortfarande anmäla dig till kursen, men skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste vi tyvärr av ekonomiska skäl boka av kursen. " 
+      onClick={() => setWarning(false)}/>
+    }
   </StudentContainer> );
 }
  

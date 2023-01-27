@@ -48,6 +48,37 @@ padding:2rem;
 
 @media screen and (max-width: 700px) {
   padding:1rem;}
+  
+`
+export const Images = styled.div`
+padding-top:2rem;
+display:flex;
+gap:1rem;
+img{width: 50%;}
+@media (max-width:800px){
+  flex-direction:column;
+  img{width: 100%;}
+}
+`
+export const Reviews = styled.div`
+display:grid;
+max-width: 1200px;
+margin: 0 auto;
+gap: 1rem;
+div{
+  max-width:300px;
+}
+@media (min-width:800px){
+  grid-template-columns: repeat(3, 1fr);
+}
+h3{
+  color: ${({ theme }) => theme.accent};
+  line-height:0;
+  font-size:1.6rem;
+}
+padding-bottom:3rem;
+padding-top: 3rem;
+
 `
 export const GoodToKnow = styled.div`
 display:flex;

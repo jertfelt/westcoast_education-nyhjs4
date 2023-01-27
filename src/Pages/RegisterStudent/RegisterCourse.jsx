@@ -67,6 +67,7 @@ useEffect(() =>{
     course1 = {course1}
     allCourses = {courses}
     />}
+    
   </Studentsections> );
 }
  

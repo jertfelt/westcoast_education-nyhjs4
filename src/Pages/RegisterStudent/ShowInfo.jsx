@@ -1,16 +1,14 @@
 const ShowInfo = ({courses}) => {
   return ( 
     <div>
-      <h4>{courses.courseName}</h4>
       
-      <p>Start: {courses.startDate} </p>
-      {!courses.published && courses.studentsAssigned <5 && 
-              
-    <p>Just nu: {courses.studentsAssigned}/5 studenter</p>
-                }
-    <p>Längd i veckor: {courses.lengthWeeks} </p>
-    <p>Lärare: {courses.teacherAssigned}</p>
-     </div>
+      <p>Start: {courses.startDate} <br/>
+      {!courses.published && courses.studentsAssigned <5 &&         
+      <>Just nu: {courses.studentsAssigned}/5 studenter<br/></>
+      }
+      Längd i veckor: {courses.lengthWeeks} <br/>
+      Lärare: {courses.teacherAssigned}</p>
+    </div>
    );
 }
  

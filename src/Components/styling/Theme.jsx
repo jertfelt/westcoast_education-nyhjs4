@@ -18,10 +18,12 @@ export const lightTheme = {
   accent: "#b86dd6",
   highlight: "#cbb1e1",
   link :"#FFF",
+  inverText : "white"
 }
 
 export const darkTheme = {
   body: '#363537',
+  inverText : "black",
   text: "white",
   buttonText: "#e2e2e2",
   toggleBorder: "#67b3c1",

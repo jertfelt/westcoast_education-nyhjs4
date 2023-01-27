@@ -1,30 +1,50 @@
 import styled, { css } from "styled-components";
 
- const Form = styled.form`
+const Form = styled.form`
 padding:2rem;
 h1{
-  align-self:center;
+  padding-top:1rem;
   font-size:2rem;
   line-height:1rem;
   @media (max-width: 600px){
     line-height:1.8rem;
-    font-size:1.8rem;
   }
+  text-align:center;
 }
 display:flex;
 flex-direction:column;
 gap:20px;
 font-family: Sofia Sans;
-
-
+p{
+  font-size:1.2rem;
+}
 @media (max-width: 700px){
   padding:0px;
+  gap:0;
+  align-items:center;
+  width:100%;
+  min-width:300px;
+  max-width:600px;
 }
 `
 
 export const FormInstructions = styled(Form)`
 padding-bottom:0;
 font-family: Sofia Sans;
+width:100%;
+
+h3,h2{
+  font-size:2rem;
+  @media (max-width:800px){
+    font-size:1.5rem;
+  }
+}
+h4{
+  font-size:1.5rem;
+  @media (max-width: 500px){
+    font-size:1.2rem;
+  }
+}
 
 button{
   padding: 4px 8px;
@@ -44,7 +64,6 @@ button{
     @media (max-width: 700px){
       padding:1px;
     }
-
 }
 
 .instructions{
@@ -132,7 +151,58 @@ button{
     justify-content:space-around;
     text-align:end;
     p{font-size:1rem;}
-     `}
+    `}
+
+    ${props => 
+      props.studentCourses && 
+      css`
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      padding:0;
+      justify-content:center;
+      input[type="submit"] {
+        padding: 6px 8px;
+        background: ${({ theme }) => theme.highlight};
+        border:none;
+        border-radius:30px;
+          &:hover{
+            color: ${({ theme }) => theme.background};
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            background: ${({ theme }) => theme.accent};
+          }
+        cursor: pointer;
+        max-width:30%;
+        font-family: Sofia Sans;
+        text-align:center;
+        :disabled{
+          display:none;
+        }
+      }
+
+      .selecting{
+        display:flex;
+        flex-direction:column;
+        label{
+          text-align:center;
+          background: ${({ theme }) => theme.background};
+          padding:10px;
+          color: ${({ theme }) => theme.link};
+        }
+        select{
+          border-color: ${({ theme }) => theme.background};
+          padding: 10px;
+          color: ${({ theme }) => theme.background};
+          font-size: 1rem;
+         
+          text-align:center;
+        }
+      }
+      padding:0;
+      @media (max-width: 800px){
+        width:100%;
+      `}
+    }
 `
 
 

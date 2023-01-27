@@ -7,6 +7,7 @@ justify-content:center;
 align-items: center;
 padding:1rem;
 min-height:80vh;
+
 `
 
 export const ButtonDiv = styled.div`
@@ -24,13 +25,12 @@ justify-content:space-between;
 }`
 
 export const StudentContainer = styled.div`
-background: ${({ theme }) => theme.background};
-color: ${({ theme }) => theme.body};
-
+background: ${({ theme }) => theme.buttonText};
+color: ${({ theme }) => theme.background};
 label{
-  color:${({ theme }) => theme.toggleBorder};
+  color:${({ theme }) => theme.background};
 }
-padding:1rem;
+
 .disabled{
   display:none;
 }
@@ -39,13 +39,72 @@ padding:1rem;
   opacity: 1;
   cursor:pointer;
 }
+padding:2rem;
+display:flex;
+flex-direction:column;
+align-items: center;
 
+gap:2rem;
+max-width:800px;
+width:100%;
+border-radius:9px;
+@media (max-width: 800px){
+ padding:0rem;
+  padding-bottom:2rem;
+  div{
+    width:100%;
+  }
+}
+`
+
+export const ColumnTwo = styled.div`
+height:100%;
+background: ${({ theme }) => theme.background};
+color: ${({ theme }) => theme.link};
+padding: 1rem;
+display:flex;
+flex-direction: column;
+align-items:center;
+justify-content:center;
+border-radius:29px;
+max-width:30%;
+h2{
+  text-align:center;
+  line-height:1rem;
+}
+h3{
+  line-height:1rem;
+}
+div{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  h4{font-size:1.2rem;
+  margin-bottom:-.5rem;}
+  h3{
+    margin-bottom:-.5rem;
+  }
+}
+@media (max-width: 800px){
+  max-width:80%;
+  div{
+    width:100%;
+    padding:1rem;
+  }
+}
 `
 
 export const TwoColumns = styled.div`
 display:flex;
 flex-direction:row;
+align-items:center;
 gap: 1rem;
+@media (max-width: 800px){
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
 ${props => 
   props.largergap && 
   css`
@@ -53,9 +112,29 @@ ${props =>
   gap:3rem;
   text-align:end;
   p{font-size:1rem;}
-   `}
+  @media (max-width: 800px){
+    display:flex;
+    flex-direction:column;
+    width:100%;
+  }
+  `}
+
 `
  
+
+export const Introduction = styled.div`
+margin: 0 auto;
+padding:0;
+h1{
+  text-align:center;
+  font-size:2rem;
+}
+font-family: Sofia Sans;
+h3{
+  font-size:1.5rem;
+  color: ${({ theme }) => theme.background};
+}
+`
 
 
 export const QuestionDiv = styled.div`
@@ -96,7 +175,6 @@ justify-content:center;
 align-items:center;
 max-width:800px;
 ` 
-
 export const ContentLoginRegister = styled.div`
 min-height:50vh;
 background:${({ theme }) => theme.background};
@@ -299,8 +377,45 @@ input[type=submit], button{
 `
 
 export const IfAlreadyExists = styled.div`
+display:flex;
+flex-direction:row;
+justify-content:space-around;
+align-items:center;
 text-align:left;
-padding-bottom:2rem;
+
+h3{
+  padding-right:2rem;
+}
+div{
+
+  p{
+    font-size:1.2rem;
+  }
+}
+.exists{
+h3{
+  padding-right:2rem;
+}
+display:flex;
+flex-direction:row;
+justify-content:space-around;
+align-items:center;
+text-align:left;
+@media (max-width:800px){
+  h3{
+    margin-top:-.5rem;
+    font-size:2rem;
+    padding:0;
+    margin-bottom:-.5rem;
+  }
+  flex-direction:column;
+  
+  p,h3{
+    text-align:center;
+  }
+}
+}
+ 
 `
 
 export default Studentsections

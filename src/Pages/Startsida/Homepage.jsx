@@ -1,6 +1,6 @@
 import {Line} from "../../Components/StylingElements/Line/Line"
 import { Link } from "react-router-dom";
-import {Intro, TwoColumns, Column, About, Grid, GoodToKnow} from "./HomepageStyles.jsx"
+import {Intro, TwoColumns, Column, About, Grid, GoodToKnow, Images, Reviews} from "./HomepageStyles.jsx"
 
 const HomePage = ({courses, studentsDb}) => {
   const year = new Date().getFullYear();
@@ -36,6 +36,47 @@ const HomePage = ({courses, studentsDb}) => {
    </Intro>
   <Line/>
   <About >
+  <Images>
+ <img src="https://files.builder.misssite.com/d4/00/d400b081-d445-4bc5-8170-d2b5b7448058.jpg"
+          alt="Glad kille i telefonsamtal"/>
+    <img src="https://files.builder.misssite.com/1a/e3/1ae30306-563d-41ab-b876-b5ac6660782d.png"
+    alt="Glad äldre kvinna med en padda"/>
+ </Images>
+ <h2>Våra studenters omdömen:</h2>
+ <Reviews>
+    <div>
+      <h3>Jose Ruejas</h3>
+      <Line/>
+      <p>Man får snabba svar på sina uppgifter och bra reflektioner att ta med sig vidare. Föreläsningarna har varit mycket bra och givande.</p>
+    </div>
+    <div>
+    <h3>Mark McCliff</h3>
+    <Line/>
+      <p>Bra utbildning med professionell kursledare, lärt mig jättemycket angående ämnet. </p>
+    </div>
+    <div>
+    <h3>Rut Katrinsson</h3>
+    <Line/>
+      <p>Man behövde bara komma in i hur upplägget var.</p>
+    </div>
+    <div>
+    <h3>Samuel Badat</h3>
+    <Line/>
+      <p>Det bästa med utbildningen var föreläsningarna och att man kunde lyssna och inte läsa så mycket. Att det var en blandning mellan uppgifter, föreläsningar och inlämningsuppgifter, det var väldigt bra.</p>
+    </div>
+    <div>
+    <h3>Kajsa Gustafsson</h3>
+    <Line/>
+      <p>Att man fick hjälp och svar på det man behövde snabbt var toppen!</p>
+    </div>
+    <div>
+    <h3>Michael Qvarnström</h3>
+    <Line/>
+      <p>Jag tycker faktiskt att den var superbra anpassad för de som arbetar och samtidigt vill plugga vid sidan om</p>
+    </div>
+    
+ </Reviews>
+ <Line/>
   <h2>Våra kurser {year}</h2>
   {!courses && <h3>Laddar..</h3>}
     {courses &&  <>
@@ -77,12 +118,14 @@ const HomePage = ({courses, studentsDb}) => {
   </>
 }
   <GoodToKnow>
+
   <h3>Bra att veta:</h3>
   <p>När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med
       betalningsuppgifter och ett välkomstmeddelande. 
       Skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste
       vi tyvärr av ekonomiska skäl boka av kursen. </p>
-      </GoodToKnow>
+  </GoodToKnow>
+
   </About>
   </section> );
 }
