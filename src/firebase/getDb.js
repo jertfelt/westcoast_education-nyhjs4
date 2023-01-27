@@ -1,10 +1,15 @@
 //*firebase:
 import initFirebase from "./initFirebase";
-import { getDatabase, onValue, ref } from "firebase/database";
+import {child, get, getDatabase, onValue, ref } from "firebase/database";
 import { useEffect, useState} from "react";
 
 
-export function GetDb(route1, route2, route3, route4){
+export function GetDb(
+  route1, 
+  route2, 
+  route3, 
+  route4){
+
   const [courses, setCourses] = useState(null)
   const [students, setStudents] = useState(null)
   const [teachers, setTeachers] = useState(null)
@@ -12,24 +17,72 @@ export function GetDb(route1, route2, route3, route4){
   const [loading, setLoading] = useState(null)
   const [error, setError] = useState(false)
   
-  const getDataFromFirebase = (route1, route2, route3, route4) => {
+ function getDataFromFirebase (
+  route1, 
+  route2, 
+  route3,
+  route4){
     const db = getDatabase()
-    onValue(ref(db, route1), (snapshot) => {
-    setCourses(snapshot.val())
+    const dbRefR1 = ref(db, route1)
+    const dbRefR2 = ref(db, route2)
+    const dbRefR3 = ref(db, route3)
+    const dbRefR4 = ref(db, route4)
    
+    onValue(dbRefR1, (snapshot) => {
+    setCourses(snapshot.val())
     })
-    onValue(ref(db, route2), (snapshot) => {
+    onValue(dbRefR2, (snapshot) => {
     setStudents(snapshot.val())
     })
-    onValue(ref(db, route3), (snapshot) => {
+    onValue(dbRefR3, (snapshot) => {
     setTeachers(snapshot.val())
     })
-    onValue(ref(db, route4), (snapshot) => {
-      setCompetences(snapshot.val())
-    })
+
+    // get((dbRefR1)).then((snapshot) => {
+    //   if (snapshot.exists()) {
+    //     setCourses(snapshot.val())
+    //   } else {
+    //     console.log("No data available");
+    //   }
+    // }).catch((error) => {
+    //   setError(error);
+    // });
+
+    // get((dbRefR2)).then((snapshot) => {
+    //   if (snapshot.exists()) {
+    //     setStudents(snapshot.val())
+    //   } else {
+    //     console.log("No data available");
+    //   }
+    // }).catch((error) => {
+    //   setError(error);
+    // });
+
+
+    // get((dbRefR3)).then((snapshot) => {
+    //   if (snapshot.exists()) {
+    //     setTeachers(snapshot.val())
+    //   } else {
+    //     console.log("No data available");
+    //   }
+    // }).catch((error) => {
+    //   setError(error);
+    // });
+   
+    get((dbRefR4)).then((snapshot) => {
+      if (snapshot.exists()) {
+        setCompetences(snapshot.val())
+      } else {
+        console.log("No data available");
+      }
+    }).catch((error) => {
+      setError(error);
+    });
   }
+
   
-  
+
+
     useEffect(() => {(
       async function(){
         try{
@@ -43,5 +96,9 @@ export function GetDb(route1, route2, route3, route4){
         }
       })()
     },[route1, route2, route3, route4])
+
+
+    
     return {courses,students,teachers,competences, error, loading}
 }
+

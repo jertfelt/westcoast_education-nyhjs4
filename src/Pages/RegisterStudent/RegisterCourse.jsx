@@ -6,14 +6,20 @@ import Studentsections from "../../Components/StylingElements/StudentSections/St
 import RegisterCourseForm from "./RegisterCourseForm";
 
 
-const RegistreringKurs = (props, {studentsDb, courses}) => {
+const RegistreringKurs = (props,{ studentsDb, courses}) => {
 const [thisStudent, setThisStudent] = useState("")
 const context = useContext(StudentContext);
-const data = studentsDb;
+const [data, setData] = ""
 const [errMsg, setErrMsg] = useState("")
 const [id, setID] = useState([])
 const [error, setError] =useState(false)
 const [course1, setCourse1] = useState("default")
+console.log(studentsDb,"test")
+useEffect(() => {
+  if(studentsDb){
+    setData(studentsDb)
+  }
+})
 
 useEffect(() =>{
   if(data){
@@ -54,7 +60,7 @@ useEffect(() =>{
   }
 }, [data, id, context.studentID, context.studentEmail, context.studentName])
 
-
+console.log(courses, "d")
 
   return ( 
   <Studentsections 

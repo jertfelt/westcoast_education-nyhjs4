@@ -16,7 +16,7 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, allCourses})
   const courseInputRef = useRef()
   const [studentEmail, setStudentEmail] = useState("")
   const [studentPassword, setStudentPassword] = useState("")
-  const data = allCourses;
+  const [data, setData] = useState(allCourses)
  
   const [firstChoice, setFirst] = useState("")
   const [warning, setWarning] = useState(false)
@@ -26,6 +26,13 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, allCourses})
   const [messageModal, setMessage] = useState("")
   const [showCourseInfo, setShowCourseInfo ]= useState(false)
   const [noFirst, setNoFirst] = useState(false)
+
+useEffect(() => {
+  if(allCourses) {
+    setData = allCourses;
+  }
+},[])
+console.log(allCourses)
 
 useEffect(() =>{
   if(ifDirected){   
@@ -204,7 +211,7 @@ const checkInputsFirstChoice = (e) => {
 }}
 
 
-
+console.log(data)
 
   return ( 
   <StudentContainer>
