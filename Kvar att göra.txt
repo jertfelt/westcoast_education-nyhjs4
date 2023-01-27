@@ -3,11 +3,6 @@ ADMIN--------------
 
 1) städa funktioner och fetch Firebase kanske bara en gång skicka som props
 
-Se över: det fungerar inte helt. Async function från firebase - hur? 
-Spara som context?
-nu blir det unefined i registercourse
-
-
  - DUBBELKOLLA ATT DETTA FUNGERAR ÖVERALLT! 
 
 
