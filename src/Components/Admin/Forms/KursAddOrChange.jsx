@@ -120,6 +120,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       students,
       published,
       ID,
+      teacherAssigned,
       ) => {
       const db = getDatabase()
       set(ref(db, "/courses/" + ID ),{
@@ -130,7 +131,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
         published: published,
         startDate : startdate,
         studentsAssigned: students,
-        teacherAssigned: "Default",
+        teacherAssigned: teacherAssigned,
       }).then(
         navigate("/admin")
       )
@@ -145,6 +146,10 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
         const students = Number(studentsAssignedRef.current.value)
         const published = publishedStatus
         const ID = courseID
+        let teacherAssigned = chosenTeacher
+        if(!chosenTeacher){
+          teacherAssigned= "Default"
+        }
       
         sendEditToFirebase(
           coursename,   
@@ -154,6 +159,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
           students,
           published,
           ID,
+          teacherAssigned,
           )
     }
 
@@ -166,8 +172,6 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
     const deleteCourse=(e) => {
       e.preventDefault()
       const db = getDatabase()
-      console.log(courses)
-      
       set(ref(db, "/courses/" + courseID ),{
         courseName: "DELETED",
         courseID: courseID,})
@@ -318,6 +322,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       <div className="Row">
       <label htmlFor="chooseSubject">Välj ämne & lärare: </label>
       <select id="chooseSubject"
+      required
       aria-labelledby ="Välj ämne:"
       onChange={(e) => chooseCompetence(e)}
       >
@@ -333,6 +338,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       {showTeacherMultiple && <div className="Row">
       <label htmlFor="chooseTeacher">Finns flera val! Välj lärare:</label>
       <select id="chooseTeacher"
+      required
       aria-labelledby ="Välj lärare:"
       onChange={(e) => chooseTeacher(e)}> 
       {multipleTeachersItem.map(item => (
@@ -355,16 +361,16 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
   <ButtonContainerOutsideForm>
     <div>
       {validation && <div> 
-        {showTeacherOnlyOneChoice && teacherItem.map(item => (
+        {chosenTeacher && chosenTeacher.map(item => (
         <div className="teacher"
         key={item.lastName}>
-          <p>Lärare: {item.firstName} {item.lastName}</p>
+          <p>Lärare: {item.firstName} {item.lastName}<br/>Email: {item.email}</p>
         </div>
       ))}
       {}
       </div>}
         
-        
+      {!validation && <>  
       <h3>Tillgängliga kompetenser:</h3>
       <TwoColumns
       List>
@@ -386,6 +392,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       )})}
       </ul>
       </TwoColumns>
+      </>} 
     </div>
     <ButtonContainer>
     {typeOfForm==="changeCourse" &&
