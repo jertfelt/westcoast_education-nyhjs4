@@ -90,6 +90,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       setValidation(true)
       setChosenTeacher(teacherItem)
   }
+
   const showTeacherSelect = ( filteredByCourseValue) => {
     setTeacherOnlyOneChoice(false)
     setTeacherMultiple(true)
@@ -100,10 +101,15 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
     setValidation(true)
     let filtered = teachers.filter(function (teacher){
       return teacher.status !== "DELETED"}).map(item => item)
+    console.log(e.target.value, teachers, filtered)
+    let id = Number(e.target.value)
+    
     let chosen = filtered.filter(function (teacher){
-      return teacher.id === Number.e.target.value
+      return teacher.id === id
     }).map(item => item)
+    console.log(chosen)
     setChosenTeacher(chosen)
+    
   }
 
   const sendEditToFirebase = (
@@ -323,12 +329,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
         ))}
       </select>
       </div>
-      {showTeacherOnlyOneChoice && teacherItem.map(item => (
-        <div className="teacher"
-        key={item.lastName}>
-          <p>Lärare: {item.firstName} {item.lastName}</p>
-        </div>
-      ))}
+     
       {showTeacherMultiple && <div className="Row">
       <label htmlFor="chooseTeacher">Finns flera val! Välj lärare:</label>
       <select id="chooseTeacher"
@@ -353,12 +354,14 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
   
   <ButtonContainerOutsideForm>
     <div>
-      {validation && <div> <p>hej</p>
-        {chosenTeacher && chosenTeacher.map(item => (<div key={item.email}>
-          <p>{item.firstName}</p>
-        </div>))
-        }
-        
+      {validation && <div> 
+        {showTeacherOnlyOneChoice && teacherItem.map(item => (
+        <div className="teacher"
+        key={item.lastName}>
+          <p>Lärare: {item.firstName} {item.lastName}</p>
+        </div>
+      ))}
+      {}
       </div>}
         
         
