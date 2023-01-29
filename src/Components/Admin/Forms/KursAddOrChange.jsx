@@ -19,7 +19,21 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
   const [loading, setLoading] = useState(false)
   const [modalTitle, setTitle] = useState("")
   const [modalMsg, setMsg] = useState("")
-
+  const courseNameRef = useRef()
+  const courseDescriptionRef = useRef()
+  const startDateref = useRef()
+  const lengthWeeksRef =  useRef()
+  const studentsAssignedRef = useRef()
+  const [instructions, setInstructions] = useState(false)
+  const [infoMessage, setInfoMessage] = useState("")
+  const [showModal, setShowModal] = useState(false)
+  const [showModal2, setShowModal2] = useState(false)
+  const [showTeacherOnlyOneChoice, setTeacherOnlyOneChoice] = useState(false)
+  const [showTeacherMultiple, setTeacherMultiple] = useState(false)
+  const [teacherItem, setTeacherItem] = useState("")
+  const [multipleTeachersItem, setMultipleTeachersItem] = useState("")
+  const [chosenTeacher, setChosenTeacher] = useState("")
+  const [validation, setValidation] = useState(false)
 
   useEffect(() => {
     if(typeOfForm === "registerNew"){
@@ -48,16 +62,49 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
     }
   },[teachers])
 
-  const courseNameRef = useRef()
-  const courseDescriptionRef = useRef()
-  const startDateref = useRef()
-  const lengthWeeksRef =  useRef()
-  const studentsAssignedRef = useRef()
+  const chooseCompetence =(e) => {
+ 
+    let filtered = teachers.filter(function (teacher){
+      return teacher.status !== "DELETED"}).map(item => item)
+   
+    let compCount = filtered.filter(function (t){ return t.competences}).map(item => item.competences).flat(1).filter((v) => (v === e.target.value)).length; 
 
-  const [instructions, setInstructions] = useState(false)
-  const [infoMessage, setInfoMessage] = useState("")
-  const [showModal, setShowModal] = useState(false)
-  const [showModal2, setShowModal2] = useState(false)
+    let filteredByCourseValue = []
+    filtered.forEach(teacher => {
+      if(teacher.competences.includes(e.target.value)){
+        filteredByCourseValue.push(teacher)
+      }
+    })
+
+      if(compCount> 1){
+        showTeacherSelect(filteredByCourseValue)
+      }
+      else{
+        showTeacherOne( filteredByCourseValue, e.target.value)
+      }
+  }
+  const showTeacherOne = (filteredByCourseValue, value) => {
+      setTeacherOnlyOneChoice(true)
+      setTeacherMultiple(false)
+      setTeacherItem(filteredByCourseValue)
+      setValidation(true)
+      setChosenTeacher(teacherItem)
+  }
+  const showTeacherSelect = ( filteredByCourseValue) => {
+    setTeacherOnlyOneChoice(false)
+    setTeacherMultiple(true)
+    setMultipleTeachersItem(filteredByCourseValue)
+  }
+
+  const chooseTeacher = (e) => {
+    setValidation(true)
+    let filtered = teachers.filter(function (teacher){
+      return teacher.status !== "DELETED"}).map(item => item)
+    let chosen = filtered.filter(function (teacher){
+      return teacher.id === Number.e.target.value
+    }).map(item => item)
+    setChosenTeacher(chosen)
+  }
 
   const sendEditToFirebase = (
       coursename,
@@ -85,7 +132,6 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
 
     const confirmSave = (e) => {
       e.preventDefault()
-      console.log("clickat")
         const coursename = courseNameRef.current.value;
         const description = courseDescriptionRef.current.value
         const startdate = startDateref.current.value
@@ -119,7 +165,6 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       set(ref(db, "/courses/" + courseID ),{
         courseName: "DELETED",
         courseID: courseID,})
-        console.log(courses.map(item => item.courseID))
         setShowModal(false)
     }
 
@@ -132,16 +177,12 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
           setMsg("Tryck på SPARA så är sidan avpublicerad")
       }
       else{
-
           setPublishedStatus(true)
           setShowModal2(true)
           setTitle("Nästan färdig")
           setMsg("Tryck på SPARA så är sidan publicerad")
         }
-
     }
-
-
   const instructionsUnclear=(e) => {
     if(e.target.id === "courseDescriptionChangeInput"){
       setInfoMessage("Högst 50 tecken, inga länkar tillåtna.")
@@ -153,7 +194,6 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
     }
   }
 
- 
   return (
     <> 
     <h1>{title}</h1>
@@ -164,13 +204,11 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
         onClick = {(e) => publishCourse(e)}>
       {assignedStudents1 >= 5 ? (<>{publishedStatus ? (<p>Avpublicera</p>):(<p>Publicera</p>)}</>):(<p>För att publicera kursen på hemsidan ska alla fält vara fyllda, och det måste vara fler än fem studenter</p>)}
       </PublishBtn>
-    
-  <FormInstructions
-  Kursform
-  data-testid="formaddorchange"
-    onSubmit={confirmSave}>
+      <FormInstructions
+      Kursform
+      data-testid="formaddorchange"
+      onSubmit={confirmSave}>
       {loading ? (<h1>Laddar</h1>) :(<>
-
     {typeOfForm === "changeCourse" && <>
       {showModal && <ValidationModal
       title="Är du säker?"
@@ -184,8 +222,6 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       message={modalMsg}
       onClick={() => setShowModal2(false)}
       />}
-    
-
     <div className="Row">
     <label
           htmlFor="courseNameInput">
@@ -199,7 +235,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
     />
     </div>
  
-      <div className="Row">
+    <div className="Row">
       <label
           htmlFor="courseDescriptionInput">
             Kursbeskrivning:
@@ -214,15 +250,15 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
           onBlur={() => setInstructions(false)}
     />
     </div>
+
     {instructions &&
     <p className="instructions">
       {infoMessage}</p>
     }
+
     {courseExists && courseExists.startDate < year &&
     <p>Startdatum har redan passerat!</p>
     }
-
- 
     <div className="Row">
     <label
           htmlFor="startDateInput">
@@ -272,16 +308,60 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
         ref={studentsAssignedRef}
     />
     </div>
+    <div >
+      <div className="Row">
+      <label htmlFor="chooseSubject">Välj ämne & lärare: </label>
+      <select id="chooseSubject"
+      aria-labelledby ="Välj ämne:"
+      onChange={(e) => chooseCompetence(e)}
+      >
+    {competencesTeachers && competencesTeachers.map((item, indx )=> (
+        <option key={indx}
+        value={item}>
+          {item}
+        </option>
+        ))}
+      </select>
+      </div>
+      {showTeacherOnlyOneChoice && teacherItem.map(item => (
+        <div className="teacher"
+        key={item.lastName}>
+          <p>Lärare: {item.firstName} {item.lastName}</p>
+        </div>
+      ))}
+      {showTeacherMultiple && <div className="Row">
+      <label htmlFor="chooseTeacher">Finns flera val! Välj lärare:</label>
+      <select id="chooseTeacher"
+      aria-labelledby ="Välj lärare:"
+      onChange={(e) => chooseTeacher(e)}> 
+      {multipleTeachersItem.map(item => (
+        <option 
+        key={item.id}
+        value={item.id}>
+        {item.firstName} {item.lastName}
+        </option>
+      ))}
+      </select>
+      </div>}
+      </div>
     <input
       className="centered"  
       type="submit"
       value="Spara"/>
-
     </>)}
   </FormInstructions>
   
   <ButtonContainerOutsideForm>
     <div>
+      {validation && <div> <p>hej</p>
+        {chosenTeacher && chosenTeacher.map(item => (<div key={item.email}>
+          <p>{item.firstName}</p>
+        </div>))
+        }
+        
+      </div>}
+        
+        
       <h3>Tillgängliga kompetenser:</h3>
       <TwoColumns
       List>
@@ -303,23 +383,20 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       )})}
       </ul>
       </TwoColumns>
-    
-    
     </div>
-
-  <ButtonContainer>
+    <ButtonContainer>
     {typeOfForm==="changeCourse" &&
     <button 
       onClick={(e)=>deleteCourse(e)}
       disabled = {courseExists && courseExists.published ? true : false}>
     Radera kurs
     </button>} 
-    <button 
+    <button className="closingButt" 
       onClick={typeOfForm === "changeCourse" ? onChangeForm : () => navigate(-1)}>
         Stäng
     </button>
     </ButtonContainer>
-    </ButtonContainerOutsideForm></>
+  </ButtonContainerOutsideForm></>
    );
 }
 

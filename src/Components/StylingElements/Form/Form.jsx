@@ -65,7 +65,6 @@ button{
       padding:1px;
     }
 }
-
 .instructions{
   font-size:1rem;
   max-width:400px;
@@ -85,26 +84,34 @@ button{
   flex-direction:column;
   align-items: center;
 }
-
-
   .Row{
     display:flex;
+    flex-direction:row;
     align-items:center;
+    justify-content: flex-end;
     gap:1rem;
     line-height:1rem;
     @media (max-width: 600px){
       flex-direction:column;
-      align-items:flex-start;
     }
-   
 
   }
   input{
+    padding: 6px;
+    border-radius: 9px;
     width:100%;
     max-width:400px;
     font-size:1.2rem;
   }
+  input[type="date"]{
+    max-width:50%;
+    font-family: Sofia Sans;
+    padding: 6px;
+    border-radius: 9px;
+  }
   textarea{
+    padding: 6px;
+    border-radius: 9px;
     font-family: Sofia Sans;
     max-width:400px;
     width:100%;
@@ -129,7 +136,7 @@ button{
     margin-top:2rem;
       &:hover{
       background: ${({ theme }) => theme.accent};
-      color: ${({ theme }) => theme.toggleBorder};
+      color: ${({ theme }) => theme.text};
       }
     cursor: pointer;
     max-width:50%;

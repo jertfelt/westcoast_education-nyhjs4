@@ -5,18 +5,18 @@ import { useNavigate } from "react-router-dom";
 const Form = styled.div``
 
 const AddTeacherOrCourseToggle = () => {
-  const [msg, setMsg] = useState("Välj")
+
   const navigate = useNavigate()
   const chooseYourForm = (e) => {
     switch(e.target.value){
       case "teacher":
-       navigate("/larare/new")
+      navigate("/larare/new")
         break;
       case "course":
-       navigate("/kurser/new")
+      navigate("/kurser/new")
         break;
       default:
-       setMsg("Bra om du väljer något")
+       console.log("not chosen")
     }
   }
 
@@ -30,7 +30,7 @@ const AddTeacherOrCourseToggle = () => {
     > 
       <option 
       value="" 
-      label={msg}/>
+      label="Välj:"/>
       <option 
       value="teacher" 
       label="Lärare">Lärare</option>

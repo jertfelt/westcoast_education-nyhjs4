@@ -39,9 +39,9 @@ const AllTeachers = ({teachers}) => {
     {!teachers ? <p>Laddar...</p>: <>
     <HeadingWFilter>
     <h2>Alla lärare</h2>
-   
     <Filter>
-      <label htmlFor="filterTeachers">Filtrera:</label>
+      <label htmlFor="filterTeachers">
+        Filtrera efter ämne:</label>
       <select id ="chooseTeachers"
       aria-labelledby ="Filtrera"
       onChange={filterTeacher}>
@@ -55,7 +55,6 @@ const AllTeachers = ({teachers}) => {
       </select>
     </Filter>
     </HeadingWFilter>
-
       <Grid>
         {defaultView ? (<>
         {teachers && teachers.filter(function (item){

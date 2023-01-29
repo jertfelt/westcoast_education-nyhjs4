@@ -23,7 +23,7 @@ h2{
   }
 }
 a{
-  color: ${({ theme }) => theme.link};
+  color: ${({ theme }) => theme.text};
   &:hover, &:active, &:focus{
     color: ${({ theme }) => theme.text};
     background:${({ theme }) => theme.highlight};
@@ -38,7 +38,6 @@ h3, h4 {
   }
 }
 p{
- 
   font-size:1.2rem;
   @media (max-width:400px){
     font-size:1rem;
@@ -56,7 +55,6 @@ display: flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-
 `
 
 
@@ -118,6 +116,64 @@ div{
 }
 @media (min-width:800px){
   flex-direction: row;
+}
+gap: 8px;
+label{
+  color:${({ theme }) => theme.text};
+  font-size:1rem;
+}
+margin-top:-1rem;
+
+select{
+  font-size:1rem;
+  appearance: none;
+  -mox-appearance: none;
+  -webkit-appearance: none;
+  background-color: ${({ theme }) => theme.toogleBorder};
+  border: thin solid blue;
+  border-radius: 4px;
+  display: inline-block;
+
+  line-height: 1.5em;
+  padding: 0.5em 3.5em 0.5em 1em;
+  
+  &:hover{
+    background-color: ${({ theme }) => theme.highlight};
+    border-color: ${({ theme }) => theme.highlight};
+  }
+
+  background-image:
+    linear-gradient(45deg, transparent 50%, ${({ theme }) => theme.background} 50%),
+    linear-gradient(135deg, ${({ theme }) => theme.background} 50%, transparent 50%),
+    radial-gradient(${({ theme }) => theme.highlight} 70%, transparent 72%);
+  background-position:
+  
+    calc(100% - 20px) calc(1rem + 2px),
+    calc(100% - 15px) calc(1rem + 2px),
+    calc(100% - .5em) .5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+
+:focus{
+    background-image:
+    linear-gradient(45deg, white 50%, transparent 50%),
+    linear-gradient(135deg, transparent 50%, white 50%),
+    radial-gradient(gray 70%, transparent 72%);
+  background-position:
+    calc(100% - 15px) 1em,
+    calc(100% - 20px) 1em,
+    calc(100% - .5em) .5em;
+  background-size:
+    5px 5px,
+    5px 5px,
+    1.5em 1.5em;
+  background-repeat: no-repeat;
+  border-color: green;
+  outline: 0;
+}
 }
 `
 

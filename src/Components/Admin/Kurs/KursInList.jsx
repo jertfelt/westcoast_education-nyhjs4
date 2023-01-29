@@ -11,12 +11,17 @@ const KursInList = ({courses}) => {
       data-testid="kurstest">
       {courses.courseName}</h3>
       {courses.published ? (<>
-        <p><strong>Publicerad</strong></p>
-        <p>Start: {courses.startDate}</p>
+        <p><strong>
+          Publicerad
+          </strong></p>
+        <p>Start: 
+          {courses.startDate}</p>
         <p>Antal studenter: {courses.studentsAssigned}</p>
       </>
       ):(<>
-      <p><strong>Ej publicerad</strong></p>
+      <p><strong>
+        Ej publicerad</strong></p>
+        <p>Antal studenter: {courses.studentsAssigned}/5</p>
       </>)}
     </Link>
   </Courses>  );

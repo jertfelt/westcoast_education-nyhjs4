@@ -5,25 +5,19 @@ import { useSeveralRoutesFirebase } from "../../utils/useSeveralRoutesFirebase";
 
 
 const AddKurs = ({coursesDB, studentsDB, teachersDB}) => {
-
   const [teachers, setTeachers] = useState([])
   const [students,setStudents] = useState([])
   const [courses, setCourses] = useState([])
-
-  
   useEffect(() => {
     if(teachersDB){
       setTeachers(teachersDB.map(item =>item))
-     
     }
     if(studentsDB){
       setStudents(studentsDB.map(item => item))
-      
     }
     if(coursesDB){
       setCourses(coursesDB.map(item => item))
     }
-    
   }, [teachersDB, studentsDB, coursesDB])
   
   return ( 
@@ -42,8 +36,6 @@ const AddKurs = ({coursesDB, studentsDB, teachersDB}) => {
       onChangeForm = {""}
       courseExists = {""}
       />}
-      
-     
     </InfoRuta>
   </Section> );
 }

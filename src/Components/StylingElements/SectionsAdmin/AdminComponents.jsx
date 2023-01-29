@@ -34,14 +34,27 @@ padding:0;
 margin:0;
 
 gap:1rem;
+.closingButt{
+  padding: 6px 8px;
+  color: ${({ theme }) => theme.background};
+  background: ${({ theme }) => theme.toggleBorder};
+  border:none;
+  border-radius:30px;
+  margin-top:2rem;
+    &:hover{
+    background: ${({ theme }) => theme.accent};
+    color: ${({ theme }) => theme.text};
+    }
+  cursor: pointer;  
+  font-family: Sofia Sans;
+  text-align:center
+}
 ${props => 
   props.About && 
   css`
 
   display:flex;
   flex-direction:column;
-
-
   `}
 `
 
@@ -117,6 +130,7 @@ margin: -1rem;
 display:flex;
 flex-wrap:wrap;
 padding:1rem;
+border-radius:29px;
 flex-direction: column;
 align-items: center;
 justify-content:center;
@@ -125,12 +139,11 @@ background-color: ${({ theme }) => theme.buttonBackground};
 color: ${({ theme }) => theme.buttonText};
 width:100%;
 text-align:center;
-
-p{
-  margin-bottom:2rem;
+h3{
+  margin-bottom:.5rem;
 }
 a{
-  background:${({ theme }) => theme.background};
+  background:${({ theme }) => theme.body};
   padding: 6px;
   border-radius:9px;
 }
@@ -221,17 +234,16 @@ flex-direction:row;
 gap: 8px;
 label{
   color:${({ theme }) => theme.text};
-}
-margin-top:-1rem;
-label{
   font-size:1rem;
 }
+margin-top:-1rem;
+
 select{
   font-size:1rem;
   appearance: none;
   -mox-appearance: none;
   -webkit-appearance: none;
-  background-color: ${({ theme }) => theme.body};
+  background-color: ${({ theme }) => theme.toogleBorder};
   border: thin solid blue;
   border-radius: 4px;
   display: inline-block;
@@ -310,6 +322,7 @@ justify-content:center;
   align-items:flex-start;
   gap:1rem;
 }
+
 `
 
 export const Courses = styled.div`
@@ -317,6 +330,8 @@ display:flex;
 align-items:flex-start;
 justify-content:flex-start;
 opacity:0.8;
+width:100%;
+max-width:300px;
 
 &:hover{
   opacity:1;
@@ -331,12 +346,16 @@ h3{
   line-height:1.2rem;
   text-align:left;
 }
-a{
-    color: ${({ theme }) => theme.text};
+a{padding:1rem;
+  border-radius:20px;
+    color: ${({ theme }) => theme.background};
   &:hover{
-    color: ${({ theme }) => theme.accent};
+    background:${({ theme }) => theme.body};
+
+    color: ${({ theme }) => theme.text};
   }
 }
+
 
 
 ${props => 
@@ -384,14 +403,15 @@ padding-bottom: 3rem;
 `
 
 export const PublishBtn = styled.button`
+margin-top:-rem;
 cursor: pointer;
 :disabled{
   cursor:none;
   background:transparent;
-  color: ${({ theme }) => theme.toggleBorder}
+  color: ${({ theme }) => theme.text}
 }
 background:${({ theme }) => theme.toggleBorder}
-color: ${({ theme }) => theme.buttonText};
+color: ${({ theme }) => theme.text};
 margin-bottom:-1rem;
 margin-top:-1rem;
 

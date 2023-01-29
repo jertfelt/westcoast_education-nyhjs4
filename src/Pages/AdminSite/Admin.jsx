@@ -26,9 +26,7 @@ const Admin = ({courses, teachers, competences}) => {
         courses = {courses} 
         />
       </TwoColumns> 
-      
     </MainContent>
-
   </AdminSite>  );
 }
  
