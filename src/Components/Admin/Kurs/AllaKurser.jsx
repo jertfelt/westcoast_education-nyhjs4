@@ -6,13 +6,11 @@ import KursInList, { KursNotPublishedOnly, KursPublishedOnly } from "./KursInLis
 
 
 const AllaKurser = ({courses}) => {
-  
   const [defaultView, setDefault] =useState(true)
   const [notpublished, setCheckNotpublished] = useState(true)
   const [published, setCheckPublished] = useState(true)
   const [filteredUnPublish, setShowFiltered] = useState([])
   const [publishedFilter, setFilteredPublished] = useState([])
-
 
   useEffect(() => {
     if(courses){
@@ -37,10 +35,10 @@ const AllaKurser = ({courses}) => {
         setCheckPublished(false)
         setCheckNotpublished(true)
       break;
-        default:
-          setDefault(true)
-          setCheckNotpublished(false)
-          setCheckPublished(false)
+      default:
+        setDefault(true)
+        setCheckNotpublished(false)
+        setCheckPublished(false)
     }
   }
 
@@ -50,43 +48,47 @@ const AllaKurser = ({courses}) => {
     {courses && <>
     <HeadingWithFilterAdmin>
       <h2>Alla kurser</h2>
-    <Filter>
-    <label htmlFor="filterCourses">Filtrera:</label>
-      <select id ="chooseCourses"
-      aria-labelledby ="Filtrera"
-      onChange={filterCourses}>
+      <Filter>
+        <label htmlFor="filterCourses">
+          Filtrera:
+        </label>
+        <select 
+        id ="chooseCourses"
+        aria-labelledby ="Filtrera"
+        onChange={filterCourses}>
           <option value="default">
-            Alla</option>
+            Alla
+            </option>
           <option value="published">
-            Publicerade</option>
+            Publicerade
+            </option>
           <option value="notpublished">
-            Ej publicerade</option>
-      </select>
-    </Filter>
+            Ej publicerade
+            </option>
+        </select>
+      </Filter>
     </HeadingWithFilterAdmin>
     <GridKurser>
-    {defaultView && courses.filter(function (course){
-      return course.courseName !== "DELETED"
-    }).map(courses => (
-      <KursInList
-      key={courses.courseID}
-      courses={courses}
-      />
-    ))}
-    {!defaultView && published && publishedFilter.map(courses => (
-      <KursPublishedOnly 
+      {defaultView && courses.filter(function (course){
+        return course.courseName !== "DELETED"
+      }).map(courses => (
+        <KursInList
+        key={courses.courseID}
+        courses={courses}
+        />
+      ))}
+      {!defaultView && published && publishedFilter.map(courses => (
+        <KursPublishedOnly 
+        key={`${courses.courseID}${courses.courseID}`}
+        courses={courses}/>
+      ))}
+      {!defaultView && notpublished && filteredUnPublish.map(courses => (
+      <KursNotPublishedOnly
       key={`${courses.courseID}${courses.courseID}`}
       courses={courses}/>
-      ))}
-    {!defaultView && notpublished && filteredUnPublish.map(courses => (
-    <KursNotPublishedOnly
-    key={`${courses.courseID}${courses.courseID}`}
-    courses={courses}/>
-         
-        )) }      
+        ))}      
     </GridKurser>
-    </>}
-    </>}
+    </>}</>}
     </Content>  );
 }
  

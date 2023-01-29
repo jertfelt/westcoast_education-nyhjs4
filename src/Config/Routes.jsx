@@ -1,5 +1,5 @@
 import { Routes, Route, Navigate } from "react-router-dom";
-import { useContext, useEffect } from "react";
+import { useContext} from "react";
 import AuthContext from "../Context/Auth.Context";
 import StudentContext from "../Context/StudentContext";
 
@@ -22,7 +22,8 @@ import RegisterKurs from "../Components/RegisterKursParam/RegisterKursParam";
 import RegistreringKurs from "../Pages/RegisterStudent/RegisterCourse";
 import StudentPortal from "../Pages/StudentPortal/StudentPortal"
 import LoginStudent from "../Pages/LoginStudent/LoginStudent";
-import { useState } from "react";
+import SignAdmin from "../Components/Admin/LoginLogOut/SignAdmin";
+
 
 const Routing = ({courses, students, teachers, competences}) => {
   const contextAdmin = useContext(AuthContext)
@@ -39,7 +40,10 @@ const Routing = ({courses, students, teachers, competences}) => {
     />
 
     <Route path="/admin/login"
-    element={<Login/>}/>
+    element={!isAdminLoggedIn ?<Login/>: <Navigate to="/admin"/> }/>
+    
+    <Route path="/admin/register"
+      element={!isAdminLoggedIn ? <SignAdmin/> : <Navigate to="/admin"/>}/>
 
     <Route path="/admin" 
     element={isAdminLoggedIn ? 
@@ -56,6 +60,7 @@ const Routing = ({courses, students, teachers, competences}) => {
     element={isStudentLoggedIn ? <StudentPortal 
       studentsDb = {students}
       coures = {courses}/>: <Navigate to="/student/login"/>}/>
+
 
     <Route path="/student/student-kurser/register">
       <Route index element={isStudentLoggedIn ? 

@@ -166,6 +166,7 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
       </PublishBtn>
     
   <FormInstructions
+  Kursform
   data-testid="formaddorchange"
     onSubmit={confirmSave}>
       {loading ? (<h1>Laddar</h1>) :(<>
@@ -280,14 +281,16 @@ const KursAddOrChange = ({typeOfForm, teachers, courses, title, ID, onChangeForm
   </FormInstructions>
   
   <ButtonContainerOutsideForm>
-    <div><h3>Tillgängliga kompetenser:</h3>
-      <TwoColumns>
+    <div>
+      <h3>Tillgängliga kompetenser:</h3>
+      <TwoColumns
+      List>
       <ul>
       {competencesTeachers.map((item, indx) => {
       if(indx < competencesTeachers.length/2) return (
         <li key={`${item}-${indx}`}>
         {item}
-      </li>
+        </li>
       )})}
       </ul>
       

@@ -85,6 +85,8 @@ button{
   flex-direction:column;
   align-items: center;
 }
+
+
   .Row{
     display:flex;
     align-items:center;
@@ -94,6 +96,7 @@ button{
       flex-direction:column;
       align-items:flex-start;
     }
+   
 
   }
   input{
@@ -218,6 +221,20 @@ button{
         background:transparent;
       `}
     }
+    ${props => 
+      props.Kursform && 
+      css`
+      font-family: Sofia Sans;
+      max-width:80%;
+      label{color: ${({ theme }) => theme.background};
+      line-height:1.5rem;}
+      input{
+        padding: 4px;
+      }
+      .number{
+        max-width:20%;
+      }
+      `}
 `
 
 

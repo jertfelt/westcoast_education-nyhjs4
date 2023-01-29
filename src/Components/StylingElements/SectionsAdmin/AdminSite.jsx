@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
 
 
@@ -7,11 +7,11 @@ const AdminSite = styled.section`
   padding:0;
 }
 padding:2rem;
+color: ${({ theme }) => theme.text};
 h1{
   font-family: Mukta; 
   text-align:center;
   font-size:3rem;
-  color: ${({ theme }) => theme.text};
   @media (max-width:400px){
     font-size:2rem;
   }
@@ -23,30 +23,28 @@ h2{
   }
 }
 a{
-  color: ${({ theme }) => theme.highlight};
-  &:hover{
-    color: ${({ theme }) => theme.accent};
-  }
-  &:active, &:focus{
-    color: ${({ theme }) => theme.link};
+  color: ${({ theme }) => theme.link};
+  &:hover, &:active, &:focus{
+    color: ${({ theme }) => theme.text};
+    background:${({ theme }) => theme.highlight};
     text-transform: underline;
   }
 }
 h3, h4 {
   
-  color: ${({ theme }) => theme.link};
   font-size:1.5rem;
-   @media (max-width:400px){
+  @media (max-width:400px){
     font-size:1.2rem;
   }
 }
 p{
-  color: ${({ theme }) => theme.link};
+ 
   font-size:1.2rem;
-   @media (max-width:400px){
+  @media (max-width:400px){
     font-size:1rem;
   }
 }
+
 `
 export const MainContent = styled.div`
 min-height:80vh;
@@ -61,6 +59,7 @@ justify-content:center;
 
 `
 
+
 export const TwoColumns = styled.div`
 font-family: Sofia Sans;
 background: ${({ theme }) => theme.background};
@@ -70,15 +69,26 @@ width:100%;
 max-width:1000px;
 padding:1rem;
 justify-content:space-around;
-h2{
-  color: ${({ theme }) => theme.buttonText};
-}
 @media (min-width:800px){
   flex-direction:row;
 }
+
+
+${props => 
+  props.AdminForm && 
+  css`
+  background: ${({ theme }) => theme.highlight};
+  `}
+  ${props => 
+    props.List && 
+    css`
+    margin-top:-1rem;
+    background: transparent;
+    `}
+
 `
 
-export const FormContainer = styled.aside`
+export const FormContainer = styled.div`
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -87,7 +97,7 @@ width:100%;
 font-family: Sofia Sans;
 max-width:1000px;
 padding:1rem;
-padding-bottom:2rem;
+padding-bottom:1rem;
 background: ${({ theme }) => theme.highlight};
 color: ${({ theme }) => theme.text};
 flex-wrap: wrap;
@@ -96,7 +106,6 @@ h1{
 line-height:1rem;
   }
   line-height:2.8rem;
-  margin-bottom:-1rem;
 }
 h3, p{
   color: ${({ theme }) => theme.text};

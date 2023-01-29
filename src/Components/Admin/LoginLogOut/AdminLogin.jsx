@@ -1,53 +1,18 @@
-import { useState, useContext} from "react";
+import { useState, useContext, useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../Context/Auth.Context";
 import { ButtonBlack } from "../../StylingElements/Buttons/FormButton";
 //Modal
 import Modal from "../../ui/Modal/Modal";
+import { Section, Intro, Form, LabelInput } from "./AdminStyledSections";
 
-//styling
-import styled from "styled-components";
-const Section = styled.section`
-min-height:90vh;
-@media (min-width: 900px){
-  padding-left:4rem;
-}`
-const Intro = styled.div`
-h1{
-  font-size:42px;
-}
-padding:2rem;
-p{ max-width:60%;
-  @media (min-width: 900px){
-    max-width:500px;
-  }
-}
-`
-const Form = styled.form`
-padding:2rem;
-margin-top:-2rem;
-display: flex;
-flex-direction: column;
-gap:20px;
-font-size:1.4rem;
-`
-const LabelInput = styled.div`
-display:flex;
-align-items:center;
-gap:10px;
-max-width:60%;
-font-family: Sofia Sans;
-@media (min-width: 900px){
-  max-width:500px;
-}
-input{
-  border-color:black;
-  border-radius:9px;
-  padding:4px;
-  font-family: Sofia Sans;
-  width:100%;
-}`
 
+import { signInWithEmailAndPassword} from "firebase/auth";
+
+import { useAuthState } from "react-firebase-hooks/auth";
+
+import { auth2 } from "../../../firebase/initFirebase";
+import { Link } from "react-router-dom";
 
 
 const Login = () => {
@@ -57,6 +22,10 @@ const Login = () => {
   const [userName, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null)
+
+  const [email, setEmail] = useState("");
+  const [user] = useAuthState(auth2);
+
  
   const [showModal, setShowModal] = useState(false)
   
@@ -106,9 +75,52 @@ const Login = () => {
     }
   }
 
+  const loginFunction= (password, email) => {
+    signInWithEmailAndPassword(email, password)
+    let userName = email
+    context.onLogin({
+      userName,
+      password,
+    })
+    if (user) {
+      navigate("/admin");
+    }
+  }
+
   return ( 
   <Section data-testid="AdminLogin">
-    <Intro>
+    <div className="login">
+      <div className="login__container">
+        <input
+          type="text"
+          className="login__textBox"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="E-mail Address"
+        />
+        <input
+          type="password"
+          className="login__textBox"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Password"
+        />
+        <button
+          className="login__btn"
+          onClick={() => loginFunction(password,email)}
+        >
+          Logga in
+        </button>
+        <div>
+          <Link to="/reset">Glömt lösenord</Link>
+        </div>
+        <div>
+          Har du inget konto? 
+          <Link to="/admin/register"> Registrera</Link> dig nu.
+        </div>
+      </div>
+    </div>
+    {/* <Intro>
     <h1>Välkommen</h1>
     <p>Här krävs det inloggning! För att få ett konto, kontakta din lärare eller administratören på westcoast-admin@email.com</p>
     </Intro>
@@ -147,7 +159,7 @@ const Login = () => {
       disabled={buttDisabled}
       >
       </ButtonBlack>
-    </Form>
+    </Form> */}
   </Section> );
 }
 

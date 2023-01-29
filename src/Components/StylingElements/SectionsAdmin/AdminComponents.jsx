@@ -30,16 +30,26 @@ justify-content:center;
 @media (max-width:700px){
   flex-direction:column;
 }
-gap:1rem;
+padding:0;
+margin:0;
 
+gap:1rem;
+${props => 
+  props.About && 
+  css`
+
+  display:flex;
+  flex-direction:column;
+
+
+  `}
 `
 
 export const InfoRuta = styled.div`
-background: ${({ theme }) => theme.background};
-color: ${({ theme }) => theme.buttonText};
-max-width:1000px;
+background: ${({ theme }) => theme.highlight};
+color: ${({ theme }) => theme.text};
+max-width:50%;
 padding:2rem;
-padding-bottom:2rem;
 display:flex;
 flex-direction:column;
 align-items:center;
@@ -50,14 +60,14 @@ ul{
   padding-left:0;
 }
 p{
-  font-size:1rem;
+  font-size:1.3rem;
 }
-margin-bottom:-2rem;
+
 button{
-  padding: 4px 9px;
-  margin-right:1rem;
+  margin-top: 2rem;
+  padding: 9px;
   border:none;
-  font-size:14px;
+  font-size:1rem;
   border-radius:30px;
   color:${({ theme }) => theme.text};
   background: ${({ theme }) => theme.toggleBorder};
@@ -66,7 +76,24 @@ button{
     color: ${({ theme }) => theme.accent};
   }
 }
+${props => 
+  props.About && 
+  css`
+  background: ${({ theme }) => theme.accent};
+  display:flex;
+  flex-direction:column;
+  text-align:center;
+
+  `}
+
 `
+export const TwoSquares = styled.div`
+display:flex;
+@media(max-width: 700px){
+  flex-direction:column;
+}
+`
+
 
 //All teacher components:
 
@@ -167,8 +194,8 @@ h2{
 export const AllTeachersContent = styled.div`
 display:flex;
 flex-direction: column;
-background: ${({ theme }) => theme.background};
-color: ${({ theme }) => theme.buttonText};
+background: ${({ theme }) => theme.highlight};
+color: ${({ theme }) => theme.text};
 `
 export const List = styled.ul`
 text-align:left;
@@ -193,7 +220,7 @@ align-items: center;
 flex-direction:row;
 gap: 8px;
 label{
-  color:${({ theme }) => theme.highlight};
+  color:${({ theme }) => theme.text};
 }
 margin-top:-1rem;
 label{
@@ -305,6 +332,7 @@ h3{
   text-align:left;
 }
 a{
+    color: ${({ theme }) => theme.text};
   &:hover{
     color: ${({ theme }) => theme.accent};
   }
@@ -322,13 +350,11 @@ ${props =>
 
 `
 export const Content = styled.div`
-background:  ${({ theme }) => theme.background};
+background:  ${({ theme }) => theme.highlight};
 h2{
 text-align: flex-start;
 line-height:2rem;
 }
-
-
 `
 
 export const KursDetails = styled.div`
@@ -342,7 +368,7 @@ justify-content:center;
 text-align:center;
 flex-wrap:wrap;
 strong{
-  color:${({ theme }) => theme.accent}
+  color:${({ theme }) => theme.background}
 }
 
 .Row{
