@@ -325,13 +325,21 @@ justify-content:center;
 
 `
 
+export const CourseTable = styled.table`
+text-align:left;
+width:100%;
+td{
+  text-align:right;
+}
+`
+
 export const Courses = styled.div`
 display:flex; 
 align-items:flex-start;
 justify-content:flex-start;
 opacity:0.8;
 width:100%;
-max-width:300px;
+max-width:500px;
 
 &:hover{
   opacity:1;
