@@ -4,7 +4,7 @@ import StudentContext from "../../../Context/StudentContext";
 import { useNavigate} from "react-router-dom";
 import Modal from "../../ui/Modal/Modal";
 import { FormInstructions as Form } from "../../StylingElements/Form/Form";
-import { useFirebase } from "../../utils/useFirebase";
+
 
 const LoginFormStudent = ({studentsDB}) => {
   const context = useContext(StudentContext);
@@ -14,8 +14,6 @@ const LoginFormStudent = ({studentsDB}) => {
   const [studentPassword, setPassword] = useState("")
   const [errMsg, setErrMsg] = useState("")
   const [showModal, setShowModal] = useState(false)
-
-  
   const [students, setStudents] = useState([])
 
   useEffect(() => {
@@ -29,15 +27,10 @@ const LoginFormStudent = ({studentsDB}) => {
     userRef.current.focus()
   }, [])
 
-
-
-
   const modalFunction = (message) => {
     setShowModal(prev => !prev)
     setErrMsg(message)
   }
-
-
 
   const handleSubmit =  (e) => {
     e.preventDefault()

@@ -5,8 +5,7 @@ import Studentsections, {QuestionDiv, ContentLoginRegister} from "../../Componen
 
 
 const LoginStudent = ({students}) => {
-  const [notMemberYet, setMember] = useState(false)
- 
+const [notMemberYet, setMember] = useState(false)
 const determineMember = () => {
   if(!notMemberYet){
     setMember(true) 
@@ -15,7 +14,6 @@ const determineMember = () => {
     setMember(false)
   }
 }
-
   return (
   <Studentsections>
   <ContentLoginRegister>

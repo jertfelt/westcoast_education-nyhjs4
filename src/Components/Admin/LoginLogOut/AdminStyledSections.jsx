@@ -2,7 +2,6 @@
 //styling
 import styled from "styled-components";
 
-
 export const Section = styled.section`
 min-height:90vh;
 display: flex;
@@ -21,7 +20,7 @@ max-width:1000px;
 min-height: 30vh;
 padding:3rem;
 background: ${({ theme }) => theme.background};
-background: linear-gradient(330deg, ${({ theme }) => theme.buttonBackground} 0%,  ${({ theme }) => theme.coloredDarkBackground} 100%);
+background: linear-gradient(330deg, ${({ theme }) => theme.buttonBackground} 0%,  ${({ theme }) => theme.highlight} 100%);
 
 h1, h2, label, p{
   color: ${({ theme }) => theme.link}
@@ -44,11 +43,11 @@ input{
 a{
   color: ${({ theme }) => theme.link};
   font-weight:bold;
-  padding: 8px 4px;
+  padding: 10px 4px;
   margin-top:.5rem;
   &:active, &:hover, &:focus{
     background: ${({ theme }) => theme.body};
-    color: ${({ theme }) => theme.link};
+    color: ${({ theme }) => theme.text};
     border-radius: 9px;
   }
 }
@@ -79,16 +78,20 @@ font-family: Sofia Sans;
 display:flex;
 flex-direction: column;
 gap:4px;
-background: ${({ theme }) => theme.highlight};
+background: ${({ theme }) => theme.body};
 margin-top: 2rem;
 margin-bottom:2rem;
 border-radius: 29px;
 font-size:1.5rem;
+p{
+  color: ${({ theme }) => theme.text};
+}
 a{
-  color: ${({ theme }) => theme.link};
+  color: ${({ theme }) => theme.highlight};
   font-weight:bold;
-  padding: 0px 4px ;
+  padding: 3px 8px ;
   &:active, &:hover, &:focus{
+    color: ${({ theme }) => theme.link};
     background: ${({ theme }) => theme.background};
     border-radius: 9px;
   }

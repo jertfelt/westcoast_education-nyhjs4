@@ -118,7 +118,7 @@ button{
     font-size:1.2rem;
   }
   label{
-    font-size:1.2rem;
+    font-size:1.5rem;
     color: ${({ theme }) => theme.buttonText};
   }
   .number{
@@ -130,17 +130,17 @@ button{
 
   input[type="submit"] {
     padding: 6px 8px;
-    background: ${({ theme }) => theme.toggleBorder};
     border:none;
     border-radius:30px;
     margin-top:2rem;
+     background: ${({ theme }) => theme.body};
+     color: ${({ theme }) => theme.text};
       &:hover{
       background: ${({ theme }) => theme.accent};
       color: ${({ theme }) => theme.text};
       }
     cursor: pointer;
     max-width:50%;
-    
     font-family: Sofia Sans;
     text-align:center;
     :disabled{

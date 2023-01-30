@@ -1,14 +1,9 @@
 import { useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../Context/Auth.Context";
-
 import { Container, Links, Section,  } from "./AdminStyledSections";
-
-
 import { signInWithEmailAndPassword} from "firebase/auth";
-
 import { useAuthState } from "react-firebase-hooks/auth";
-
 import { auth2 } from "../../../firebase/initFirebase";
 import { Link } from "react-router-dom";
 import { FormInstructions } from "../../StylingElements/Form/Form";
@@ -17,7 +12,6 @@ import { FormInstructions } from "../../StylingElements/Form/Form";
 const Login = () => {
   const navigate = useNavigate()
   const context = useContext(AuthContext);
-  const [buttDisabled, setButtDisabled] = useState(true);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState("");
   const [user] = useAuthState(auth2);
@@ -46,8 +40,9 @@ const Login = () => {
       <Links>
         
           Har du inget konto?  <br/>
-          <Link to="/admin/register">Registrera</Link> dig nu.
-       
+          <Link to="/admin/register">Registrera dig nu.</Link> 
+          <p>Det kostar inget att vara admin!</p>
+
         </Links>
     </div>
     <div className="second">

@@ -147,14 +147,10 @@ p{
 button{
   margin-top:-1rem;
   padding:6px;
-  color: ${({ theme }) => theme.text};
-  background:${({ theme }) => theme.body};
+
   border:none;
   font-weight:bold;
-  &:hover{
-    color: ${({ theme }) => theme.body};
-    background:${({ theme }) => theme.text};
-  }
+  
 }
 `
 export const Content = styled.div`
@@ -167,11 +163,14 @@ align-items:center;
 max-width:800px;
 ` 
 export const ContentLoginRegister = styled.div`
-min-height:50vh;
+min-height:60vh;
+border-radius:29px;
 background:${({ theme }) => theme.background};
+background: linear-gradient(330deg, ${({ theme }) => theme.background} 0%,  ${({ theme }) => theme.accent} 100%);
 color: ${({ theme }) => theme.accent};
 font-size:1.2rem;
 padding:2rem;
+padding-top:0;
 display:flex;
 flex-direction:column;
 justify-content:center;
@@ -179,26 +178,27 @@ align-items:center;
 max-width:800px;
 h1{
   font-size:2.5rem;
-  color:${({ theme }) => theme.toggleBorder};
+  color:${({ theme }) => theme.link};
 }
 @media (min-width:800px){
 flex-direction:row;
 gap:3rem;
 }
 button{
-  background: ${({ theme }) => theme.toggleBorder};
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   &:hover{
-    background: ${({ theme }) => theme.highlight};
+    background: ${({ theme }) => theme.accent};
     color: ${({ theme }) => theme.text};
     }
     &:active, &:focus{
       background: ${({ theme }) => theme.accent};
       color: ${({ theme }) => theme.background};
     }
-    cursor: pointer;
-   font-size:1rem;
-   border-radius:30px;
-   max-width:50%;
+  cursor: pointer;
+  font-size:1rem;
+  border-radius:30px;
+  max-width:50%;
 }
 ` 
 
