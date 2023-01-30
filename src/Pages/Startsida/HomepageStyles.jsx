@@ -59,6 +59,7 @@ img{width: 50%;}
   flex-direction:column;
   img{width: 100%;}
 }
+padding-bottom:2rem;
 `
 export const Reviews = styled.div`
 display:grid;
@@ -86,7 +87,14 @@ flex-direction:column;
 align-items:center;
 justify-content:center;
 margin-top:3rem;
-p{max-width:900px;
+p{max-width:900px;}
+h2{
+  line-height:1.3rem;
+  @media (max-width: 700px){
+    line-height:2rem;
+  }
+  margin-bottom:-.5rem;
+}
 `
 
 export const Grid = styled.div`
