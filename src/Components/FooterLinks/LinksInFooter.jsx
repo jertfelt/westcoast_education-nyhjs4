@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { useContext } from "react";
 import AuthContext from "../../Context/Auth.Context";
 import StudentContext from "../../Context/StudentContext";
+import LogOut from "../Admin/LoginLogOut/Logout";
 const LinksInFooter = () => {
   const context = useContext(AuthContext)
   const contextStudent = useContext(StudentContext)
@@ -15,8 +16,7 @@ const LinksInFooter = () => {
           Admin</Link>
         </li>
       <li>
-        <button onClick={context.onLogout}>
-          Logga ut</button>
+      <LogOut/>
         </li>
     </>):(
       <>
@@ -26,8 +26,8 @@ const LinksInFooter = () => {
           Studentportal</Link>
       </li>
       <li>
-        <button onClick={contextStudent.onLogout}>
-          Logga ut</button>
+      <button onClick={contextStudent.onLogout}>
+          Logga ut student</button>
         </li> 
     </>
     }</>)

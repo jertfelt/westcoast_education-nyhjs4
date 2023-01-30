@@ -23,6 +23,8 @@ import RegistreringKurs from "../Pages/RegisterStudent/RegisterCourse";
 import StudentPortal from "../Pages/StudentPortal/StudentPortal"
 import LoginStudent from "../Pages/LoginStudent/LoginStudent";
 import SignAdmin from "../Components/Admin/LoginLogOut/SignAdmin";
+import { getAuth } from "firebase/auth";
+
 
 
 const Routing = ({courses, students, teachers, competences}) => {
@@ -35,7 +37,7 @@ const Routing = ({courses, students, teachers, competences}) => {
   <Routes>
     <Route path="/" 
     element={<HomePage 
-      studentsDb = {students}
+    studentsDb = {students}
     courses = {courses}/>}
     />
 

@@ -47,10 +47,10 @@ const HomePageCourses = ({year, courseList}) => {
   <br/>
   <GoodToKnow>
   <TwoColumns>
-    <p><h3>Kurserna nedan är inte bokade än:</h3>
-    Dessa kurser har ännu inte fullt antal anmälda. Men du kan fortfarande anmäla dig till dem! 5 studenter behövs för att kursen ska bli publicerad. Anmäl dig idag om du är intresserad!</p>
-  <p><h4>Bra att veta:</h4>
-  När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med
+    <h3>Kurserna nedan är inte bokade än:</h3>
+    <p>Dessa kurser har ännu inte fullt antal anmälda. Men du kan fortfarande anmäla dig till dem! 5 studenter behövs för att kursen ska bli publicerad. Anmäl dig idag om du är intresserad!</p>
+  <h4>Bra att veta:</h4>
+  <p>När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med
       betalningsuppgifter och ett välkomstmeddelande. 
       Skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste vi tyvärr av ekonomiska skäl boka av kursen. </p>
   </TwoColumns>

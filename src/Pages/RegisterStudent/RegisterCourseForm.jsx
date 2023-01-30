@@ -1,7 +1,7 @@
 import { useState, useRef, useContext, useEffect} from "react";
 import StudentContext from "../../Context/StudentContext";
 import { FormInstructions } from "../../Components/StylingElements/Form/Form";
-import {ColumnTwo, IfAlreadyExists, Introduction, Show, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
+import {ColumnTwo, IfAlreadyExists, Introduction, StudentContainer, TwoColumns} from "../../Components/StylingElements/StudentSections/StudentSections";
 import { useNavigate } from "react-router-dom";
 import sendStudentEditToFb, { decrementCoursesByStudent, incrementCoursesByStudent } from "../../firebase/useSendToFb";
 import ShowInfo from "./ShowInfo";

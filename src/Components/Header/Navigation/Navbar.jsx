@@ -7,8 +7,8 @@ import MenuButton from "../../StylingElements/Buttons/MenuButton";
 
 
 const DropDMenu = styled.nav`
-  background: ${({ theme }) => theme.buttonBackground};
-  color: ${({ theme }) => theme.body};
+  background: ${({ theme }) => theme.highlight};
+  color: ${({ theme }) => theme.text};
   font-size:1.2rem;
   position: absolute;
   top: 10vh;
@@ -20,21 +20,21 @@ const DropDMenu = styled.nav`
   padding: 12px 16px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   @media (min-width: 768px) {
-      left: calc(50% - 20rem);
-      width: 50rem;
+      left: calc(60%);
+      width: 20rem;
   }
   
 
 button{
   background: transparent;
-  color: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   border:none;
   padding:8px;
   font-size:1.2rem;
   position:relative;
   left:80%;
   &:hover{
-    color: ${({ theme }) => theme.highlight};
+    color: ${({ theme }) => theme.body};
   }
 }
 ul{
@@ -50,7 +50,7 @@ li{
   }
 }
 a{
-  color:${({ theme }) => theme.buttonText};
+  color:${({ theme }) => theme.text};
   font-family: Sofia Sans;
   &:hover{
     color: ${({ theme }) => theme.buttonText};
@@ -59,7 +59,7 @@ a{
     color: ${({ theme }) => theme.body};
   }
   &:active{
-    color: ${({ theme }) => theme.link};
+    color: ${({ theme }) => theme.text};
   }
 }
 `

@@ -6,29 +6,41 @@ import {useState } from "react";
 import AuthContext from "../../../Context/Auth.Context";
 import { useContext } from "react";
 import { FormInstructions } from "../../StylingElements/Form/Form";
+import { useEffect } from "react";
+import { getAuth } from "firebase/auth";
 
 const SignAdmin = () => {
   const [email, setEmail] = useState("");
   const navigate = useNavigate()
   const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  const [user,] = useAuthState(auth2);
-  const context = useContext(AuthContext);
+  const [user] = useAuthState(auth2);
+  const context = useContext(AuthContext);  
+  const auth = getAuth();
+  const user2 = auth.currentUser;
 
+if (user2) {
+  console.log(user2, "loggedin")
+
+} else {
+  console.log("user not logged in")
+}
 
   const register = () => {
     if (!name) alert("Vänligen fyll i alla fält");
-    registerWithEmailAndPassword(name, email, password)
-    let userName = email
-    if (user) {
+    registerWithEmailAndPassword(name, email, password) 
+    console.log(user, "test")
+  };
+  useEffect(() => {
+    if (user2) {
+      let userName = email
       context.onLogin({
         userName,
         password,
       })
       navigate("/admin");
-      
     }
-  };
+  })
 
   return ( 
   <Section data-testid="AdminRegister">
@@ -42,8 +54,7 @@ const SignAdmin = () => {
       </Links>
       </div>
       <div className="second">
-        <FormInstructions
-        onSubmit= {register}>
+        <div>
           <div className="Row">
             <label htmlFor="adminNamn">Namn: </label>
           <input
@@ -77,10 +88,9 @@ const SignAdmin = () => {
           placeholder="******"
         />
           </div>
-          <input type="submit"
-          onClick={(e) => (e.preventDefault)}
-          value="Registrera"/>
-        </FormInstructions>
+          <button
+          onClick={register}>Registrera</button>
+        </div>
       </div>
     </Container>
 

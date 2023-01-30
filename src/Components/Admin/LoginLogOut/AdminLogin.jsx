@@ -1,12 +1,14 @@
 import { useState, useContext} from "react";
 import { useNavigate } from "react-router-dom";
 import AuthContext from "../../../Context/Auth.Context";
-import { Container, Links, Section,  } from "./AdminStyledSections";
+import { Container,Section,  } from "./AdminStyledSections";
 import { signInWithEmailAndPassword} from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { auth2 } from "../../../firebase/initFirebase";
+import { auth2, logInWithEmailAndPassword } from "../../../firebase/initFirebase";
 import { Link } from "react-router-dom";
-import { FormInstructions } from "../../StylingElements/Form/Form";
+import { useEffect } from "react";
+import { getAuth } from "firebase/auth";
+import RegisterOrLoginContainer from "./RegisterOrLoginContainer";
 
 
 const Login = () => {
@@ -14,21 +16,25 @@ const Login = () => {
   const context = useContext(AuthContext);
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState("");
-  const [user] = useAuthState(auth2);
-
+  const [userName, setUserName] = useState("")
+  const auth = getAuth();
+  const user2 = auth.currentUser;
 
   const loginFunction= (password, email) => {
-    signInWithEmailAndPassword(email, password)
-    let userName = email
-    context.onLogin({
-      userName,
-      password,
-    })
-    if (user) {
+    logInWithEmailAndPassword(email, password)
+    setUserName(email)
+    if (user2) {
+      console.log(user2, "loggedin")
       navigate("/admin");
+      context.onLogin({
+        userName,
+        password,
+      })
+    }
+    else {
+      console.log("user not logged in")
     }
   }
-
   return ( 
   <Section 
   data-testid="AdminLogin">
@@ -37,17 +43,10 @@ const Login = () => {
       <h1>Logga in som admin</h1>
       <h2>Nyheter:</h2>
       <p>Just nu är det några buggar kvar. <br/>Rapportera gärna till webbadminstratören om du märker av dessa.</p>
-      <Links>
-        
-          Har du inget konto?  <br/>
-          <Link to="/admin/register">Registrera dig nu.</Link> 
-          <p>Det kostar inget att vara admin!</p>
-
-        </Links>
+      
     </div>
     <div className="second">
-    <FormInstructions
-    onSubmit={() => loginFunction(password,email)}>
+    <div>
       <div className="Row">
         <label htmlFor="adminEmail">Email:</label>
         <input
@@ -68,19 +67,18 @@ const Login = () => {
           placeholder="******"
         />
       </div>
-        <input 
+        <button
           className="centered"
-          type="submit"
-          value="Logga in"
-          />
-    </FormInstructions>
+          onClick={() => loginFunction(password,email)}
+          >
+          Logga in
+          </button>
+    </div>
     <Link to="/reset">Glömt lösenord?</Link>
     </div>
-
-          
-     
+    
     </Container>    
-  
+    <RegisterOrLoginContainer></RegisterOrLoginContainer>
   </Section> );
 }
 

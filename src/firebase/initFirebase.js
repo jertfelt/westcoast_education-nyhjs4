@@ -3,7 +3,6 @@ import {  getAuth} from 'firebase/auth';
 import { getDatabase, set } from 'firebase/database'
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, sendPasswordResetEmail, signOut } from 'firebase/auth';
 
-
 const clientCredentials = {
 
   apiKey: process.env.REACT_APP_API_KEY,
