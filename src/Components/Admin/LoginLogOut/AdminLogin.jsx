@@ -39,9 +39,18 @@ const Login = () => {
   <Section 
   data-testid="AdminLogin">
     <Container>
+    <div>
       <h1>Logga in som admin</h1>
       <h2>Nyheter:</h2>
-    <p>Just nu är det några buggar kvar. <br/>Rapportera gärna till webbadminstratören om du märker av dessa.</p>
+      <p>Just nu är det några buggar kvar. <br/>Rapportera gärna till webbadminstratören om du märker av dessa.</p>
+      <Links>
+        <div>
+          Har du inget konto?  <br/>
+          <Link to="/admin/register">Registrera</Link> dig nu.
+        </div>
+        </Links>
+    </div>
+    <div className="second">
     <FormInstructions
     onSubmit={() => loginFunction(password,email)}>
       <div className="Row">
@@ -70,14 +79,11 @@ const Login = () => {
           value="Logga in"
           />
     </FormInstructions>
-    
-          <Link to="/reset">Glömt lösenord?</Link>
-          <Links>
-        <div>
-          Har du inget konto?  <br/>
-          <Link to="/admin/register">Registrera</Link> dig nu.
-        </div>
-        </Links>
+    <Link to="/reset">Glömt lösenord?</Link>
+    </div>
+
+          
+     
     </Container>    
   
   </Section> );

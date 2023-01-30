@@ -15,10 +15,12 @@ padding:5rem;
 }
 `
 export const Container = styled.div`
+border-radius: 30px;
 max-width:1000px;
 min-height: 30vh;
 padding:3rem;
 background: ${({ theme }) => theme.background};
+background: linear-gradient(330deg, ${({ theme }) => theme.background} 0%, ${({ theme }) => theme.text} 100%);
 h1, h2, label, p{
   color: ${({ theme }) => theme.link}
 }
@@ -27,13 +29,15 @@ h1{
 }
 text-align:center;
 display:flex;
-flex-direction:column;
+flex-direction:row;
+@media (max-width:700px){
+  flex-direction:column;
+}
 align-items:center;
 justify-content:center;
 input{
   border-color: ${({ theme }) => theme.highlight}
   padding:4px;
-  font-weight:bold;
 }
 a{
   color: ${({ theme }) => theme.link};
@@ -44,6 +48,26 @@ a{
     background: ${({ theme }) => theme.body};
     color: ${({ theme }) => theme.text};
     border-radius: 9px;
+  }
+}
+div{
+  display:flex;
+  flex-direction: column;
+  align-items:center;
+  width:80%;
+  padding:2rem;
+ 
+}
+.second{
+  form{
+    display:flex;
+    flex-direction: column;
+    align-items:center;
+
+    gap: 0px;
+    div{
+      padding:0.5rem;
+    }
   }
 }
 `
