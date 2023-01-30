@@ -1,10 +1,11 @@
-import { Section } from "./AdminStyledSections";
+import { Container, Links, Section } from "./AdminStyledSections";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate} from "react-router-dom";
 import { auth2,  registerWithEmailAndPassword } from "../../../firebase/initFirebase";
 import {useState } from "react";
 import AuthContext from "../../../Context/Auth.Context";
 import { useContext } from "react";
+import { FormInstructions } from "../../StylingElements/Form/Form";
 
 const SignAdmin = () => {
   const [email, setEmail] = useState("");
@@ -16,52 +17,73 @@ const SignAdmin = () => {
 
 
   const register = () => {
-    if (!name) alert("Please enter name");
+    if (!name) alert("Vänligen fyll i alla fält");
     registerWithEmailAndPassword(name, email, password)
     let userName = email
-    context.onLogin({
-      userName,
-      password,
-    })
     if (user) {
+      context.onLogin({
+        userName,
+        password,
+      })
       navigate("/admin");
+      
     }
   };
 
-  return ( <Section data-testid="AdminRegister">
-<div className="register">
-      <div className="register__container">
-        <input
+  return ( 
+  <Section data-testid="AdminRegister">
+    <Container>
+      <div>
+        <h1>Registrera dig</h1>
+        <p>Som admin kan du ändra och lägga till kurser och lärare.</p>
+        <Links>
+        Har du redan ett konto?  
+        <Link to="/admin/login">Logga in här.</Link>
+      </Links>
+      </div>
+      <div className="second">
+        <FormInstructions
+        onSubmit= {register}>
+          <div className="Row">
+            <label htmlFor="adminNamn">Namn: </label>
+          <input
+          id="adminNamn"
           type="text"
           className="register__textBox"
           value={name}
           onChange={(e) => setName(e.target.value)}
-          placeholder="Full Name"
+          placeholder="Ditt namn"
         />
-        <input
-          type="text"
+          </div>
+          <div className="Row">
+            <label htmlFor="newAdminEmail">Email: </label>
+          <input
+          id="newAdminEmail"
+          type="email"
           className="register__textBox"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="E-mail Address"
+          placeholder="E-mail"
         />
-        <input
+          </div>
+          <div className="Row">
+          <label htmlFor="newAdminPass">Lösenord:</label>
+          <input
+          id="newAdminPass"
           type="password"
           className="register__textBox"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder="******"
         />
-        <button className="register__btn" 
-        onClick={register}>
-          Register
-        </button>
-        
-        <div>
-          Already have an account? <Link to="/admin/login">Login</Link> now.
-        </div>
+          </div>
+          <input type="submit"
+          onClick={(e) => (e.preventDefault)}
+          value="Registrera"/>
+        </FormInstructions>
       </div>
-    </div>
+    </Container>
+
 
   </Section> );
 }

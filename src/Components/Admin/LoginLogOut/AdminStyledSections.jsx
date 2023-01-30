@@ -2,6 +2,7 @@
 //styling
 import styled from "styled-components";
 
+
 export const Section = styled.section`
 min-height:90vh;
 display: flex;
@@ -20,7 +21,8 @@ max-width:1000px;
 min-height: 30vh;
 padding:3rem;
 background: ${({ theme }) => theme.background};
-background: linear-gradient(330deg, ${({ theme }) => theme.background} 0%, ${({ theme }) => theme.text} 100%);
+background: linear-gradient(330deg, ${({ theme }) => theme.buttonBackground} 0%,  ${({ theme }) => theme.coloredDarkBackground} 100%);
+
 h1, h2, label, p{
   color: ${({ theme }) => theme.link}
 }
@@ -46,7 +48,7 @@ a{
   margin-top:.5rem;
   &:active, &:hover, &:focus{
     background: ${({ theme }) => theme.body};
-    color: ${({ theme }) => theme.text};
+    color: ${({ theme }) => theme.link};
     border-radius: 9px;
   }
 }
@@ -56,7 +58,6 @@ div{
   align-items:center;
   width:80%;
   padding:2rem;
- 
 }
 .second{
   form{

@@ -18,7 +18,9 @@ export const lightTheme = {
   accent: "#b86dd6",
   highlight: "#cbb1e1",
   link :"#FFF",
-  inverText : "white"
+  inverText : "white",
+  coloredDarkBackground: '#e360d9',
+  coloredLighterBackground : '#99edfe'
 }
 
 export const darkTheme = {
@@ -32,6 +34,8 @@ export const darkTheme = {
   accent:  "#5cbae6",
   highlight: "#8b94e2",
   link: "#FFF",
+  coloredDarkBackground: '#2c0445',
+  coloredLighterBackground : '#6fde8f'
 }
 
 export const Theme = ({ children }) => (

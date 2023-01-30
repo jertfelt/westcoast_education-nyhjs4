@@ -44,10 +44,10 @@ const Login = () => {
       <h2>Nyheter:</h2>
       <p>Just nu är det några buggar kvar. <br/>Rapportera gärna till webbadminstratören om du märker av dessa.</p>
       <Links>
-        <div>
+        
           Har du inget konto?  <br/>
           <Link to="/admin/register">Registrera</Link> dig nu.
-        </div>
+       
         </Links>
     </div>
     <div className="second">
@@ -70,7 +70,7 @@ const Login = () => {
           type="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          placeholder="Password"
+          placeholder="******"
         />
       </div>
         <input 
