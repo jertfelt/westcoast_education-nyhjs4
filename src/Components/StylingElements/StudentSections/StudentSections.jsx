@@ -25,11 +25,8 @@ justify-content:space-between;
 }`
 
 export const StudentContainer = styled.div`
-background: ${({ theme }) => theme.buttonText};
+background: ${({ theme }) => theme.highlight};
 color: ${({ theme }) => theme.background};
-
-
-
 padding:2rem;
 display:flex;
 flex-direction:column;
@@ -236,16 +233,16 @@ img{
   max-width:300px;
   border-radius: 50%;
 }
- .logoutBtn{
-  border-radius:9px;
+.logoutBtn{
+  border-radius:29px;
   font-size:1rem;
   border:none;
   padding: 8px;
   background: ${({ theme }) => theme.text};
     color: ${({ theme }) => theme.body};
   &:hover{
-    background: ${({ theme }) => theme.accent};
-    color: ${({ theme }) => theme.body};
+    background: ${({ theme }) => theme.highlight};
+    color: ${({ theme }) => theme.text};
   }
 }
 .logoutBtn{
@@ -368,45 +365,43 @@ input[type=submit], button{
 `
 
 export const IfAlreadyExists = styled.div`
-display:flex;
-flex-direction:row;
-justify-content:space-around;
-align-items:center;
-text-align:left;
-
-h3{
-  padding-right:2rem;
-}
-div{
-
-  p{
-    font-size:1.2rem;
-  }
-}
-.exists{
-h3{
-  padding-right:2rem;
-}
-display:flex;
-flex-direction:row;
-justify-content:space-around;
-align-items:center;
-text-align:left;
-@media (max-width:800px){
+  display:flex;
+  flex-direction:row;
+  justify-content:space-around;
+  align-items:center;
+  text-align:left;
   h3{
-    margin-top:-.5rem;
-    font-size:2rem;
-    padding:0;
-    margin-bottom:-.5rem;
+    padding-right:2rem;
   }
-  flex-direction:column;
-  
-  p,h3{
-    text-align:center;
+  div{
+
+    p{
+      font-size:1.2rem;
+    }
   }
-}
-}
- 
+  .exists{
+    h3{
+      padding-right:2rem;
+    }
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    align-items:center;
+    text-align:left;
+    @media (max-width:800px){
+      h3{
+        margin-top:-.5rem;
+        font-size:2rem;
+        padding:0;
+        margin-bottom:-.5rem;
+      }
+      flex-direction:column;
+      
+      p,h3{
+        text-align:center;
+      }
+    }
+  }
 `
 
 export default Studentsections

@@ -29,9 +29,7 @@ const HomePage = ({courses, studentsDb}) => {
       <p>
       Vi har specialiserat oss på framförallt
       systemutvecklingsutbildningar inom webb och mobila lösningar.
-      Vårt koncept har och är fortfarande att tillhandahålla klassrums utbildningar där elever och
-      lärare möts. Vi erbjuder även distansutbildning där elever kan närvara via länk till klassrum
-      där en lärare genomför lektionen.
+      Vårt koncept har och är fortfarande att tillhandahålla klassrums utbildningar där elever och lärare möts. Vi erbjuder även distansutbildning där elever kan närvara via länk till klassrum där en lärare genomför lektionen.
         </p>
       </Column>
     </TwoColumns>
@@ -52,14 +50,7 @@ const HomePage = ({courses, studentsDb}) => {
   <HomePageCourses 
   year={year}
   courseList={courseList}/>}
-  <GoodToKnow>
 
-  <h3>Bra att veta:</h3>
-  <p>När du har bokat en kurs så kommer vi skicka ett bekräftelsemejl med
-      betalningsuppgifter och ett välkomstmeddelande. 
-      Skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste
-      vi tyvärr av ekonomiska skäl boka av kursen. </p>
-  </GoodToKnow>
 
   </About>
   </section> );

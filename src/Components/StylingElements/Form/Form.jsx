@@ -68,6 +68,7 @@ button{
 .instructions{
   font-size:1rem;
   max-width:400px;
+  color: ${({ theme }) => theme.link};
 }
 .offscreen{
   border: 0;
@@ -166,7 +167,7 @@ button{
     ${props => 
       props.studentCourses && 
       css`
-      background: ${({ theme }) => theme.toggleBorder};
+      background: ${({ theme }) => theme.highlight};
       border-radius: 29px;
       max-width:60%;
       display:flex;
@@ -191,9 +192,9 @@ button{
         border:none;
         border-radius:30px;
           &:hover{
-            color: ${({ theme }) => theme.background};
+            color: ${({ theme }) => theme.link};
             box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-            background: ${({ theme }) => theme.highlight};
+            background: ${({ theme }) => theme.background};
           }
         cursor: pointer;
         max-width:30%;

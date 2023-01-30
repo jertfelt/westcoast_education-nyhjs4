@@ -86,9 +86,10 @@ display:flex;
 flex-direction:column;
 align-items:center;
 justify-content:center;
-margin-top:3rem;
-p{max-width:900px;}
+p{max-width:900px;
+text-align:center;}
 h2{
+  text-align:left;
   line-height:1.3rem;
   @media (max-width: 700px){
     line-height:2rem;
@@ -125,5 +126,56 @@ button{
   padding:8px;
   border:none;
   font-size:1rem;
+    &:hover{
+    background-color: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.buttonText};
+  }
+}
+.mobile{
+  @media (min-width:700px){
+    display:none;
+  }
 }
 `
+
+export const TableCourses = styled.table`
+font-family: Sofia Sans;
+display:flex;
+flex-direction:column;
+align-items:center;
+border-collapse: collapse;
+thead{
+  font-size:1.3rem;
+  background-color: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.buttonText};
+}
+th{
+  width:200px;
+  padding:.5rem;
+}
+
+tbody{
+  background-color: ${({ theme }) => theme.highlight};
+  color: ${({ theme }) => theme.text};
+}
+td{
+  
+  font-size:1rem;
+  text-align:center;
+  padding:.5rem;
+  width:200px;
+}
+button{
+  padding:8px;
+  border:none;
+  font-size:1rem;
+  &:hover{
+    background-color: ${({ theme }) => theme.background};
+  color: ${({ theme }) => theme.buttonText};
+  }
+}
+@media (max-width:700px){
+  display:none;
+}
+`
+

@@ -27,11 +27,11 @@ max-width:100px;
 &:hover, &:focus{
   color: ${({ theme }) => theme.background};
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  background: ${({ theme }) => theme.accent};
+  background: ${({ theme }) => theme.link};
 }
 &:active{
   color: ${({ theme }) => theme.button};
-  background: ${({ theme }) => theme.accent};
+  background: ${({ theme }) => theme.link};
 }
 cursor: pointer;
 font-size:1rem;

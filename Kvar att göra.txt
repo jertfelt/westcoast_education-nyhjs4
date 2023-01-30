@@ -2,22 +2,18 @@
 ADMIN--------------
 
 1) städa funktioner och fetch Firebase kanske bara en gång skicka som props
-
  - DUBBELKOLLA ATT DETTA FUNGERAR ÖVERALLT! 
 
+2) Bugg i student - visar fel kurs efter ändring
 
 5)Kursformulär:  
 Lärare i select option, utifrån kompetenser! 
 Ämnesområden som lista:
 <--- Finns, men koden buggar
 
-
-2) fixa Admin genom firebase istället, 
-
-
+4) CSS FIXES
 
 Studentportal:
-3) bugg i studentportal: lösenord och email blir tomt ?  <--- minns ej denna
 
 4) Laga pomofocus i studentportal
 

@@ -7,8 +7,9 @@ export const ModalDiv = styled.div`
   left: calc(50% - 20rem);
   width: 40rem;
 }
+border-radius: 29px;
 background: ${({ theme }) => theme.body};
-color: ${({ theme }) => theme.buttonBackground};
+color: ${({ theme }) => theme.text};
 box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
 position: fixed;
 top: 30vh;
@@ -21,11 +22,11 @@ button{
   color: ${({ theme }) => theme.text};
   font-size:1rem;
   padding: 6px;
+  border-radius: 29px;
   border:none;
   cursor: pointer;
   &:hover{
-    background: ${({ theme }) => theme.toggleBorder};
-   
+    background: ${({ theme }) => theme.highlight};
   }
 }
 `
@@ -48,7 +49,7 @@ const ModalOverlay = (props) => {
   return (
     <ModalDiv>
     <Content>
-    <h3>{props.title}</h3>
+    <h1>{props.title}</h1>
     <p>{props.message}</p>
     <button onClick={props.onCLick}>Stäng</button>
     </Content>

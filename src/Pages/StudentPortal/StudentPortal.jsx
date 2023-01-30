@@ -168,6 +168,7 @@ setShowModal(true)
       
     <ParagraphWithButton 
           data-testid="paragraph">
+
            {showNewName ? <p> <strong>Namn:</strong> {newName}</p>:<p> <strong>Namn:</strong> {studentName}</p>}
           <button 
           onClick={() => setChangeNameForm(true)} 
@@ -221,15 +222,18 @@ setShowModal(true)
     <div>
     {context.studentCourseFirstChoice && <p>{context.studentCourseFirstChoice}</p>}
     {!context.studentCourseFirstChoice  && <p>Du har inte anmält dig till någon kurs än!</p>} 
+    <ButtonDiv>
     <HashLink smooth to ="/#kurser">
-      Se alla publicerade kurser här</HashLink><br/>
+      Se alla kurser här</HashLink><br/>
     <Link to="/student/student-kurser/register">{!courses ? "Anmäl dig till en kurs här":"Ändra kurser"}
     </Link><br/>
+    </ButtonDiv>
     <Line/>
     <button className="logoutBtn" 
     onClick={context.onLogout}>Logga ut</button>
     </div>
     </div>
+    {/* <Timer/> */}
   </Section> );
 }
  

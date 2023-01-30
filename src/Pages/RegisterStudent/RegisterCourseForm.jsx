@@ -7,8 +7,7 @@ import sendStudentEditToFb, { decrementCoursesByStudent, incrementCoursesByStude
 import ShowInfo from "./ShowInfo";
 import Modal from "../../Components/ui/Modal/Modal";
 import { GobackButton } from "../../Components/StylingElements/Buttons/MenuButton";
-
-
+import { useLayoutEffect } from "react";
 
 const RegisterCourseForm = ({ ifDirected, studentid, item, course1, allCourses}) => {
   const navigate = useNavigate()
@@ -18,15 +17,14 @@ const RegisterCourseForm = ({ ifDirected, studentid, item, course1, allCourses})
   const [studentEmail, setStudentEmail] = useState("")
   const [studentPassword, setStudentPassword] = useState("")
   const data = allCourses;
- 
   const [firstChoice, setFirst] = useState("")
   const [warning, setWarning] = useState(false)
-
   const [showModal3, setShowModal3] = useState(false)
   const [titleModal, setTitle] = useState("")
   const [messageModal, setMessage] = useState("")
   const [showCourseInfo, setShowCourseInfo ]= useState(false)
   const [noFirst, setNoFirst] = useState(false)
+  const [current, setCurrent] = useState("")
 
 useEffect(() =>{
   if(ifDirected){   
@@ -56,17 +54,12 @@ useEffect(() => {
 
 
 useEffect(() => {
-
   if(firstChoice){
     setNoFirst(false)
-
   }else{
     setNoFirst(true)
   }
-  
 },[firstChoice])
-
-
 
 const contextFunction = (
   studentID, 
@@ -92,29 +85,25 @@ const filterNames = (name) => {
   return test
 }
 const prepareData = (newName, studentName, newEmail, newPassword, courses, studentID, studentLoggedIn, referenceURL) => {
- 
   if(!firstChoice){
-
-    console.log("null")
     let chosen1 = data.filter(function (i){
-      return i.courseName !== "DELETED"}).filter(function (course){
-        return course.courseName === courseInputRef.current.value
-    }).map(item => item)
+      return i.courseName !== "DELETED"})
+      .filter(function (course){
+        return course.courseName === current})
+      .map(item => item)
 
     let newID= Number(chosen1.map(item => item.courseID))
     let courseID2 = newID
-  
     incrementCoursesByStudent(
       courseID2, 
     )
   }
   else{
-  
+
     let chosen1 = filterNames(firstChoice)
     let oldID = Number(chosen1.map(item => item.courseID))
     let courseID1 = oldID
-
-    let chosenNew = filterNames(courseInputRef.current.value)
+    let chosenNew = filterNames(current)
     let newID = Number(chosenNew.map(item => item.courseID))
     let courseID2 = newID
   
@@ -133,7 +122,7 @@ const prepareData = (newName, studentName, newEmail, newPassword, courses, stude
     newPassword,
     referenceURL
   )
-  let studentCourseFirstChoice = courseInputRef.current.value
+  let studentCourseFirstChoice = current
   contextFunction(
       studentID, 
       studentName,
@@ -146,25 +135,23 @@ const prepareData = (newName, studentName, newEmail, newPassword, courses, stude
     setMessage("Nu är ditt val av kurs ändrat.")
     navigate("/student")
 }
- 
+
 const onSubmit = (e) => {
   e.preventDefault()
-  const newName = context.studentName
-  let studentName = newName
+    const newName = context.studentName
+    let studentName = newName
     let newEmail = studentEmail
     let newPassword = studentPassword
-    let courses = {courseName : courseInputRef.current.value, courseName2nd:  ""}
+    let courses = {courseName : current, courseName2nd:  ""}
     const studentID = studentid
     let studentLoggedIn = true
     let referenceURL = "/students/" + studentid
-    
     prepareData(newName, studentName, newEmail, newPassword, courses, studentID, studentLoggedIn, referenceURL)
 }
 
 
 
 const checkIfNotPublished = (value) => {
-  
 let published = (data.filter(function (item) {
   return item.courseName !== "DELETED"
 }).filter(function (notDeleted){
@@ -182,30 +169,27 @@ let notPublished = (data.filter(function (item) {
   return notDeleted.published !== true
 }).map(item => item))
 
-
 notPublished.forEach(array => {
   if(array.courseName === value){
-    console.log("not published")
     setWarning(true)
-    console.log(array.courseName, value)
   }
 }
 )
 }
 
-
 const checkInputsFirstChoice = (e) => {
   e.preventDefault()
+  if(setShowCourseInfo){
+    setShowCourseInfo(false)
+  }
   checkIfNotPublished(e.target.value)
- 
   if(e.target.value !== "Välj:"){
+    setCurrent(e.target.value)
     setValidInputs(true)
     setShowCourseInfo(true)
-    
 }}
-
-
-
+useLayoutEffect(() => {
+})
 
   return ( 
   <StudentContainer>
@@ -216,21 +200,21 @@ const checkInputsFirstChoice = (e) => {
     />}
     <Introduction>
     {!data && <h2>Laddar...</h2>}
-   
     <h1 data-testid ="welcome">Välkommen {context.studentName}</h1>
-   
     <TwoColumns>
     {data && <div>
       {!noFirst && 
       <IfAlreadyExists>
         {data && data.filter(function (i){
-            return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === firstChoice}).map((item, indx) => (
+            return i.courseName !== "DELETED"})
+            .filter(function (course){return course.courseName === firstChoice})
+            .map((item, indx) => (
             <div className="exists"
             key={`${indx}-${item.courseID}-${indx}${indx}-${indx}`}>
               <h3>Du {!showCourseInfo ? "är": "var"} anmäld till:<br/>{item.courseName}</h3>
               <ShowInfo 
                 courses = {item}/>
-                </div>
+            </div>
         ))}
       </IfAlreadyExists>
     }</div>} 
@@ -245,10 +229,13 @@ const checkInputsFirstChoice = (e) => {
     <FormInstructions
     studentCourses
     onSubmit={onSubmit}>
-        {showCourseInfo && <IfAlreadyExists>
+      {showCourseInfo && 
+      <IfAlreadyExists>
       <h3>Nytt val:</h3>
       {data && data.filter(function (i){
-        return i.courseName !== "DELETED"}).filter(function (course){return course.courseName === courseInputRef.current.value}).map((item, indx) => (
+        return i.courseName !== "DELETED"})
+        .filter(function (course){return course.courseName === current})
+        .map((item, indx) => (
         <ShowInfo 
         key={`${indx}-3333-${indx}${indx}-${indx}`}
         courses = {item}
@@ -323,10 +310,8 @@ const checkInputsFirstChoice = (e) => {
     </div>
   </ColumnTwo>
   </TwoColumns>
-    
    <GobackButton 
               onClick={() => navigate(-1)}>Gå tillbaka</GobackButton>
-
       {warning && !item.published && <Modal
       title="OBS"
       message="Kursen du valt är inte publicerad ännu, det behöver vara minst fem studenter anmälda. Du får fortfarande anmäla dig till kursen, men skulle det vara så att 3 veckor före kursstart vi inte har fler än 5 deltagare anmälda så måste vi tyvärr av ekonomiska skäl boka av kursen. " 
